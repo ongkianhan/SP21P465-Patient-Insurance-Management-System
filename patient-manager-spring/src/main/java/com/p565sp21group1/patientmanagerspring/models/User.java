@@ -5,19 +5,25 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
-public class User
+@Table(name = "User")
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "DISCRIMINATOR")
+public abstract class User
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long userId;
 
     @NotBlank(message = "Email address cannot be blank")
     private String email;
+
     @NotBlank(message = "Username cannot be blank")
     @Column(unique = true)
+    @Size(min=3, max=24, message="Please use 3-24 characters")
     private String username;
+
     @NotBlank(message = "Password cannot be blank")
-    @Size(min=4, max=64, message="Please use 4-64 characters")
+    @Size(min=8, max=64, message="Please use 8-64 characters")
     private String password;
 
     @NotBlank(message = "First name cannot be blank")
@@ -25,15 +31,12 @@ public class User
     @NotBlank(message = "Last name cannot be blank")
     private String lastName;
 
-    public User() {
+    public Long getUserId() {
+        return userId;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getEmail() {
