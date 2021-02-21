@@ -37,7 +37,7 @@ public class UserController
         ResponseEntity<?> errorMap = errorMapValidationService.mapErrors(result);
         if (errorMap != null) return errorMap;
 
-        Doctor newDoctor = userService.saveOrUpdateDoctor(doctor);
+        Doctor newDoctor = (Doctor) userService.saveOrUpdateUser(doctor);
         return new ResponseEntity<Doctor>(newDoctor, HttpStatus.CREATED);
     }
 
@@ -54,7 +54,7 @@ public class UserController
         ResponseEntity<?> errorMap = errorMapValidationService.mapErrors(result);
         if (errorMap != null) return errorMap;
 
-        Patient newPatient = userService.saveOrUpdatePatient(patient);
+        Patient newPatient = (Patient) userService.saveOrUpdateUser(patient);
         return new ResponseEntity<Patient>(newPatient, HttpStatus.CREATED);
     }
 
@@ -71,7 +71,7 @@ public class UserController
         ResponseEntity<?> errorMap = errorMapValidationService.mapErrors(result);
         if (errorMap != null) return errorMap;
 
-        Insurer newInsurer = userService.saveOrUpdateInsurer(insurer);
+        Insurer newInsurer = (Insurer) userService.saveOrUpdateUser(insurer);
         return new ResponseEntity<Insurer>(newInsurer, HttpStatus.CREATED);
     }
 
