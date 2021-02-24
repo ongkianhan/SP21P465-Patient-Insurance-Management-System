@@ -27,11 +27,14 @@ public class AppointmentController
     @Autowired
     private ErrorMapValidationService errorMapValidationService;
 
-    /*
-     * Registers a new user to the database.
-     * @param doctor the JSON data used to create a new account
+    /**
+     * Creates a new appointment object and attaches it to both the
+     * patient and the doctor.
+     * @param appointment the JSON data used to create a new Appointment
      * @param result contains Spring validation errors
-     * @return the new user as JSON or errors JSON
+     * @param patientId
+     * @param doctorId
+     * @return the new appointment as JSON or errors JSON
      */
     @PostMapping("/create-appointment/{patientId}&{doctorId}")
     public ResponseEntity<?> createAppointment(@Valid @RequestBody Appointment appointment,
@@ -45,5 +48,19 @@ public class AppointmentController
         Appointment newAppointment = appointmentService.addAppointment(patientIdLong, doctorIdLong, appointment);
 
         return new ResponseEntity<Appointment>(newAppointment, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/get-by-patient/{patientId}")
+    public Iterable<Appointment> getAppointmentsByPatientId(@PathVariable String patientId)
+    {
+        long patientIdLong = userService.parseLong(patientId);
+        return appointmentService.getAppointmentsByPatientId(patientIdLong);
+    }
+
+    @GetMapping("/get-by-doctor/{doctorId}")
+    public Iterable<Appointment> getAppointmentsByDoctorId(@PathVariable String doctorId)
+    {
+        long doctorIdLong = userService.parseLong(doctorId);
+        return appointmentService.getAppointmentsByDoctorId(doctorIdLong);
     }
 }

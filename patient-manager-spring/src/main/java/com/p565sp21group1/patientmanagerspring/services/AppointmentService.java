@@ -9,6 +9,8 @@ import com.p565sp21group1.patientmanagerspring.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class AppointmentService
 {
@@ -41,5 +43,18 @@ public class AppointmentService
             throw new UserNotFoundException("The patient or doctor could not be found.");
         }
 
+    }
+
+    public Iterable<Appointment> getAppointmentsByPatientId(long patientId)
+    {
+        //FIXME might not work correctly if the user is in a different time zone than the server?
+        Date now = new Date(); //pass in the current time to only show upcoming Appointments
+        return appointmentRepository.getAppointmentsByPatientId(patientId, now);
+    }
+
+    public Iterable<Appointment> getAppointmentsByDoctorId(long doctorId)
+    {
+        Date now = new Date(); //pass in the current time to only show upcoming Appointments
+        return appointmentRepository.getAppointmentsByDoctorId(doctorId, now);
     }
 }

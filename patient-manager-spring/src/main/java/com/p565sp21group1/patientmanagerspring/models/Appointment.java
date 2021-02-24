@@ -24,7 +24,7 @@ public class Appointment
     @JsonIgnore //fixes infinite recursion with relationship setting
     private Doctor doctor; //reference to the doctor hosting this appt.
 
-    @JsonFormat(pattern="dd/mm/yyyy")
+    @JsonFormat(pattern="MM/dd/yyyy h:mm a")
     private Date date; //time and date when the appointment is scheduled
 
     public Appointment() {
