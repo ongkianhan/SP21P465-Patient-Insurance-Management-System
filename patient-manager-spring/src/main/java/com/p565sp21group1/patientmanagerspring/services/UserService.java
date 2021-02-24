@@ -15,10 +15,16 @@ public class UserService
     @Autowired
     UserRepository userRepository;
 
+    /*@Autowired //TODO: Un-comment when Spring Security is added
+    private BCryptPasswordEncoder bCryptPasswordEncoder;*/
+
     public User saveOrUpdateUser(User user)
     {
         try
         {
+            //Encode the password
+            //user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            user.setConfirmPassword("");
             //Create the user on the database
             return userRepository.save(user);
         }

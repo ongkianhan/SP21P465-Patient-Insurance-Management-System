@@ -1,14 +1,17 @@
 package com.p565sp21group1.patientmanagerspring.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Collection;
 
 @Entity
 @Table(name = "User")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "DISCRIMINATOR")
-public abstract class User
+public abstract class User //TODO: Implement UserDetails when Spring Security is added
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,12 +22,16 @@ public abstract class User
 
     @NotBlank(message = "Username cannot be blank")
     @Column(unique = true)
-    @Size(min=3, max=24, message="Please use 3-24 characters")
+    @Size(min=4, max=24, message="Please use 4-24 characters")
     private String username;
 
     @NotBlank(message = "Password cannot be blank")
-    @Size(min=8, max=64, message="Please use 8-64 characters")
+    @Size(min=8, max=48, message="Please use 8-48 characters")
     private String password;
+
+    @NotBlank(message = "Password is required")
+    @Transient //do not persist password confirmation
+    private String confirmPassword;
 
     @NotBlank(message = "First name cannot be blank")
     private String firstName;
@@ -63,6 +70,14 @@ public abstract class User
         this.password = password;
     }
 
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -78,4 +93,5 @@ public abstract class User
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
 }

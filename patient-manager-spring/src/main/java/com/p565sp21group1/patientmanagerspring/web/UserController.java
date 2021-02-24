@@ -6,6 +6,7 @@ import com.p565sp21group1.patientmanagerspring.models.Patient;
 import com.p565sp21group1.patientmanagerspring.models.User;
 import com.p565sp21group1.patientmanagerspring.services.ErrorMapValidationService;
 import com.p565sp21group1.patientmanagerspring.services.UserService;
+import com.p565sp21group1.patientmanagerspring.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,9 @@ public class UserController
     @Autowired
     private ErrorMapValidationService errorMapValidationService;
 
+    @Autowired
+    private UserValidator userValidator;
+
     /**
      * Registers a new user to the database.
      * @param doctor the JSON data used to create a new account
@@ -33,6 +37,9 @@ public class UserController
     @PostMapping("/create-doctor")
     public ResponseEntity<?> createNewDoctor(@Valid @RequestBody Doctor doctor, BindingResult result)
     {
+        //Validate passwords
+        userValidator.validate(doctor, result);
+
         //Return errors if the annotations in User class cause them
         ResponseEntity<?> errorMap = errorMapValidationService.mapErrors(result);
         if (errorMap != null) return errorMap;
@@ -50,6 +57,9 @@ public class UserController
     @PostMapping("/create-patient")
     public ResponseEntity<?> createNewPatient(@Valid @RequestBody Patient patient, BindingResult result)
     {
+        //Validate passwords
+        userValidator.validate(patient, result);
+
         //Return errors if the annotations in User class cause them
         ResponseEntity<?> errorMap = errorMapValidationService.mapErrors(result);
         if (errorMap != null) return errorMap;
@@ -67,6 +77,9 @@ public class UserController
     @PostMapping("/create-insurer")
     public ResponseEntity<?> createNewInsurer(@Valid @RequestBody Insurer insurer, BindingResult result)
     {
+        //Validate passwords
+        userValidator.validate(insurer, result);
+
         //Return errors if the annotations in User class cause them
         ResponseEntity<?> errorMap = errorMapValidationService.mapErrors(result);
         if (errorMap != null) return errorMap;

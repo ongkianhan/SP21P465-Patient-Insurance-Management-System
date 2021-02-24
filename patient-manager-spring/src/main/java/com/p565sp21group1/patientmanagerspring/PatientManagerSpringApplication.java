@@ -6,6 +6,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class PatientManagerSpringApplication
 {
+	/*@Bean //TODO un-comment when Spring Security is added
+	BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}*/
+
 	public static void main(String[] args) {
 		SpringApplication.run(PatientManagerSpringApplication.class, args);
 	}
