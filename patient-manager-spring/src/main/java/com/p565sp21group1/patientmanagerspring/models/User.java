@@ -29,7 +29,7 @@ public abstract class User //TODO: Implement UserDetails when Spring Security is
     @Size(min=8, max=48, message="Please use 8-48 characters")
     private String password;
 
-    @NotBlank(message = "Password is required")
+    @NotBlank(message = "Password confirmation cannot be blank")
     @Transient //do not persist password confirmation
     private String confirmPassword;
 

@@ -90,4 +90,11 @@ public class UserController
 
     @GetMapping("/all-doctors")
     public Iterable<Doctor> getAllDoctors(){return userService.getAllDoctors();}
+
+    @GetMapping("/{userId}")
+    public User getUserById(@PathVariable String userId)
+    {
+        long userIdLong = userService.parseLong(userId);
+        return userService.findUserById(userIdLong);
+    }
 }

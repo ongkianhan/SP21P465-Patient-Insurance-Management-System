@@ -1,5 +1,7 @@
 package com.p565sp21group1.patientmanagerspring.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,12 +11,8 @@ import java.util.List;
 @DiscriminatorValue("PAT")
 public class Patient extends User
 {
-    //OneToMany with patient to appointments
-    //orphanRemoval deletes the appointments when the patient is deleted
-    //@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "patient", orphanRemoval = true)
-    //@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, orphanRemoval = true)
-    //@OneToMany(mappedBy="patient")
-    //private List<Appointment> appointments = new ArrayList<>();
+    @OneToMany(mappedBy="patient")
+    private List<Appointment> appointments = new ArrayList<>();
 
     @Column(name = "age", nullable = false, unique = false)
     private int age;
@@ -34,13 +32,13 @@ public class Patient extends User
     public Patient() {
     }
 
-    /*public List<Appointment> getAppointments() {
+    public List<Appointment> getAppointments() {
         return appointments;
     }
 
     public void setAppointments(List<Appointment> appointments) {
         this.appointments = appointments;
-    }*/
+    }
 
     public int getAge() {
         return age;

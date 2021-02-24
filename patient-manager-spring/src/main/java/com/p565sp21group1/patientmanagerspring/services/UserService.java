@@ -18,13 +18,29 @@ public class UserService
     /*@Autowired //TODO: Un-comment when Spring Security is added
     private BCryptPasswordEncoder bCryptPasswordEncoder;*/
 
+    /**
+     * Converts a URL parameter to a long
+     */
+    public long parseLong(String id)
+    {
+        try
+        {
+            return Long.parseLong(id);
+        }
+        catch (NumberFormatException ex)
+        {
+            throw new NumberFormatException("Invalid ID");
+        }
+    }
+
+
     public User saveOrUpdateUser(User user)
     {
         try
         {
             //Encode the password
             //user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-            user.setConfirmPassword("");
+            //user.setConfirmPassword("");
             //Create the user on the database
             return userRepository.save(user);
         }
@@ -40,4 +56,8 @@ public class UserService
     {
         return userRepository.getAllDoctors();
     }
+
+    public User findUserById(long id) { return userRepository.findById(id).get(); }
+
+
 }
