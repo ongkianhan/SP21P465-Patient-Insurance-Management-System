@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface ConversationRepository extends CrudRepository<Conversation, Long>
 {
-    @Query("SELECT c FROM Conversation c")
+    @Query("SELECT c from Conversation c WHERE EXISTS " +
+            "(SELECT a from Conversation ce LEFT JOIN ce.usersInvolved a WHERE c = ce AND a.id = :userId)")
     List<Conversation> getConversationsByUserId(long userId);
 }

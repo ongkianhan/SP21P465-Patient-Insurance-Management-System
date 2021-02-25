@@ -17,6 +17,8 @@ public class Conversation
     private Long conversationId;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "userId", nullable = false)
+    @JsonIgnore //do not show all user JSON for each conversation
     private List<User> usersInvolved = new ArrayList<>();
 
     /*@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
