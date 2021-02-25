@@ -1,6 +1,7 @@
 package com.p565sp21group1.patientmanagerspring.web;
 
 import com.p565sp21group1.patientmanagerspring.models.Conversation;
+import com.p565sp21group1.patientmanagerspring.models.Message;
 import com.p565sp21group1.patientmanagerspring.services.ConversationService;
 import com.p565sp21group1.patientmanagerspring.services.ErrorMapValidationService;
 import com.p565sp21group1.patientmanagerspring.services.UserService;
@@ -27,6 +28,28 @@ public class ConversationController
     private ErrorMapValidationService errorMapValidationService;
 
 
+    @GetMapping("/view/{conversationId}")
+    public Iterable<Message> getProjectBacklog(@PathVariable String conversationId)
+    {
+        long conversationIdLong = userService.parseLong(conversationId);
+        return conversationService.getRecentMessages(conversationIdLong);
+    }
+
+    @PostMapping("/{conversationId}")
+    public ResponseEntity<?> addMessageToConversation(@Valid @RequestBody Message message,
+                                                     BindingResult result, @PathVariable String conversationId)
+    {
+        //Return an error if the message was blank
+        ResponseEntity<?> errorMap = errorMapValidationService.mapErrors(result);
+        if (errorMap != null) return errorMap;
+
+        //Create the message on the database
+        long conversationIdLong = userService.parseLong(conversationId);
+        Message message1 = conversationService.addMessage(conversationIdLong, message);
+
+        return new ResponseEntity<Message>(message1, HttpStatus.CREATED);
+    }
+
     @PostMapping("/create-conversation/{userId1}&{userId2}")
     public ResponseEntity<?> createConversation(@Valid @RequestBody Conversation conversation,
                                                BindingResult result, @PathVariable String userId1, @PathVariable String userId2)
@@ -41,7 +64,7 @@ public class ConversationController
         return new ResponseEntity<Conversation>(newConversation, HttpStatus.CREATED);
     }
 
-    @GetMapping("/get/{userId}")
+    @GetMapping("/get-by-user/{userId}")
     public Iterable<Conversation> getConversationsByUserId(@PathVariable String userId)
     {
         long userIdLong = userService.parseLong(userId);

@@ -1,10 +1,10 @@
 package com.p565sp21group1.patientmanagerspring.models;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+@Entity
+@Table(name="Message")
 public class Message
 {
     @Id

@@ -16,15 +16,13 @@ public class Conversation
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long conversationId;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "userId", nullable = false)
     @JsonIgnore //do not show all user JSON for each conversation
     private List<User> usersInvolved = new ArrayList<>();
 
-    /*@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-    @JoinColumn(name="messages", nullable=false)
-    @JsonIgnore //fixes infinite recursion with relationship setting
-    private List<Message> messages = new ArrayList<>();*/
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    private List<Message> messages = new ArrayList<>();
 
 
     public Conversation() {
