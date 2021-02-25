@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "User")
@@ -37,6 +39,11 @@ public abstract class User //TODO: Implement UserDetails when Spring Security is
     private String firstName;
     @NotBlank(message = "Last name cannot be blank")
     private String lastName;
+
+    @OneToMany(mappedBy = "usersInvolved", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, orphanRemoval = true)
+    private List<Conversation> conversations = new ArrayList<>();
+
+
 
     public Long getUserId() {
         return userId;
@@ -94,4 +101,11 @@ public abstract class User //TODO: Implement UserDetails when Spring Security is
         this.lastName = lastName;
     }
 
+    public List<Conversation> getConversations() {
+        return conversations;
+    }
+
+    public void setConversations(List<Conversation> conversations) {
+        this.conversations = conversations;
+    }
 }
