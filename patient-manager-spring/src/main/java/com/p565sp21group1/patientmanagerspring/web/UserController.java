@@ -1,5 +1,6 @@
 package com.p565sp21group1.patientmanagerspring.web;
 
+import com.p565sp21group1.patientmanagerspring.exceptions.UserNotFoundException;
 import com.p565sp21group1.patientmanagerspring.models.Doctor;
 import com.p565sp21group1.patientmanagerspring.models.Insurer;
 import com.p565sp21group1.patientmanagerspring.models.Patient;
@@ -40,12 +41,13 @@ public class UserController
         //Validate passwords
         userValidator.validate(doctor, result);
 
-        //Return errors if the annotations in User class cause them
+        //Return errors if the exist
         ResponseEntity<?> errorMap = errorMapValidationService.mapErrors(result);
         if (errorMap != null) return errorMap;
 
+        //Persist the user
         Doctor newDoctor = (Doctor) userService.saveOrUpdateUser(doctor);
-        return new ResponseEntity<Doctor>(newDoctor, HttpStatus.CREATED);
+        return new ResponseEntity<User>(newDoctor, HttpStatus.CREATED);
     }
 
     /**
@@ -94,7 +96,7 @@ public class UserController
     @GetMapping("/{userId}")
     public User getUserById(@PathVariable String userId)
     {
-        long userIdLong = userService.parseLong(userId);
+        long userIdLong = userService.parseUserId(userId);
         return userService.findUserById(userIdLong);
     }
 }

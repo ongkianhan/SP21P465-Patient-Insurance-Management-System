@@ -1,11 +1,11 @@
 package com.p565sp21group1.patientmanagerspring.exceptions;
 
-public class InvalidLoginResponse
+public class InvalidLoginExceptionResponse
 {
     private String username;
     private String password;
 
-    public InvalidLoginResponse()
+    public InvalidLoginExceptionResponse()
     {
         this.username = "Invalid username";
         this.password = "Invalid password";

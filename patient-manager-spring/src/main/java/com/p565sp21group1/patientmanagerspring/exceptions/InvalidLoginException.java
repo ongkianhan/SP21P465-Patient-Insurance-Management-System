@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class UsernameTakenException extends RuntimeException
+public class InvalidLoginException extends RuntimeException
 {
-    public UsernameTakenException(String message) {
+    public InvalidLoginException(String message) {
         super(message);
     }
 }

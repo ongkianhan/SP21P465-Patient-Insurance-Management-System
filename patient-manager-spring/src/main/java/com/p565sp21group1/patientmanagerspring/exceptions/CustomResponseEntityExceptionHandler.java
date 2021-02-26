@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+
 /**
  * Credit to https://github.com/AgileIntelligence/AgileIntPPMTool/
  * for the method logic in this class.
@@ -16,17 +17,27 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler
 {
+    //Username taken
     @ExceptionHandler
-    public final ResponseEntity<Object> handleProjectIdException(UsernameTakenException ex, WebRequest request)
-    {
-        UsernameTakenExceptionResponse exceptionResponse = new UsernameTakenExceptionResponse(ex.getMessage());
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
-    }
-
-    /*@ExceptionHandler
     public final ResponseEntity<Object> handleUsernameTakenException(UsernameTakenException ex, WebRequest request)
     {
         UsernameTakenExceptionResponse exceptionResponse = new UsernameTakenExceptionResponse(ex.getMessage());
         return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
-    }*/
+    }
+
+    //Find User by ID failed
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException ex, WebRequest request)
+    {
+        UserNotFoundExceptionResponse exceptionResponse = new UserNotFoundExceptionResponse(ex.getMessage());
+        return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    //Incorrect login credentials
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleInvalidLoginException(InvalidLoginException ex, WebRequest request)
+    {
+        InvalidLoginExceptionResponse exceptionResponse = new InvalidLoginExceptionResponse();
+        return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
 }

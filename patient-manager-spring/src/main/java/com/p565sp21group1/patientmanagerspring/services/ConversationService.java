@@ -52,10 +52,15 @@ public class ConversationService
     }
 
 
-    public Message addMessage(long conversationId, Message message)
+    public Message addMessage(long conversationId, long userId, Message message)
     {
-        //ProjectTasks to be added to a specific project, project != null, backlog != null
+        //Tell the message which conversation it belongs to
         Conversation conversation = conversationRepository.findById(conversationId).get();
+        message.setConversation(conversation);
+
+        //Tell the message who sent it
+        User sender = userRepository.findById(userId).get();
+        message.setSender(sender);
 
         return messageRepository.save(message);
     }

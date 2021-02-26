@@ -8,9 +8,13 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+//NOTE: The table is named "T_Message" because "Message" is a reserved table
+
 @Repository
 public interface MessageRepository extends CrudRepository<Message, Long>
 {
-    @Query(value = "SELECT m FROM Message m ORDER BY m.id DESC")
+    @Query(value = "SELECT m FROM Message m " +
+            "WHERE m.conversation.conversationId = :conversationId " +
+            "ORDER BY m.id DESC")
     List<Message> getRecentMessages(long conversationId);
 }

@@ -1,11 +1,9 @@
 package com.p565sp21group1.patientmanagerspring.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -21,7 +19,7 @@ public class Conversation
     @JsonIgnore //do not show all user JSON for each conversation
     private List<User> usersInvolved = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "conversation", orphanRemoval = true)
     private List<Message> messages = new ArrayList<>();
 
 
@@ -51,4 +49,11 @@ public class Conversation
         usersInvolved.add(newUser);
     }
 
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
 }

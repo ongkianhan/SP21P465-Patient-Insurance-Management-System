@@ -1,5 +1,7 @@
 package com.p565sp21group1.patientmanagerspring.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,16 +12,17 @@ import java.util.List;
 public class Doctor extends User
 {
     @OneToMany(mappedBy="doctor")
+    @JsonIgnore
     private List<Appointment> appointments = new ArrayList<>();
 
     @Column(name = "specialization", nullable = false, unique = false)
     private String specialization;
 
     @Column(name = "latitude", nullable = true, unique = false)
-    private long latitude;
+    private double latitude;
 
     @Column(name = "longitude", nullable = true, unique = false)
-    private long longitude;
+    private double longitude;
 
     public Doctor() {
     }
@@ -40,19 +43,19 @@ public class Doctor extends User
         this.appointments = appointments;
     }
 
-    public long getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(long latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public long getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(long longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 }

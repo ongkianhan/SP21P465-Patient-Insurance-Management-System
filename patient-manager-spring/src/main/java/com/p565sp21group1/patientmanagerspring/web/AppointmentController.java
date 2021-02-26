@@ -43,8 +43,8 @@ public class AppointmentController
         ResponseEntity<?> errorMap = errorMapValidationService.mapErrors(result);
         if (errorMap != null) return errorMap;
 
-        long patientIdLong = userService.parseLong(patientId);
-        long doctorIdLong = userService.parseLong(doctorId);
+        long patientIdLong = userService.parseUserId(patientId);
+        long doctorIdLong = userService.parseUserId(doctorId);
         Appointment newAppointment = appointmentService.addAppointment(patientIdLong, doctorIdLong, appointment);
 
         return new ResponseEntity<Appointment>(newAppointment, HttpStatus.CREATED);
@@ -53,14 +53,14 @@ public class AppointmentController
     @GetMapping("/get-by-patient/{patientId}")
     public Iterable<Appointment> getAppointmentsByPatientId(@PathVariable String patientId)
     {
-        long patientIdLong = userService.parseLong(patientId);
+        long patientIdLong = userService.parseUserId(patientId);
         return appointmentService.getAppointmentsByPatientId(patientIdLong);
     }
 
     @GetMapping("/get-by-doctor/{doctorId}")
     public Iterable<Appointment> getAppointmentsByDoctorId(@PathVariable String doctorId)
     {
-        long doctorIdLong = userService.parseLong(doctorId);
+        long doctorIdLong = userService.parseUserId(doctorId);
         return appointmentService.getAppointmentsByDoctorId(doctorIdLong);
     }
 }

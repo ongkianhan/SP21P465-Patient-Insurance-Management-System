@@ -1,5 +1,6 @@
 package com.p565sp21group1.patientmanagerspring.services;
 
+import com.p565sp21group1.patientmanagerspring.exceptions.UserNotFoundException;
 import com.p565sp21group1.patientmanagerspring.exceptions.UsernameTakenException;
 import com.p565sp21group1.patientmanagerspring.models.Doctor;
 import com.p565sp21group1.patientmanagerspring.models.Insurer;
@@ -8,6 +9,8 @@ import com.p565sp21group1.patientmanagerspring.models.User;
 import com.p565sp21group1.patientmanagerspring.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Service
 public class UserService
@@ -21,7 +24,7 @@ public class UserService
     /**
      * Converts a URL parameter to a long
      */
-    public long parseLong(String id)
+    public long parseUserId(String id)
     {
         try
         {
@@ -29,7 +32,7 @@ public class UserService
         }
         catch (NumberFormatException ex)
         {
-            throw new NumberFormatException("Invalid ID");
+            throw new UserNotFoundException("Invalid ID");
         }
     }
 
@@ -57,7 +60,21 @@ public class UserService
         return userRepository.getAllDoctors();
     }
 
-    public User findUserById(long id) { return userRepository.findById(id).get(); }
+    public User findUserById(long id)
+    {
+        try
+        {
+            return userRepository.findById(id).get();
+        }
+        catch (Exception ex)
+        {
+            throw new UserNotFoundException("User with ID '"+id+"' not found");
+        }
+    }
 
-
+    public Iterable<Doctor> filterDoctors()
+    {
+        //TODO
+        return new ArrayList<Doctor>();
+    }
 }

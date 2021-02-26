@@ -8,7 +8,6 @@ import com.p565sp21group1.patientmanagerspring.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,21 +30,24 @@ public class ConversationController
     @GetMapping("/view/{conversationId}")
     public Iterable<Message> getProjectBacklog(@PathVariable String conversationId)
     {
-        long conversationIdLong = userService.parseLong(conversationId);
+        long conversationIdLong = userService.parseUserId(conversationId);
         return conversationService.getRecentMessages(conversationIdLong);
     }
 
-    @PostMapping("/{conversationId}")
+    @PostMapping("/user-{userId}/{conversationId}")
     public ResponseEntity<?> addMessageToConversation(@Valid @RequestBody Message message,
-                                                     BindingResult result, @PathVariable String conversationId)
+                                                      BindingResult result,
+                                                      @PathVariable String conversationId,
+                                                      @PathVariable String userId)
     {
         //Return an error if the message was blank
         ResponseEntity<?> errorMap = errorMapValidationService.mapErrors(result);
         if (errorMap != null) return errorMap;
 
         //Create the message on the database
-        long conversationIdLong = userService.parseLong(conversationId);
-        Message message1 = conversationService.addMessage(conversationIdLong, message);
+        long conversationIdLong = userService.parseUserId(conversationId);
+        long userIdLong = userService.parseUserId(userId);
+        Message message1 = conversationService.addMessage(conversationIdLong, userIdLong, message);
 
         return new ResponseEntity<Message>(message1, HttpStatus.CREATED);
     }
@@ -57,8 +59,8 @@ public class ConversationController
         ResponseEntity<?> errorMap = errorMapValidationService.mapErrors(result);
         if (errorMap != null) return errorMap;
 
-        long userId1Long = userService.parseLong(userId1);
-        long userId2Long = userService.parseLong(userId2);
+        long userId1Long = userService.parseUserId(userId1);
+        long userId2Long = userService.parseUserId(userId2);
         Conversation newConversation = conversationService.createConversation(userId1Long, userId2Long, conversation);
 
         return new ResponseEntity<Conversation>(newConversation, HttpStatus.CREATED);
@@ -67,7 +69,7 @@ public class ConversationController
     @GetMapping("/get-by-user/{userId}")
     public Iterable<Conversation> getConversationsByUserId(@PathVariable String userId)
     {
-        long userIdLong = userService.parseLong(userId);
+        long userIdLong = userService.parseUserId(userId);
         return conversationService.getConversationsByUserId(userIdLong);
     }
 }

@@ -3,6 +3,7 @@ package com.p565sp21group1.patientmanagerspring.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -20,11 +21,11 @@ public abstract class User //TODO: Implement UserDetails when Spring Security is
     private Long userId;
 
     @NotBlank(message = "Email address cannot be blank")
+    @Email(message = "That is not an email")
     private String email;
 
     @NotBlank(message = "Username cannot be blank")
     @Column(unique = true)
-    @Size(min=4, max=24, message="Please use 4-24 characters")
     private String username;
 
     @NotBlank(message = "Password cannot be blank")
@@ -41,6 +42,7 @@ public abstract class User //TODO: Implement UserDetails when Spring Security is
     private String lastName;
 
     @OneToMany(mappedBy = "usersInvolved", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, orphanRemoval = true)
+    @JsonIgnore
     private List<Conversation> conversations = new ArrayList<>();
 
 
