@@ -10,7 +10,7 @@ import DoctorSearch from "./components/UserSearch/DoctorSearch.js";
 import GeneralSignupForm from "./components/SignUp/GeneralSignupForm";
 import DoctorSignupForm from "./components/SignUp/DoctorSignupForm";
 import PatientSignupForm from "./components/SignUp/PatientSignupForm";
-import ProviderSignupForm from "./components/SignUp/ProviderSignupForm";
+import InsurerSignupForm from "./components/SignUp/InsurerSignupForm";
 
 class App extends Component 
 {
@@ -27,7 +27,7 @@ class App extends Component
             <Route exact path="/find-doctors" component={DoctorSearch} />
             <Route exact path="/patient-signup" component={PatientSignupForm} />
             <Route exact path="/doctor-signup" component={DoctorSignupForm} />
-            <Route exact path="/provider-signup" component={ProviderSignupForm} />
+            <Route exact path="/insurer-signup" component={InsurerSignupForm} />
           
           </div>
         </Router>

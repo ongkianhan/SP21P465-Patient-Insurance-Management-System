@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types"
 import { Link } from "react-router-dom";
 
-class ProviderSignupForm extends Component {
+class InsurerSignupForm extends Component {
     render(){
         return(
             <div>
@@ -15,4 +15,4 @@ class ProviderSignupForm extends Component {
     }
 }
 
-export default ProviderSignupForm;
+export default InsurerSignupForm;

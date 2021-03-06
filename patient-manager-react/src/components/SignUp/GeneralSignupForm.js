@@ -15,7 +15,7 @@ class GeneralSignupForm extends Component {
                 <br></br>
                 <Link to="/patient-signup" >Go To Patient Signup</Link>
                 <br></br>
-                <Link to="/provider-signup" >Go To Provider Signup</Link>
+                <Link to="/insurer-signup" >Go To Insurance Provider Signup</Link>
             </div>
         );        
     }
