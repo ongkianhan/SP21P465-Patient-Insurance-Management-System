@@ -18,17 +18,17 @@ class DoctorSearch extends Component
             <div className="doctorContainer">
                 <div className="container">
                     <div className="row">
-                    <div className="col-md-12">
-                        <h1 className="display-4 text-center">Doctors</h1>
-                        <br />
-                        
-                        <br />
-                        <hr />
-                        {/* Get the entire list of doctors. For each DoctorCard, set its prop as the doctor data */}
-                        {allDoctors.map(doctor => (
-                            <DoctorCard key={doctor.id} doctor={doctor} />
-                        ))}
-                    </div>
+                        <div className="col-md-12">
+                            <h1 className="display-4 text-center">Doctors</h1>
+                            <br />
+                            
+                            <br />
+                            <hr />
+                            {/* Get the entire list of doctors. For each DoctorCard, set its prop as the doctor data */}
+                            {allDoctors.map(doctor => (
+                                <DoctorCard key={doctor.id} doctor={doctor} />
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
