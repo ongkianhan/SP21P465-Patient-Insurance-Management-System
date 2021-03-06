@@ -12,7 +12,7 @@ class InsurerSignupForm extends Component {
                 <h1>
                     Welcome to the Insurance Provider signup page
                 </h1>
-                <Login/>
+                <Login role={'insurer'}/>
             </div>
         );
     }

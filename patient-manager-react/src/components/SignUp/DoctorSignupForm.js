@@ -15,7 +15,7 @@ class DoctorSignupForm extends Component {
                 <h1>
                     Welcome to the Doctor signup Page
                 </h1>
-                <Login />
+                <Login role={'doctor'}/>
             </div>
         );
     }

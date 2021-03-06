@@ -12,7 +12,18 @@ class BasicLogin extends Component{
     }
 
     handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.username);
+        if(this.props.role == 'doctor'){
+            alert('A Doctor was submitted: ' + this.state.username);
+        }
+        else if(this.props.role == 'patient'){
+            alert('A Patient was submitted: ' + this.state.username);
+        }
+        else if(this.props.role == 'insurer'){
+            alert('An Insurer was submitted: ' + this.state.username);
+        }
+        else{
+            alert('what');
+        }
         event.preventDefault();
     }
 
