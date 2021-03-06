@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from "react-router-dom";
 import {PropTypes} from "prop-types";
-//import defaultProfileIcon from "../../../public/defaultProfileIcon.png";
+import defaultProfileIcon from "../../static/defaultProfileIcon.png";
 
 class DoctorCard extends Component 
 {
@@ -9,14 +9,28 @@ class DoctorCard extends Component
     {
         const {doctor} = this.props;
         return (
-            <div class="container">
-            <div class="card card-body bg-light mb-3">
-                <div class="row">
-                    <div class="col-4">
-                        {/*<img src={defaultProfileIcon} />*/}
+            <div className="container">
+            <div className="card card-body bg-light mb-3">
+                <div className="row">
+                    <div className="col-3">
+                        <img className="col mh-25" src={defaultProfileIcon} />
                     </div>
-                    <div class="col-8 text-left">
+                    <div className="col-6 text-left">
                         <h3>{doctor.firstName}{" "}{doctor.lastName}</h3>
+                        <h4>{doctor.specialty}</h4>
+                        <h4>{doctor.hospitalName}</h4>
+                    </div>
+                    <div className="col-3 justify-content-end">
+                        <Link to={`/appointments/${doctor.userId}`}>
+                            <button className="col my-1 rounded bg-primary-button">
+                                Make Appointment
+                            </button>
+                        </Link>
+                        <Link to={`/account/${doctor.userId}`}>
+                            <button className="col my-1 rounded bg-secondary-button">
+                                View Profile
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </div>

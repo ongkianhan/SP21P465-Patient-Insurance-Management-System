@@ -36,3 +36,27 @@
     transform: rotate(360deg);
   }
 }
+
+
+/*////////////////////////////////////////*/
+
+button {
+  background-color: #AAAAAA;
+  color: #FFFFFF;
+  font-family: 'Ubuntu';
+  border: none;
+  border-radius: 25px;
+  padding: 12px;
+}
+
+
+/*////////////////////////////////////////*/
+
+.bg-primary-button {
+  background-color: #00AA00;
+  font-family: 'Roboto Slab', serif;
+}
+
+.bg-secondary-button {
+  background-color: #0000AA;
+}

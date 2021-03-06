@@ -18,6 +18,9 @@ public class Doctor extends User
     @Column(name = "specialization", nullable = false, unique = false)
     private String specialization;
 
+    @Column(name = "hospitalName")
+    private String hospitalName;
+
     @Column(name = "latitude", nullable = true, unique = false)
     private double latitude;
 
