@@ -62,6 +62,8 @@ public class ConversationService
         User sender = userRepository.findById(userId).get();
         message.setSender(sender);
 
+        //TODO also save it to an Inbox table
+
         return messageRepository.save(message);
     }
 

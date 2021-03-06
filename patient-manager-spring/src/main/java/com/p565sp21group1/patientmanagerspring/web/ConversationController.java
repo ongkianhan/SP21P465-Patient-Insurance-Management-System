@@ -27,7 +27,7 @@ public class ConversationController
     private ErrorMapValidationService errorMapValidationService;
 
 
-    @GetMapping("/view/{conversationId}")
+    @GetMapping("/view/{conversationId}") //TODO rename
     public Iterable<Message> getProjectBacklog(@PathVariable String conversationId)
     {
         long conversationIdLong = userService.parseUserId(conversationId);
