@@ -1,20 +1,29 @@
 package com.p565sp21group1.patientmanagerspring.web;
 
+import com.p565sp21group1.patientmanagerspring.exceptions.InvalidLoginException;
 import com.p565sp21group1.patientmanagerspring.exceptions.UserNotFoundException;
 import com.p565sp21group1.patientmanagerspring.models.Doctor;
 import com.p565sp21group1.patientmanagerspring.models.Insurer;
 import com.p565sp21group1.patientmanagerspring.models.Patient;
 import com.p565sp21group1.patientmanagerspring.models.User;
+import com.p565sp21group1.patientmanagerspring.payload.JwtLoginSuccessResponse;
+import com.p565sp21group1.patientmanagerspring.payload.LoginRequest;
+import com.p565sp21group1.patientmanagerspring.security.JwtTokenProvider;
 import com.p565sp21group1.patientmanagerspring.services.ErrorMapValidationService;
 import com.p565sp21group1.patientmanagerspring.services.UserService;
-import com.p565sp21group1.patientmanagerspring.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import static com.p565sp21group1.patientmanagerspring.security.SecurityConstants.TOKEN_PREFIX;
 
 @RestController
 @RequestMapping("/api/account")
@@ -27,7 +36,11 @@ public class UserController
     private ErrorMapValidationService errorMapValidationService;
 
     @Autowired
-    private UserValidator userValidator;
+    private JwtTokenProvider jwtTokenProvider;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
 
     /**
      * Registers a new user to the database.
@@ -38,9 +51,6 @@ public class UserController
     @PostMapping("/create-doctor")
     public ResponseEntity<?> createNewDoctor(@Valid @RequestBody Doctor doctor, BindingResult result)
     {
-        //Validate passwords
-        userValidator.validate(doctor, result);
-
         //Return errors if the exist
         ResponseEntity<?> errorMap = errorMapValidationService.mapErrors(result);
         if (errorMap != null) return errorMap;
@@ -59,9 +69,6 @@ public class UserController
     @PostMapping("/create-patient")
     public ResponseEntity<?> createNewPatient(@Valid @RequestBody Patient patient, BindingResult result)
     {
-        //Validate passwords
-        userValidator.validate(patient, result);
-
         //Return errors if the annotations in User class cause them
         ResponseEntity<?> errorMap = errorMapValidationService.mapErrors(result);
         if (errorMap != null) return errorMap;
@@ -79,9 +86,6 @@ public class UserController
     @PostMapping("/create-insurer")
     public ResponseEntity<?> createNewInsurer(@Valid @RequestBody Insurer insurer, BindingResult result)
     {
-        //Validate passwords
-        userValidator.validate(insurer, result);
-
         //Return errors if the annotations in User class cause them
         ResponseEntity<?> errorMap = errorMapValidationService.mapErrors(result);
         if (errorMap != null) return errorMap;
@@ -98,5 +102,36 @@ public class UserController
     {
         long userIdLong = userService.parseUserId(userId);
         return userService.findUserById(userIdLong);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult result)
+    {
+        //Return errors if the exist
+        ResponseEntity<?> errorMap = errorMapValidationService.mapErrors(result);
+        if (errorMap != null) return errorMap;
+
+        try //Attempt to login with the provided username and password
+        {
+            System.out.println("Logging in...");
+            //Authenticate the login credentials
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getEmail(),
+                            loginRequest.getPassword()
+                    )
+            );
+            System.out.println("Success!!!");
+
+            //Prepare the JWT token
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String jwt = TOKEN_PREFIX + jwtTokenProvider.generateToken(authentication);
+
+            return ResponseEntity.ok(new JwtLoginSuccessResponse(true, jwt));
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidLoginException("Invalid credentials");
+        }
     }
 }

@@ -11,4 +11,8 @@ public interface UserRepository extends CrudRepository<User, Long>
 {
     @Query("SELECT d FROM Doctor d")
     Iterable<Doctor> getAllDoctors();
+
+    @Query("SELECT u FROM User u " +
+            "WHERE u.email = :email")
+    User findByEmail(String email);
 }

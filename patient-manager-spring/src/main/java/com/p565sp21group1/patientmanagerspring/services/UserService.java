@@ -1,13 +1,12 @@
 package com.p565sp21group1.patientmanagerspring.services;
 
 import com.p565sp21group1.patientmanagerspring.exceptions.UserNotFoundException;
-import com.p565sp21group1.patientmanagerspring.exceptions.UsernameTakenException;
+import com.p565sp21group1.patientmanagerspring.exceptions.EmailTakenException;
 import com.p565sp21group1.patientmanagerspring.models.Doctor;
-import com.p565sp21group1.patientmanagerspring.models.Insurer;
-import com.p565sp21group1.patientmanagerspring.models.Patient;
 import com.p565sp21group1.patientmanagerspring.models.User;
 import com.p565sp21group1.patientmanagerspring.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,8 +17,8 @@ public class UserService
     @Autowired
     UserRepository userRepository;
 
-    /*@Autowired //TODO: Un-comment when Spring Security is added
-    private BCryptPasswordEncoder bCryptPasswordEncoder;*/
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     /**
      * Converts a URL parameter to a long
@@ -42,16 +41,18 @@ public class UserService
         try
         {
             //Encode the password
-            //user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-            //user.setConfirmPassword("");
-            //Create the user on the database
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            //Throw error if username taken
+            user.setUsername(user.getUsername());
+
+            //Save the user
             return userRepository.save(user);
         }
         catch (Exception ex)
         {
             //Show an error if the username is taken
-            throw new UsernameTakenException(
-                    "The username '" + user.getUsername() + "' is taken. Great minds truly do think alike. ");
+            throw new EmailTakenException(
+                    "The email '" + user.getEmail() + "' is taken. Great minds truly do think alike. ");
         }
     }
 

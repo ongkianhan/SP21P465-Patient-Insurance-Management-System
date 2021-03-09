@@ -19,9 +19,9 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
 {
     //Username taken
     @ExceptionHandler
-    public final ResponseEntity<Object> handleUsernameTakenException(UsernameTakenException ex, WebRequest request)
+    public final ResponseEntity<Object> handleUsernameTakenException(EmailTakenException ex, WebRequest request)
     {
-        UsernameTakenExceptionResponse exceptionResponse = new UsernameTakenExceptionResponse(ex.getMessage());
+        EmailTakenExceptionResponse exceptionResponse = new EmailTakenExceptionResponse(ex.getMessage());
         return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 

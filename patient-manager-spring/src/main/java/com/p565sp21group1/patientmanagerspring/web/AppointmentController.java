@@ -5,7 +5,6 @@ import com.p565sp21group1.patientmanagerspring.models.Doctor;
 import com.p565sp21group1.patientmanagerspring.services.AppointmentService;
 import com.p565sp21group1.patientmanagerspring.services.ErrorMapValidationService;
 import com.p565sp21group1.patientmanagerspring.services.UserService;
-import com.p565sp21group1.patientmanagerspring.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

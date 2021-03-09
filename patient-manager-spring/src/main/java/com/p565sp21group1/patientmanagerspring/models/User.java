@@ -1,6 +1,8 @@
 package com.p565sp21group1.patientmanagerspring.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -14,7 +16,7 @@ import java.util.List;
 @Table(name = "User")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "DISCRIMINATOR")
-public abstract class User //TODO: Implement UserDetails when Spring Security is added
+public abstract class User implements UserDetails
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,19 +24,11 @@ public abstract class User //TODO: Implement UserDetails when Spring Security is
 
     @NotBlank(message = "Email address cannot be blank")
     @Email(message = "That is not an email")
+    @Column(unique = true)
     private String email;
 
-    @NotBlank(message = "Username cannot be blank")
-    @Column(unique = true)
-    private String username;
-
     @NotBlank(message = "Password cannot be blank")
-    @Size(min=8, max=48, message="Please use 8-48 characters")
     private String password;
-
-    @NotBlank(message = "Password confirmation cannot be blank")
-    @Transient //do not persist password confirmation
-    private String confirmPassword;
 
     @NotBlank(message = "First name cannot be blank")
     private String firstName;
@@ -63,28 +57,12 @@ public abstract class User //TODO: Implement UserDetails when Spring Security is
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
     }
 
     public String getFirstName() {
@@ -109,5 +87,47 @@ public abstract class User //TODO: Implement UserDetails when Spring Security is
 
     public void setConversations(List<Conversation> conversations) {
         this.conversations = conversations;
+    }
+
+
+    //
+    //  REQUIRED METHODS FOR UserDetails
+    //
+    public String getUsername() {
+        return email;
+    }
+
+    public void setUsername(String email) {
+        this.email = email;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    @JsonIgnore
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
     }
 }
