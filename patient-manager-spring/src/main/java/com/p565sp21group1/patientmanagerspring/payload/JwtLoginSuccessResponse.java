@@ -1,5 +1,8 @@
 package com.p565sp21group1.patientmanagerspring.payload;
 
+/**
+ * Significant credit to Agile Intelligence: https://github.com/AgileIntelligence/AgileIntPPMTool/
+ */
 public class JwtLoginSuccessResponse
 {
     private boolean success;

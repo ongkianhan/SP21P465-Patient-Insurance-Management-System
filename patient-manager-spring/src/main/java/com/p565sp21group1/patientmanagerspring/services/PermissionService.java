@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.function.Consumer;
 
+/**
+ * TODO: This class can check the roles of users when running requests
+ */
 @Service
 public class PermissionService
 {

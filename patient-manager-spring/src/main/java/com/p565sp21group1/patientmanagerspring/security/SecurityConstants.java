@@ -1,8 +1,10 @@
 package com.p565sp21group1.patientmanagerspring.security;
 
+/**
+ * Based on code written by Agile Intelligence: https://github.com/AgileIntelligence/AgileIntPPMTool/
+ */
 public class SecurityConstants
 {
-    public static final String SIGN_UP_URLS = "/api/account/**";
     public static final String H2_URL = "h2-console/**";
     public static final String SECRET ="SecretKeyToGenJWTs";
     public static final String TOKEN_PREFIX= "Bearer ";

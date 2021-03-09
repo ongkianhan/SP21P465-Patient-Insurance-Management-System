@@ -2,6 +2,9 @@ package com.p565sp21group1.patientmanagerspring.payload;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * Significant credit to Agile Intelligence: https://github.com/AgileIntelligence/AgileIntPPMTool/
+ */
 public class LoginRequest
 {
     @NotBlank(message = "Email cannot be blank")

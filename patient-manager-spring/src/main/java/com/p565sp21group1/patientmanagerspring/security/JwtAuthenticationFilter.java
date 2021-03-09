@@ -19,7 +19,9 @@ import java.util.Collections;
 import static com.p565sp21group1.patientmanagerspring.security.SecurityConstants.HEADER_STRING;
 import static com.p565sp21group1.patientmanagerspring.security.SecurityConstants.TOKEN_PREFIX;
 
-
+/**
+ * Significant credit to Agile Intelligence: https://github.com/AgileIntelligence/AgileIntPPMTool/
+ */
 public class JwtAuthenticationFilter extends OncePerRequestFilter
 {
     @Autowired

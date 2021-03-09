@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Significant credit to Agile Intelligence: https://github.com/AgileIntelligence/AgileIntPPMTool/
+ */
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint
 {

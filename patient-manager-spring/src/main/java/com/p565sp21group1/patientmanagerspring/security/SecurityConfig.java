@@ -16,9 +16,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static com.p565sp21group1.patientmanagerspring.security.SecurityConstants.H2_URL;
-import static com.p565sp21group1.patientmanagerspring.security.SecurityConstants.SIGN_UP_URLS;
 
 
+/**
+ * Significant credit to Agile Intelligence: https://github.com/AgileIntelligence/AgileIntPPMTool/
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
@@ -74,9 +76,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                         "/**/*.css",
                         "/**/*.js"
                 ).permitAll()
-                .antMatchers(SIGN_UP_URLS).permitAll()
                 .antMatchers(H2_URL).permitAll()
-                .antMatchers("/api/account/**").permitAll()
+                .antMatchers("/api/account/**").permitAll() //permit sign-up & login without login
                 .anyRequest().authenticated();
                 //.and()
                 //.oauth2Login();

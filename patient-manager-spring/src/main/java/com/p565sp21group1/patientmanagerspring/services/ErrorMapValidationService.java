@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * ALL credit for this class goes to https://github.com/AgileIntelligence/AgileIntPPMTool/
+ * Significant credit to Agile Intelligence: https://github.com/AgileIntelligence/AgileIntPPMTool/
  */
 @Service
 public class ErrorMapValidationService

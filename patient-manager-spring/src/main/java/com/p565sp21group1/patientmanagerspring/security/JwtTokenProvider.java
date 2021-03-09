@@ -11,6 +11,9 @@ import java.util.Map;
 
 import static com.p565sp21group1.patientmanagerspring.security.SecurityConstants.SECRET;
 
+/**
+ * Significant credit to Agile Intelligence: https://github.com/AgileIntelligence/AgileIntPPMTool/
+ */
 @Component
 public class JwtTokenProvider
 {

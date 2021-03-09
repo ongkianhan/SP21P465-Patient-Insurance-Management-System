@@ -104,6 +104,10 @@ public class UserController
         return userService.findUserById(userIdLong);
     }
 
+    /**
+     * Returns a JWT token to login.
+     * Significant credit to Agile Intelligence: https://github.com/AgileIntelligence/AgileIntPPMTool/
+     */
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult result)
     {
@@ -113,7 +117,6 @@ public class UserController
 
         try //Attempt to login with the provided username and password
         {
-            System.out.println("Logging in...");
             //Authenticate the login credentials
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -121,7 +124,6 @@ public class UserController
                             loginRequest.getPassword()
                     )
             );
-            System.out.println("Success!!!");
 
             //Prepare the JWT token
             SecurityContextHolder.getContext().setAuthentication(authentication);
