@@ -40,4 +40,12 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         InvalidLoginExceptionResponse exceptionResponse = new InvalidLoginExceptionResponse();
         return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
+
+    //Incorrect role
+    @ExceptionHandler
+    public final ResponseEntity<Object> handlePermissionDeniedException(PermissionDeniedException ex, WebRequest request)
+    {
+        PermissionDeniedExceptionResponse exceptionResponse = new PermissionDeniedExceptionResponse(ex.getMessage());
+        return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
 }

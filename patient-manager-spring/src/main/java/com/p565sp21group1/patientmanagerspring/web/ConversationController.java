@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/conversations")
@@ -27,8 +28,8 @@ public class ConversationController
     private ErrorMapValidationService errorMapValidationService;
 
 
-    @GetMapping("/view/{conversationId}") //TODO rename
-    public Iterable<Message> getProjectBacklog(@PathVariable String conversationId)
+    @GetMapping("/view/{conversationId}")
+    public Iterable<Message> getConversationById(@PathVariable String conversationId, Principal principal)
     {
         long conversationIdLong = userService.parseUserId(conversationId);
         return conversationService.getRecentMessages(conversationIdLong);
@@ -38,7 +39,8 @@ public class ConversationController
     public ResponseEntity<?> addMessageToConversation(@Valid @RequestBody Message message,
                                                       BindingResult result,
                                                       @PathVariable String conversationId,
-                                                      @PathVariable String userId)
+                                                      @PathVariable String userId,
+                                                      Principal principal)
     {
         //Return an error if the message was blank
         ResponseEntity<?> errorMap = errorMapValidationService.mapErrors(result);
@@ -54,7 +56,8 @@ public class ConversationController
 
     @PostMapping("/create-conversation/{userId1}&{userId2}")
     public ResponseEntity<?> createConversation(@Valid @RequestBody Conversation conversation,
-                                               BindingResult result, @PathVariable String userId1, @PathVariable String userId2)
+                                               BindingResult result, @PathVariable String userId1, @PathVariable String userId2,
+                                               Principal principal)
     {
         ResponseEntity<?> errorMap = errorMapValidationService.mapErrors(result);
         if (errorMap != null) return errorMap;
@@ -67,7 +70,7 @@ public class ConversationController
     }
 
     @GetMapping("/get-by-user/{userId}")
-    public Iterable<Conversation> getConversationsByUserId(@PathVariable String userId)
+    public Iterable<Conversation> getConversationsByUserId(@PathVariable String userId, Principal principal)
     {
         long userIdLong = userService.parseUserId(userId);
         return conversationService.getConversationsByUserId(userIdLong);
