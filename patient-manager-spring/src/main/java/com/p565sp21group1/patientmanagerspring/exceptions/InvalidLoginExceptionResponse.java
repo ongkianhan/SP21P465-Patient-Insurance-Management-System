@@ -2,21 +2,21 @@ package com.p565sp21group1.patientmanagerspring.exceptions;
 
 public class InvalidLoginExceptionResponse
 {
-    private String username;
+    private String email;
     private String password;
 
     public InvalidLoginExceptionResponse()
     {
-        this.username = "Invalid username";
-        this.password = "Invalid password";
+        this.email = "Email and password do not match";
+        this.password = "Email and password do not match";
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

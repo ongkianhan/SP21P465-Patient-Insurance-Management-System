@@ -3,39 +3,38 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logout } from "../actions/securityActions";
+import vitaLogoWhite from "../static/vitaLogoWhite.png";
 
-class Header extends Component 
-{
-    logout() 
-    {
+class Header extends Component {
+    logout() {
         this.props.logout();
         window.location.href = "/";
     }
 
-    render() 
-    {
+    render() {
         const { validToken, user } = this.props.security;
 
         const userIsAuthenticated = (
-            <div className="collapse navbar-collapse" id="mobile-nav">
-                <ul className="navbar-nav mr-auto">
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/dashboard">
+            <div>
+                <ul class="navbar-nav ml-auto">
+                    <li>
+                        <Link className="nav-item nav-link" to="/dashboard">
                             Dashboard
                         </Link>
                     </li>
-                </ul>
-
-                <ul className="navbar-nav ml-auto">
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/dashboard">
-                            <i className="fas fa-user-circle mr-1" />
-                            {user.email}
+                    <li>
+                        <Link className="nav-item nav-link" to="/find-doctors">
+                            Find Doctors
                         </Link>
                     </li>
-                    <li className="nav-item">
+                    <li>
+                        <span className="nav-item nav-link">
+                            {user.email}
+                        </span>
+                    </li>
+                    <li>
                         <Link
-                            className="nav-link"
+                            className="nav-item nav-link"
                             to="/logout"
                             onClick={this.logout.bind(this)}
                         >
@@ -47,48 +46,42 @@ class Header extends Component
         );
 
         const userIsNotAuthenticated = (
-            <div className="collapse navbar-collapse" id="mobile-nav">
-                <ul className="navbar-nav ml-auto">
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/register">
-                            Sign Up
-                        </Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/login">
-                            Login
-                        </Link>
-                    </li>
-                </ul>
-            </div>
+            <ul class="navbar-nav ml-auto">
+                <li>
+                    <Link className="nav-item nav-link" to="/register">
+                        Sign Up
+                    </Link>
+                </li>
+                <li>
+                    <Link className="nav-item nav-link" to="/login">
+                        Login
+                    </Link>
+                </li>
+            </ul>
         );
 
         let headerLinks;
 
         if (validToken && user) {
             headerLinks = userIsAuthenticated;
-        }
-        else {
+        } else {
             headerLinks = userIsNotAuthenticated;
         }
 
         return (
-            <nav className="navbar navbar-expand-sm navbar-dark bg-primary mb-4">
-                <div className="container">
-                    <Link className="navbar-brand" to="/">
-                        vita
-                    </Link>
-                    <button
-                        className="navbar-toggler"
-                        type="button"
-                        data-toggle="collapse"
-                        data-target="#mobile-nav"
-                    >
-                        <span className="navbar-toggler-icon" />
-                    </button>
-                    {headerLinks}
-                </div>
-            </nav>
+            <header class="header-area overlay">
+                <nav class="navbar navbar-expand-md navbar-dark">
+                    <div class="container">
+                        <Link to="/" class="navbar-brand">
+                            vita
+                            {/*<img src={vitaLogoWhite}/>*/}
+                        </Link>
+                        <div id="main-nav" class="collapse navbar-collapse">
+                            {headerLinks}
+                        </div>
+                    </div>
+                </nav>
+            </header>
         );
     }
 }

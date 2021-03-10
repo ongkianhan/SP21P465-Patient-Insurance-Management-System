@@ -3,6 +3,7 @@ import { createNewDoctor } from "../../actions/securityActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
+import { login } from "../../actions/securityActions";
 
 class Register extends Component 
 {
@@ -41,6 +42,7 @@ class Register extends Component
     //When submitting, create the doctor 
     onSubmit(e) 
     {
+        //Create the account
         e.preventDefault();
         const newDoctor = {
             email: this.state.email,
@@ -50,8 +52,16 @@ class Register extends Component
             specialization: this.state.specialization,
             errors: {}
         };
-
         this.props.createNewDoctor(newDoctor, this.props.history);
+
+        /*/Automatically login
+        const LoginRequest = {
+            email: this.state.email,
+            password: this.state.password,
+        };
+        this.props.login(LoginRequest);
+        //Navigate to the dashboard
+        this.props.history.push("/dashboard");*/
     }
 
     onChange(e) 
@@ -173,6 +183,7 @@ class Register extends Component
 
 Register.propTypes = {
     createNewDoctor: PropTypes.func.isRequired,
+    login: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired,
 };
@@ -182,4 +193,4 @@ const mapStateToProps = (state) => ({
     security: state.security,
 });
 
-export default connect(mapStateToProps, { createNewDoctor })(Register);
+export default connect(mapStateToProps, { createNewDoctor, login })(Register);
