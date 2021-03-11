@@ -28,6 +28,44 @@ export const createNewDoctor = (newUser, history) => async dispatch => {
     }
 };
 
+export const createNewInsurer = (newUser, history) => async dispatch => {
+    try
+    {
+        await axios.post("/api/account/create-insurer", newUser);
+        history.push("/login");
+        dispatch({
+            type: GET_ERRORS, 
+            payload: {} //Clear the errors
+        });
+    }
+    catch (err)
+    {
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        });
+    }
+};
+
+export const createNewPatient = (newUser, history) => async dispatch => {
+    try
+    {
+        await axios.post("/api/account/create-patient", newUser);
+        history.push("/login");
+        dispatch({
+            type: GET_ERRORS, 
+            payload: {} //Clear the errors
+        });
+    }
+    catch (err)
+    {
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        });
+    }
+};
+
 //Log in and store the JWT token response in the header
 export const login = LoginRequest => async dispatch => {
     try

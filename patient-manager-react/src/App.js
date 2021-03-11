@@ -15,6 +15,7 @@ import Dashboard from "./components/Dashboard";
 import Header from "./components/Header";
 import Landing from "./components/Landing";
 import Register from "./components/SignUp/Register"; //temporary
+import GeneralSignupForm from "./components/SignUp/GeneralSignupForm";
 
 class App extends Component 
 {
@@ -30,6 +31,7 @@ class App extends Component
               //Public routes
             }
             <Route exact path="/" component={Landing} />
+            <Route exact path="/choose-role" component={GeneralSignupForm} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/patient-signup" component={PatientSignupForm} />

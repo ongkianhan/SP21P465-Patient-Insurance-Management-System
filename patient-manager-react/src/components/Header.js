@@ -48,7 +48,7 @@ class Header extends Component {
         const userIsNotAuthenticated = (
             <ul class="navbar-nav ml-auto">
                 <li>
-                    <Link className="nav-item nav-link" to="/register">
+                    <Link className="nav-item nav-link" to="/choose-role">
                         Sign Up
                     </Link>
                 </li>
@@ -73,8 +73,7 @@ class Header extends Component {
                 <nav class="navbar navbar-expand-md navbar-dark">
                     <div class="container">
                         <Link to="/" class="navbar-brand">
-                            vita
-                            {/*<img src={vitaLogoWhite}/>*/}
+                            {<img src={vitaLogoWhite} style = {{width:'30%'}}/>}
                         </Link>
                         <div id="main-nav" class="collapse navbar-collapse">
                             {headerLinks}
