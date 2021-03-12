@@ -35,7 +35,7 @@ class DoctorSearch extends Component
                                     ></textarea>
                                 </div>
                                 <div className="col-2 justify-content-end">
-                                    <button type="submit" className="card-button primary-button">
+                                    <button type="submit" className="button-card button-primary">
                                         Search
                                     </button>
                                 </div>

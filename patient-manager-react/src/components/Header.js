@@ -47,13 +47,26 @@ class Header extends Component {
 
         const userIsNotAuthenticated = (
             <ul class="navbar-nav ml-auto">
-                <li>
-                    <Link className="nav-item nav-link" to="/choose-role">
+            {/*<!--span>
+                <td style={{backgroundColor: "#a234be"}} className="my-nav-td">
+                    <Link to="/choose-role" className="my-nav-link">
+                        Sign Up
+                    </Link>
+                </td>
+                <td style={{backgroundColor: "#324521"}} className="my-nav-td">
+                    <Link to="/login" className="my-nav-link">
+                        Login
+                    </Link>
+                </td>
+            </span-->*/}
+            
+                <li style={{}}>
+                    <Link className="nav-item nav-link" style={{color: "white"}} to="/choose-role">
                         Sign Up
                     </Link>
                 </li>
-                <li>
-                    <Link className="nav-item nav-link" to="/login">
+                <li style={{}}>
+                    <Link className="nav-item nav-link" style={{color: "white"}} to="/login">
                         Login
                     </Link>
                 </li>
@@ -69,18 +82,16 @@ class Header extends Component {
         }
 
         return (
-            <header class="header-area overlay">
-                <nav class="navbar navbar-expand-md navbar-dark">
-                    <div class="container">
-                        <Link to="/" class="navbar-brand">
-                            {<img src={vitaLogoWhite} style = {{width:'30%'}}/>}
+            <table style={{backgroundColor: "#00aa95", height: "100%", marginBottom: "36px"}}>
+                <tr>
+                    <td style={{height: "calc(48px + 2vmin)", width: "10vh"}}>
+                        <Link to="/">
+                            {<img style={{marginLeft: "calc(16px + 1vmin)", height: "calc(48px + 2vmin)", width: "auto"}} src={vitaLogoWhite}/>}
                         </Link>
-                        <div id="main-nav" class="collapse navbar-collapse">
-                            {headerLinks}
-                        </div>
-                    </div>
-                </nav>
-            </header>
+                    </td>
+                    {headerLinks}
+                </tr>
+            </table>
         );
     }
 }

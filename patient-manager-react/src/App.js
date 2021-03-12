@@ -26,6 +26,7 @@ class App extends Component
         <Router>
           <div className="App">
             <Header />
+            <span style={{marginLeft: "25vh", marginRight: "25vh"}}>
 
             {
               //Public routes
@@ -44,6 +45,7 @@ class App extends Component
             <SecuredRoute exact path="/dashboard" component={Dashboard} />
             <SecuredRoute exact path="/find-doctors" component={DoctorSearch} />
             
+            </span>
           </div>
         </Router>
       </Provider>

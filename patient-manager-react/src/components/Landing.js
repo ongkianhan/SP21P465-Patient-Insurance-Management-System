@@ -22,33 +22,25 @@ class Landing extends Component
             <div className="landing">
                 <div className="light-overlay landing-inner text-dark">
                     <div className="container">
-                        <div className="row" style = {{textAlign:"center",paddingTop:"20%", height:'200%'}}>
+                        <div className="row" style = {{textAlign:"center",paddingTop:"10%", height:'90vh'}}>
                             <div className="col-md-6 text-center">
                                 <h1 className="display-3 mb-4">
                                     <img src={vitaLogoColor} />
                                 </h1>
-                                <h1 style = {{textAlign:"left"}}><strong style={{fontFamily:'Titillium Web', fontSize:'120%'}}>Find health insurance, appointments, and doctors with Vita</strong></h1>
-                                
-                                {/*<p className="lead">
-                                    Create your account
-                                </p>*
-                                <hr /> */}
-                                
+                                <h1 style = {{textAlign:"left"}}><strong style={{fontFamily:'Titillium Web', fontSize:'120%'}}>Find health insurance, appointments, and doctors with Vita</strong></h1>                               
                             </div>
-                            <div className="col-md-6 text-center" style={{paddingTop:'8%'}}>
-                                <div>
-                                    <Link
-                                        className="btn btn-lg btn-success mr-2"
-                                        style = {{width:'50%', height:50, fontSize:'250%', fontFamily:'Titillium Web'}}
-                                        to="/login"
-                                    >
-                                        Login
-                                    </Link>
-                                </div>
+                            <div className="col-md-6 text-center" style={{paddingTop:'8%'}}>                
                                 <div style = {{paddingTop:'2%'}}>
                                     <Link 
-                                        className="btn btn-lg btn-primary mr-2"
-                                        style = {{width:'50%', height:50, fontSize:'250%', fontFamily:'Titillium Web'}}
+                                        className="btn btn-lg btn-primary button-primary mr-2 button-landing-page"
+                                        to="/login"
+                                    >
+                                        Log in
+                                    </Link>
+                                </div>                
+                                <div style = {{paddingTop:'2%'}}>
+                                    <Link 
+                                        className="btn btn-lg btn-primary button-secondary mr-2 button-landing-page"
                                         to="/choose-role"
                                     >
                                         Sign Up

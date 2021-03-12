@@ -43,6 +43,7 @@
 
 * {
     font-family: "Montserrat";
+    font-size: 14pt;
 }
 
 button {
@@ -52,15 +53,53 @@ button {
     padding: 12px;
 }
 
+input {
+    font-size: 16px !important;
+}
+
+table {
+    width: 100%;
+    /*border: 3px solid greenyellow;*/
+    border-collapse: collapse;
+}
+
+td {
+    padding-right: 5%;
+    /*border: 3px solid greenyellow;*/
+    border-collapse: collapse;
+}
+
 /*///////////////// REPEATABLE ELEMENTS ///////////////////////*/
 
 .page-header {
-    margin-top: 3%;
-    margin-bottom: 3%;
+    margin-top: 18px;
+    margin-bottom: 18px;
+}
+
+/*.link-to-previous-page {  Unused, can be removed
+    padding-top: 18px;
+    font-size: 12px !important;
+    font-family: Titillium Web !important;
+    color: green !important;
+    text-align: left !important;
+}*/
+
+.thin-container {
+    border-radius: 15px;
+    border: #888888 solid 1px;
+    padding: 48px;
+    padding-top: 0px;
+    width: 100%;
+}
+
+.thin-container-title {
+    margin-top: 24px !important;
+    margin-bottom: 12px !important;
 }
 
 .textbox {
-    font-size: 36pt;
+    font-size: 16px !important;
+    width: 100%;
 }
 
 .primary-bg {
@@ -71,7 +110,34 @@ button {
     background-color: #aaaaaa;
 }
 
-.card-button {
+.button-generic {
+    margin-top: 24px;
+    padding: 12px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    font-weight: bold;
+    font-family: "Questrial";
+    font-size: 36px;
+    border: none;
+    border-radius: 20px;
+    color: #ffffff;
+    background-color: #aaaaaa;
+}
+
+.button-generic:hover {
+    text-decoration: none;
+    color: #dddddd;
+}
+
+.button-jumbo {
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    font-size: 36px;
+}
+
+.button-card {
     font-size: 18px;
     font-family: "Questrial";
     background-color: #aaaaaa;
@@ -80,21 +146,51 @@ button {
     padding: 12px;
 }
 
-.primary-button {
-    background-color: #00aa00;
+.button-primary {
+    background-color: #00aa00 !important;
     border-radius: 20px;
+    color: #ffffff;
 }
 
-.secondary-button {
-    background-color: #0000aa;
+.button-secondary {
+    background-color: #0000aa !important;
     border-radius: 20px;
+    color: #ffffff;
 }
+
+.button-submit {
+    width: 50%;
+    margin-top: 24px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    border: none;
+    color: #ffffff;
+    font-weight: bold;
+}
+
 
 /*///////////////// SINGLE-USE ELEMENTS ///////////////////////*/
 
+.button-landing-page {
+    width: 50% !important;
+    height: auto !important;
+    font-size: 24px !important;
+    font-family:'Titillium Web' !important;
+    border-radius: 18px !important;
+    border: none !important;
+}
 
-
-
+.my-nav-link {
+    white-space: nowrap;
+    overflow: hidden;
+    color: white;
+}
+.my-nav-link:hover {
+    color: white;
+}
+.my-nav-td {
+    height: 100%;
+}
 
 /*///////////////// NAVBAR ELEMENTS ///////////////////////*/
 /*Credit to Oskar Borowski for the animations https://codepen.io/oskarborowski/pen/gZRLjV */

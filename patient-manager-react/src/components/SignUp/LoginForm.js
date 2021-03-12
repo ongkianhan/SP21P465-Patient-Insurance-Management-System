@@ -66,53 +66,70 @@ class LoginForm extends Component
                 <div className="container">
                     <div className="row">
                         <div className="col-md-8 m-auto">
-                            <h1 className="display-4 text-center">Log In</h1>
-                            <form onSubmit={this.onSubmit}>
-                                <div className="form-group">
-                                    <input
-                                        type="text"
-                                        className={classnames(
-                                            "form-control form-control-lg",
-                                            {
-                                                "is-invalid": errors.email,
-                                            }
-                                        )}
-                                        placeholder="Email Address"
-                                        name="email"
-                                        value={this.state.email}
-                                        onChange={this.onChange}
-                                    />
-                                    {errors.email && (
-                                        <div className="invalid-feedback">
-                                            {errors.email}
-                                        </div>
-                                    )}
-                                </div>
-                                <div className="form-group">
-                                    <input
-                                        type="password"
-                                        className={classnames(
-                                            "form-control form-control-lg",
-                                            {
-                                                "is-invalid": errors.password,
-                                            }
-                                        )}
-                                        placeholder="Password"
-                                        name="password"
-                                        value={this.state.password}
-                                        onChange={this.onChange}
-                                    />
-                                    {errors.password && (
-                                        <div className="invalid-feedback">
-                                            {errors.password}
-                                        </div>
-                                    )}
-                                </div>
-                                <input
-                                    type="submit"
-                                    className="btn btn-info btn-block mt-4"
-                                />
-                            </form>
+                            {/*Header*/}
+                            <h1 className="display-4 text-left page-header">Log In</h1>
+
+                            <div className="thin-container">
+                                <p className="thin-container-title text-center"></p>
+
+                                <form onSubmit={this.onSubmit}>    
+                                    {/*Column 1*/}
+                                    <table>
+                                        {/*Row 1*/}
+                                        <tr>
+                                            <td>
+                                            <div className="form-group">
+                                                <input
+                                                    type="text"
+                                                    className={classnames(
+                                                        "form-control textbox", {"is-invalid": errors.email}
+                                                    )}
+                                                    placeholder="Email address"
+                                                    name="email"
+                                                    value={this.state.email}
+                                                    onChange={this.onChange}
+                                                />
+                                                {errors.email && (
+                                                    <div className="invalid-feedback">
+                                                        {errors.email}
+                                                    </div>
+                                                )}
+                                            </div>
+                                            </td>
+                                        </tr>
+                                        {/*Row 2*/}
+                                        <tr>
+                                            <td>
+                                            <div className="form-group">
+                                                <input
+                                                    type="text"
+                                                    className={classnames(
+                                                        "form-control textbox", {"is-invalid": errors.password}
+                                                    )}
+                                                    placeholder="Password"
+                                                    name="password"
+                                                    value={this.state.password}
+                                                    onChange={this.onChange}
+                                                />
+                                                {errors.password && (
+                                                    <div className="invalid-feedback">
+                                                        {errors.password}
+                                                    </div>
+                                                )}
+                                            </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    {/*Submit button*/}
+                                    <div className="row justify-content-center">
+                                        <input
+                                            type="submit"
+                                            className="button-submit button-primary"
+                                            value="Log in"
+                                        />
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

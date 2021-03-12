@@ -24,27 +24,27 @@ class GeneralSignupForm extends Component {
                 <div class="row" style = {{paddingTop:'2%'}}>
                     <div class="col-xs-4 col-md-4">
                         <Link 
-                        className="btn btn-primary btn-lg"
-                        style = {{width:'90%', height:50, fontSize:'250%', fontFamily:'Titillium Web'}}
-                        to="/doctor-signup">
-                        Doctor
+                        className="button-generic button-jumbo"
+                        to="/doctor-signup"
+                        style={{backgroundColor: "#0000AA"}}>
+                            Doctor
                         </Link>
                     </div>
                     <div class="col-xs-4 col-md-4">
-                        <Link
-                        className="btn btn-success btn-lg"
-                        style = {{width:'90%', height:50, fontSize:'250%', fontFamily:'Titillium Web'}}
-                        to="/patient-signup">
+                        <Link 
+                        className="button-generic button-jumbo"
+                        to="/patient-signup"
+                        style={{backgroundColor: "#00AA00"}}>
                             Patient
                         </Link>
                     </div>
                     <div class="col-xs-4 col-md-4">
-                        <Link
-                        className="btn btn-danger btn-lg"
-                        style = {{width:'90%', height:50, fontSize:'250%', fontFamily:'Titillium Web'}}
-                        to="/insurer-signup">
-                    Insurance Provider
-                    </Link>
+                        <Link 
+                        className="button-generic button-jumbo"
+                        to="/insurer-signup"
+                        style={{backgroundColor: "#AA0000"}}>
+                            Insurance Provider
+                        </Link>
                     </div>
                 </div>
                 

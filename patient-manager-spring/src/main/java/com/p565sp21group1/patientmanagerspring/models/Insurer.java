@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "Insurer")
@@ -11,6 +12,7 @@ import javax.persistence.Table;
 public class Insurer extends User
 {
     @Column(name = "firmName", nullable = false, unique = false)
+    @NotBlank(message = "Company name cannot be blank")
     private String firmName;
 
     public Insurer() {
