@@ -92,7 +92,7 @@ class Register extends Component
                                     <table>
                                         {/*Row 1*/}
                                         <tr>
-                                            <td>
+                                            <td className="td-textbox-holder">
                                             <div className="form-group">
                                                 <input
                                                     type="text"
@@ -111,10 +111,10 @@ class Register extends Component
                                                 )}
                                             </div>
                                             </td>
-                                            <td>
+                                            <td className="td-textbox-holder">
                                             <div className="form-group">
                                                 <input
-                                                    type="password"
+                                                    type="text"
                                                     className={classnames(
                                                         "form-control textbox", {"is-invalid": errors.password}
                                                     )}
@@ -133,7 +133,7 @@ class Register extends Component
                                         </tr>
                                         {/*Row 2*/}
                                         <tr>
-                                            <td>
+                                            <td className="td-textbox-holder">
                                             <div className="form-group">
                                                 <input
                                                     type="text"
@@ -152,7 +152,7 @@ class Register extends Component
                                                 )}
                                             </div>
                                             </td>
-                                            <td>
+                                            <td className="td-textbox-holder">
                                             <div className="form-group">
                                                 <input
                                                     type="text"
@@ -174,7 +174,7 @@ class Register extends Component
                                         </tr>
                                         {/*Row 3*/}
                                         <tr>
-                                            <td>
+                                            <td className="td-textbox-holder">
                                             <div className="form-group">
                                                 <input
                                                     type="text"

@@ -27,7 +27,7 @@ class Landing extends Component
                                 <h1 className="display-3 mb-4">
                                     <img src={vitaLogoColor} />
                                 </h1>
-                                <h1 style = {{textAlign:"left"}}><strong style={{fontFamily:'Titillium Web', fontSize:'120%'}}>Find health insurance, appointments, and doctors with Vita</strong></h1>                               
+                                <h1 style = {{textAlign:"left"}}><strong style={{fontFamily:'Titillium Web', fontSize:'32px'}}>Find health insurance, appointments, and doctors with Vita</strong></h1>                               
                             </div>
                             <div className="col-md-6 text-center" style={{paddingTop:'8%'}}>                
                                 <div style = {{paddingTop:'2%'}}>

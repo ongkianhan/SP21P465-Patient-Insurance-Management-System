@@ -59,14 +59,12 @@ input {
 
 table {
     width: 100%;
-    /*border: 3px solid greenyellow;*/
     border-collapse: collapse;
 }
 
 td {
-    padding-right: 5%;
-    /*border: 3px solid greenyellow;*/
     border-collapse: collapse;
+    box-sizing: border-box;
 }
 
 /*///////////////// REPEATABLE ELEMENTS ///////////////////////*/
@@ -100,6 +98,10 @@ td {
 .textbox {
     font-size: 16px !important;
     width: 100%;
+}
+
+.td-textbox-holder {
+    padding-right: calc(12px + 1vmin);
 }
 
 .primary-bg {
@@ -179,15 +181,15 @@ td {
     border: none !important;
 }
 
-.my-nav-link {
+.nav-link {
     white-space: nowrap;
     overflow: hidden;
     color: white;
 }
-.my-nav-link:hover {
+.nav-link:hover {
     color: white;
 }
-.my-nav-td {
+.nav-td {
     height: 100%;
 }
 
@@ -305,7 +307,7 @@ td {
 .image-option-for-signup {
     width: 100% !important;
     margin: 0px !important;
-    filter: opacity(60%);
+    filter: opacity(100%);
 }
 .td-option-for-signup:hover {
     border-bottom: 6px solid #ffffff !important;
@@ -322,6 +324,7 @@ td {
     padding-top: 12px !important;
     padding-bottom: 12px !important;
     color: black !important;
+    border: 1px solid #888888;
 }
 .div-option-for-signup:hover {
     background-color: #00aa95;

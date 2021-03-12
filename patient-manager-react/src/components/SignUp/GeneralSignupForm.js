@@ -11,6 +11,9 @@ class GeneralSignupForm extends Component {
     render(){
         return(
             <span>
+
+            <p className="thin-container-title text-center">What is your role?</p>
+
             {/*<div style={{width:'50%',display:'inline-block', marginLeft:'auto',marginRight:'auto', paddingTop:'2%'}}>
                 <div class="row">
                     <div class="col-xs-4 col-md-4">
@@ -50,7 +53,6 @@ class GeneralSignupForm extends Component {
                     </div>
                 </div>
             </div>*/}
-            
             
             <table style={{marginLeft: "calc(20vmin)", marginRight: "calc(20vmin)", width: "auto"}}>
                 <tr>

@@ -27,7 +27,7 @@ class DoctorCard extends Component
                             </button>
                         </Link>
                         <Link to={`/account/${doctor.userId}`}>
-                            <button className="col my-1 secondary-button card-button">
+                            <button className="col my-1 button-secondary card-button">
                                 View Profile
                             </button>
                         </Link>

@@ -16,26 +16,23 @@ class Header extends Component {
 
         const userIsAuthenticated = (
             <span>
-                <li>
+                <li className="nav-item">
                     <Link to="/dashboard" className="nav-link">
                         Dashboard
                     </Link>
                 </li>
-                <li>
+                <li className="nav-item">
                     <Link to="/find-doctors" className="nav-link">
                         Find Doctors
                     </Link>
                 </li>
-                <li>
-                    <span className="nav-link">{user.email}</span>
+                <li className="nav-item">
+                    <span className="nav-link">
+                        {user.email}
+                    </span>
                 </li>
-                <li>
-                    <Link
-                        to="/login"
-                        className="nav-link"
-                        to="/logout"
-                        onClick={this.logout.bind(this)}
-                    >
+                <li className="nav-item">
+                    <Link className="nav-link" onClick={this.logout.bind(this)}>
                         Logout
                     </Link>
                 </li>
@@ -67,8 +64,6 @@ class Header extends Component {
 
         return (
             <span>
-                {/*
-                            {} */}
                 <nav className="nav-horizontal">
                     <div className="nav-container">
                         <ul className="nav-list">
