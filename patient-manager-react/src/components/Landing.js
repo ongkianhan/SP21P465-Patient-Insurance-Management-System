@@ -22,7 +22,7 @@ class Landing extends Component
             <div className="landing">
                 <div className="light-overlay landing-inner text-dark">
                     <div className="container">
-                        <div className="row" style = {{textAlign:"center",paddingTop:"10%", height:'90vh'}}>
+                        <div className="row" style = {{textAlign:"center",paddingTop:"10%", height:'auto'}}>
                             <div className="col-md-6 text-center">
                                 <h1 className="display-3 mb-4">
                                     <img src={vitaLogoColor} />

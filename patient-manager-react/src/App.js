@@ -13,8 +13,8 @@ import InsurerSignupForm from "./components/SignUp/InsurerSignupForm";
 import Login from "./components/SignUp/LoginForm";
 import Dashboard from "./components/Dashboard";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import Landing from "./components/Landing";
-import Register from "./components/SignUp/Register"; //temporary
 import GeneralSignupForm from "./components/SignUp/GeneralSignupForm";
 
 class App extends Component 
@@ -27,25 +27,23 @@ class App extends Component
           <div className="App">
             <Header />
             <span style={{marginLeft: "25vh", marginRight: "25vh"}}>
+              {
+                //Public routes
+              }
+              <Route exact path="/" component={Landing} />
+              <Route exact path="/choose-role" component={GeneralSignupForm} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/patient-signup" component={PatientSignupForm} />
+              <Route exact path="/doctor-signup" component={DoctorSignupForm} />
+              <Route exact path="/insurer-signup" component={InsurerSignupForm} />
 
-            {
-              //Public routes
-            }
-            <Route exact path="/" component={Landing} />
-            <Route exact path="/choose-role" component={GeneralSignupForm} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/patient-signup" component={PatientSignupForm} />
-            <Route exact path="/doctor-signup" component={DoctorSignupForm} />
-            <Route exact path="/insurer-signup" component={InsurerSignupForm} />
-
-            {
-                //Private routes only accessible to users logged in
-            }
-            <SecuredRoute exact path="/dashboard" component={Dashboard} />
-            <SecuredRoute exact path="/find-doctors" component={DoctorSearch} />
-            
+              {
+                  //Private routes only accessible to users logged in
+              }
+              <SecuredRoute exact path="/dashboard" component={Dashboard} />
+              <SecuredRoute exact path="/find-doctors" component={DoctorSearch} />
             </span>
+            {/*<Footer />*/}
           </div>
         </Router>
       </Provider>

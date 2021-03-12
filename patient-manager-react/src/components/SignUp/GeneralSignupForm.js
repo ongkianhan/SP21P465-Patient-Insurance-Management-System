@@ -3,13 +3,15 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types"
 import { Link } from "react-router-dom";
 import defaultProfileIcon from "../../static/defaultProfileIcon.png";
+import doctorStockImage from "../../static/doctorStockImage.jpg";
 
 class GeneralSignupForm extends Component {
 
 
     render(){
         return(
-            <div style={{width:'50%',display:'inline-block', marginLeft:'auto',marginRight:'auto', paddingTop:'2%'}}>
+            <span>
+            {/*<div style={{width:'50%',display:'inline-block', marginLeft:'auto',marginRight:'auto', paddingTop:'2%'}}>
                 <div class="row">
                     <div class="col-xs-4 col-md-4">
                         <img src={defaultProfileIcon} style={{width:'100%'}}/>
@@ -47,10 +49,55 @@ class GeneralSignupForm extends Component {
                         </Link>
                     </div>
                 </div>
-                
-                
-                
-            </div>
+            </div>*/}
+            
+            
+            <table style={{marginLeft: "calc(20vmin)", marginRight: "calc(20vmin)", width: "auto"}}>
+                <tr>
+                    <td className="td-option-for-signup">
+                        <Link to="/doctor-signup">
+                            <img src={doctorStockImage} className="image-option-for-signup"/>
+                        </Link>
+                    </td>
+                    <td className="td-option-for-signup">
+                        <Link to="/patient-signup">
+                            <img src={doctorStockImage} className="image-option-for-signup"/>
+                        </Link>
+                    </td>
+                    <td className="td-option-for-signup">
+                        <Link to="/insurer-signup">
+                            <img src={doctorStockImage} className="image-option-for-signup"/>
+                        </Link>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <Link to="/doctor-signup" to="/doctor-signup" className="link-option-for-signup">
+                            <div className="div-option-for-signup">
+                                Doctor
+                            </div>
+                        </Link>
+                    </td>
+                    <td>
+                        <Link to="/patient-signup" className="link-option-for-signup">
+                            <div className="div-option-for-signup">
+                                Patient
+                            </div>
+                        </Link>
+                    </td>
+                    <td>
+                        <Link to="/insurer-signup" className="link-option-for-signup">
+                            <div className="div-option-for-signup">
+                                Insurance Provider
+                            </div>
+                        </Link>
+                    </td>
+                </tr>
+            
+            </table>
+
+
+            </span>
         );        
     }
 }

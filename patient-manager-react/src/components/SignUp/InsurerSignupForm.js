@@ -114,7 +114,7 @@ class Register extends Component
                                             <td>
                                             <div className="form-group">
                                                 <input
-                                                    type="text"
+                                                    type="password"
                                                     className={classnames(
                                                         "form-control textbox", {"is-invalid": errors.password}
                                                     )}

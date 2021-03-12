@@ -15,62 +15,46 @@ class Header extends Component {
         const { validToken, user } = this.props.security;
 
         const userIsAuthenticated = (
-            <div>
-                <ul class="navbar-nav ml-auto">
-                    <li>
-                        <Link className="nav-item nav-link" to="/dashboard">
-                            Dashboard
-                        </Link>
-                    </li>
-                    <li>
-                        <Link className="nav-item nav-link" to="/find-doctors">
-                            Find Doctors
-                        </Link>
-                    </li>
-                    <li>
-                        <span className="nav-item nav-link">
-                            {user.email}
-                        </span>
-                    </li>
-                    <li>
-                        <Link
-                            className="nav-item nav-link"
-                            to="/logout"
-                            onClick={this.logout.bind(this)}
-                        >
-                            Logout
-                        </Link>
-                    </li>
-                </ul>
-            </div>
+            <span>
+                <li>
+                    <Link to="/dashboard" className="nav-link">
+                        Dashboard
+                    </Link>
+                </li>
+                <li>
+                    <Link to="/find-doctors" className="nav-link">
+                        Find Doctors
+                    </Link>
+                </li>
+                <li>
+                    <span className="nav-link">{user.email}</span>
+                </li>
+                <li>
+                    <Link
+                        to="/login"
+                        className="nav-link"
+                        to="/logout"
+                        onClick={this.logout.bind(this)}
+                    >
+                        Logout
+                    </Link>
+                </li>
+            </span>
         );
 
         const userIsNotAuthenticated = (
-            <ul class="navbar-nav ml-auto">
-            {/*<!--span>
-                <td style={{backgroundColor: "#a234be"}} className="my-nav-td">
-                    <Link to="/choose-role" className="my-nav-link">
-                        Sign Up
-                    </Link>
-                </td>
-                <td style={{backgroundColor: "#324521"}} className="my-nav-td">
-                    <Link to="/login" className="my-nav-link">
-                        Login
-                    </Link>
-                </td>
-            </span-->*/}
-            
-                <li style={{}}>
-                    <Link className="nav-item nav-link" style={{color: "white"}} to="/choose-role">
+            <span>
+                <li className="nav-item">
+                    <Link to="/choose-role" className="nav-link">
                         Sign Up
                     </Link>
                 </li>
-                <li style={{}}>
-                    <Link className="nav-item nav-link" style={{color: "white"}} to="/login">
+                <li className="nav-item">
+                    <Link to="/login" className="nav-link">
                         Login
                     </Link>
                 </li>
-            </ul>
+            </span>
         );
 
         let headerLinks;
@@ -82,16 +66,30 @@ class Header extends Component {
         }
 
         return (
-            <table style={{backgroundColor: "#00aa95", height: "100%", marginBottom: "36px"}}>
-                <tr>
-                    <td style={{height: "calc(48px + 2vmin)", width: "10vh"}}>
-                        <Link to="/">
-                            {<img style={{marginLeft: "calc(16px + 1vmin)", height: "calc(48px + 2vmin)", width: "auto"}} src={vitaLogoWhite}/>}
-                        </Link>
-                    </td>
-                    {headerLinks}
-                </tr>
-            </table>
+            <span>
+                {/*
+                            {} */}
+                <nav className="nav-horizontal">
+                    <div className="nav-container">
+                        <ul className="nav-list">
+                            <li className="nav-item">
+                                <Link to="/">
+                                    <img
+                                        style={{
+                                            paddingTop: "1vmin",
+                                            paddingBottom: "1vmin",
+                                            height: "calc(48px + 2vmin)",
+                                            width: "auto",
+                                        }}
+                                        src={vitaLogoWhite}
+                                    />
+                                </Link>
+                            </li>
+                            {headerLinks}
+                        </ul>
+                    </div>
+                </nav>
+            </span>
         );
     }
 }
