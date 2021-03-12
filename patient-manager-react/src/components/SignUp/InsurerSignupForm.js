@@ -17,7 +17,7 @@ class Register extends Component
             password: "",
             firstName: "",
             lastName: "",
-            specialization: "",
+            firmName: "",
             errors: {},
         };
         this.onChange = this.onChange.bind(this);
@@ -50,7 +50,7 @@ class Register extends Component
             password: this.state.password,
             firstName: this.state.firstName,
             lastName: this.state.lastName,
-            specialization: this.state.specialization,
+            firmName: this.state.firmName,
             errors: {}
         };
         this.props.createNewInsurer(newInsurer, this.props.history);
@@ -155,16 +155,16 @@ class Register extends Component
                                     <input
                                         type="text"
                                         className={classnames(
-                                            "form-control form-control-lg", {"is-invalid": errors.specialization}
+                                            "form-control form-control-lg", {"is-invalid": errors.firmName}
                                         )}
-                                        placeholder="Specialization"
-                                        name="specialization"
-                                        value={this.state.specialization}
+                                        placeholder="Company name"
+                                        name="firmName"
+                                        value={this.state.firmName}
                                         onChange={this.onChange}
                                     />
-                                    {errors.specialization && (
+                                    {errors.firmName && (
                                         <div className="invalid-feedback">
-                                            {errors.specialization}
+                                            {errors.firmName}
                                         </div>
                                     )}
                                 </div>
