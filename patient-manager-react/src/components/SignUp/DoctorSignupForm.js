@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
 import { login } from "../../actions/securityActions";
+import { Link } from "react-router-dom";
 
 class Register extends Component 
 {
@@ -76,11 +77,14 @@ class Register extends Component
             <div className="register">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-8 m-auto">
-                            <h1 className="display-4 text-center">Sign Up</h1>
-                            <p className="lead text-center">
+                        <div className="col-md-8">
+                            <div className="text-left" style={{paddingTop:'2%'}}>
+                                <Link className="h1" to='/choose-role' style={{color:'Green'}}><strong style = {{fontFamily:'Titillium Web'}}>&lt; Go back to role selection</strong></Link>
+                            </div>
+                            <h1 className="display-4 text-left" style={{paddingTop:'2%', paddingBottom:'2%'}}>Create an account</h1>
+                           {/*} <p className="lead text-center">
                                 Create your account
-                            </p>
+                            </p> */}
                             <form onSubmit={this.onSubmit}>
                                 <div className="form-group">
                                     <input
