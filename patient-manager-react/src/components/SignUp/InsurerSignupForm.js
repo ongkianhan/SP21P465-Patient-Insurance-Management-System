@@ -87,7 +87,7 @@ class Register extends Component
                                     <input
                                         type="text"
                                         className={classnames(
-                                            "form-control form-control-lg", {"is-invalid": errors.email}
+                                            "form-control form-control-lg textBox", {"is-invalid": errors.email}
                                         )}
                                         placeholder="Email address"
                                         name="email"
@@ -104,7 +104,7 @@ class Register extends Component
                                     <input
                                         type="text"
                                         className={classnames(
-                                            "form-control form-control-lg", {"is-invalid": errors.password}
+                                            "form-control form-control-lg textBox", {"is-invalid": errors.password}
                                         )}
                                         placeholder="Password"
                                         name="password"
@@ -121,7 +121,7 @@ class Register extends Component
                                     <input
                                         type="text"
                                         className={classnames(
-                                            "form-control form-control-lg", {"is-invalid": errors.firstName}
+                                            "form-control form-control-lg textBox", {"is-invalid": errors.firstName}
                                         )}
                                         placeholder="First name"
                                         name="firstName"
@@ -138,7 +138,7 @@ class Register extends Component
                                     <input
                                         type="text"
                                         className={classnames(
-                                            "form-control form-control-lg", {"is-invalid": errors.lastName}
+                                            "form-control form-control-lg textBox", {"is-invalid": errors.lastName}
                                         )}
                                         placeholder="Last name"
                                         name="lastName"
@@ -155,7 +155,7 @@ class Register extends Component
                                     <input
                                         type="text"
                                         className={classnames(
-                                            "form-control form-control-lg", {"is-invalid": errors.firmName}
+                                            "form-control form-control-lg textBox", {"is-invalid": errors.firmName}
                                         )}
                                         placeholder="Company name"
                                         name="firmName"

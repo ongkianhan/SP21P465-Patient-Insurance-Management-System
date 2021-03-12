@@ -28,4 +28,4 @@ hs_err_pid*
 #Heroku files
 *.env
 
-/node_modules
+node_modules/
