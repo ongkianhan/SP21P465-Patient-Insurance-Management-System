@@ -62,7 +62,7 @@ table {
     border-collapse: collapse;
 }
 
-td {
+td, th {
     border-collapse: collapse;
     box-sizing: border-box;
 }
@@ -305,12 +305,9 @@ td {
     padding: 0px !important;
 }
 .image-option-for-signup {
-    width: 100% !important;
+    width: 80% !important;
     margin: 0px !important;
     filter: opacity(100%);
-}
-.td-option-for-signup:hover {
-    border-bottom: 6px solid #ffffff !important;
 }
 .image-option-for-signup:hover {
     width: 100%;
@@ -339,4 +336,24 @@ td {
 }
 .link-option-for-signup:hover {
     text-decoration: none !important;
+}
+
+/*///////////////// AppointmentScheduler ELEMENTS ///////////////////////*/
+.td-appointment, .th-appointment {
+    font-size: calc(1.5vh+1.5vw);
+    border: 1px solid #888888;
+    text-align: center;
+}
+.th-appointment {
+    background-color: #7fd4ca;
+    color: black;
+}
+.td-appointment-open {
+    background-color: #88ff88;
+    font-weight: bold;
+    color: black;
+}
+.td-appointment-taken {
+    background-color: #eeeeee;
+    color: #888888;
 }
