@@ -1,0 +1,25 @@
+import axios from "axios";
+import { GET_ERRORS, GET_MANY_DOCTORS, GET_ONE_DOCTOR } from "./types";
+
+export const getAllDoctors = () => async dispatch => {
+    console.log("Getting all doctors!");
+    const res = await axios.get("/api/account/all-doctors");
+    dispatch ({
+        type: GET_MANY_DOCTORS,
+        payload: res.data
+    });
+}
+
+
+export const getDoctor = (id, history) => async dispatch => {
+    try {
+        console.log("Getting a doctor!");
+        const res = await axios.get(`/api/account/${id}`);
+        dispatch({
+            type: GET_ONE_DOCTOR,
+            payload: res.data
+        })
+    } catch (error) {
+        history.push("/dashboard");
+    }
+}
