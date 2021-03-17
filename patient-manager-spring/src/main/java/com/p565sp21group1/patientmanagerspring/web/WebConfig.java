@@ -29,7 +29,7 @@ public class WebConfig implements Filter,WebMvcConfigurer
         HttpServletResponse response = (HttpServletResponse) res;
         HttpServletRequest request = (HttpServletRequest) req;
         //System.out.println("WebConfig; "+request.getRequestURI());
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost3000");
+        response.setHeader("Access-Control-Allow-Origin", "https://vita-healthcare-bucket.s3.us-east-2.amazonaws.com/");
         response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, PATCH, OPTIONS, DELETE");
         response.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With,observe");
         response.setHeader("Access-Control-Max-Age", "3600");
@@ -46,7 +46,7 @@ public class WebConfig implements Filter,WebMvcConfigurer
             }
         } else {
             //System.out.println("Pre-flight");
-            response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+            response.setHeader("Access-Control-Allow-Origin", "https://vita-healthcare-bucket.s3.us-east-2.amazonaws.com/");
             response.setHeader("Access-Control-Allow-Methods", "POST,GET,PATCH,DELETE,PUT");
             //response.setHeader("Access-Control-Allow-Credentials", "true");
             response.setHeader("Access-Control-Max-Age", "3600");
