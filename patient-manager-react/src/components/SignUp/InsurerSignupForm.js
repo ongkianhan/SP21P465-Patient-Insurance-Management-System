@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { createNewInsurer } from "../../actions/securityActions";
+import { createNewUser } from "../../actions/securityActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
-import { login } from "../../actions/securityActions";
+import { login, validateUser } from "../../actions/securityActions";
 import { Link } from "react-router-dom";
 
-class Register extends Component 
+class InsurerSignupForm extends Component 
 {
     constructor() 
     {
@@ -41,10 +41,10 @@ class Register extends Component
     }
 
     //When submitting, create the insurer
-    onSubmit(e) 
+    async onSubmit(e) 
     {
-        //Create the account
         e.preventDefault();
+        //Create a new insurer account
         const newInsurer = {
             email: this.state.email,
             password: this.state.password,
@@ -53,16 +53,29 @@ class Register extends Component
             firmName: this.state.firmName,
             errors: {}
         };
-        this.props.createNewInsurer(newInsurer, this.props.history);
+    
+        //Validate the user
+        const frontEndErrors = validateUser(newInsurer)
+        if (Object.keys(frontEndErrors).length != 0) //if errors exist
+        {
+            this.setState({ errors: frontEndErrors });
+            return;
+        }
 
-        /*/Automatically login
-        const LoginRequest = {
-            email: this.state.email,
-            password: this.state.password,
-        };
-        this.props.login(LoginRequest);
-        //Navigate to the dashboard
-        this.props.history.push("/dashboard");*/
+        //Send the signup request
+        await this.props.createNewUser(newInsurer, "insurer", this.props.history);
+
+        if (Object.keys(this.state.errors).length == 0) //if errors exist
+        {
+            //Automatically login
+            const LoginRequest = {
+                email: this.state.email,
+                password: this.state.password,
+            };
+            await this.props.login(LoginRequest);
+            //Navigate to the dashboard
+            this.props.history.push("/dashboard");
+        }
     }
 
     onChange(e) 
@@ -213,9 +226,10 @@ class Register extends Component
     }
 }
 
-Register.propTypes = {
-    createNewInsurer: PropTypes.func.isRequired,
+InsurerSignupForm.propTypes = {
+    createNewUser: PropTypes.func.isRequired,
     login: PropTypes.func.isRequired,
+    validateUser: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired,
 };
@@ -225,4 +239,4 @@ const mapStateToProps = (state) => ({
     security: state.security,
 });
 
-export default connect(mapStateToProps, { createNewInsurer, login })(Register);
+export default connect(mapStateToProps, { createNewUser, login, validateUser })(InsurerSignupForm);

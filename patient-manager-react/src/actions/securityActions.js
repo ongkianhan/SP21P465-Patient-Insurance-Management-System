@@ -9,11 +9,10 @@ import jwtDecode from "jwt-decode";
 
 
 //Register the user or show errors 
-export const createNewDoctor = (newUser, history) => async dispatch => {
+export const createNewUser = (newUser, userType, history) => async dispatch => {
     try
     {
-        await axios.post("/api/account/create-doctor", newUser);
-        history.push("/login");
+        await axios.post("/api/account/create-"+userType, newUser);
         dispatch({
             type: GET_ERRORS, 
             payload: {} //Clear the errors
@@ -104,3 +103,18 @@ export const logout = () => dispatch => {
         payload: {}
     });
 };
+
+
+export const validateUser = ( user) => {
+    const errorOutput = {};
+    //Check if the first name or last name contain a number
+    if (/\d/.test(user.firstName))
+    {
+        errorOutput["firstName"] = "First name cannot contain numbers";
+    }
+    if (/\d/.test(user.lastName))
+    {
+        errorOutput["lastName"] = "Last name cannot contain numbers";
+    }
+    return errorOutput;
+}

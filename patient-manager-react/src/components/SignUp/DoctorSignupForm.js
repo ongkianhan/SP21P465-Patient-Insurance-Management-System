@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { createNewDoctor } from "../../actions/securityActions";
+import { createNewUser } from "../../actions/securityActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
-import { login } from "../../actions/securityActions";
+import { login, validateUser } from "../../actions/securityActions";
 import { Link } from "react-router-dom";
 
-class Register extends Component {
+class DoctorSignupForm extends Component {
     constructor() {
         super();
 
@@ -38,9 +38,9 @@ class Register extends Component {
     }
 
     //When submitting, create the doctor
-    onSubmit(e) {
-        //Create the account
+    async onSubmit(e) {
         e.preventDefault();
+        //Create a new doctor account
         const newDoctor = {
             email: this.state.email,
             password: this.state.password,
@@ -50,16 +50,29 @@ class Register extends Component {
             hospitalName: this.state.hospitalName,
             errors: {},
         };
-        this.props.createNewDoctor(newDoctor, this.props.history);
+    
+        //Validate the user
+        const frontEndErrors = validateUser(newDoctor)
+        if (Object.keys(frontEndErrors).length != 0) //if errors exist
+        {
+            this.setState({ errors: frontEndErrors });
+            return;
+        }
 
-        /*/Automatically login
-        const LoginRequest = {
-            email: this.state.email,
-            password: this.state.password,
-        };
-        this.props.login(LoginRequest);
-        //Navigate to the dashboard
-        this.props.history.push("/dashboard");*/
+        //Send the signup request
+        await this.props.createNewUser(newDoctor, "doctor", this.props.history, this.props.login);
+
+        if (Object.keys(this.state.errors).length == 0) //if errors exist
+        {
+            //Automatically login
+            const LoginRequest = {
+                email: this.state.email,
+                password: this.state.password,
+            };
+            await this.props.login(LoginRequest);
+            //Navigate to the dashboard
+            this.props.history.push("/dashboard");
+        }
     }
 
     onChange(e) {
@@ -221,14 +234,13 @@ class Register extends Component {
                                                         placeholder="Specialization"
                                                         name="specialization"
                                                         value={
-                                                            this.state
-                                                                .specialization
+                                                            this.state.specialization
                                                         }
                                                         onChange={this.onChange}
                                                     />
-                                                    {errors.firmName && (
+                                                    {errors.specialization && (
                                                         <div className="invalid-feedback">
-                                                            {errors.firmName}
+                                                            {errors.specialization}
                                                         </div>
                                                     )}
                                                 </div>
@@ -247,12 +259,11 @@ class Register extends Component {
                                                         placeholder="Hospital name"
                                                         name="hospitalName"
                                                         value={
-                                                            this.state
-                                                                .hospitalName
+                                                            this.state.hospitalName
                                                         }
                                                         onChange={this.onChange}
                                                     />
-                                                    {errors.firmName && (
+                                                    {errors.hospitalName && (
                                                         <div className="invalid-feedback">
                                                             {
                                                                 errors.hospitalName
@@ -281,9 +292,10 @@ class Register extends Component {
     }
 }
 
-Register.propTypes = {
-    createNewDoctor: PropTypes.func.isRequired,
+DoctorSignupForm.propTypes = {
+    createNewUser: PropTypes.func.isRequired,
     login: PropTypes.func.isRequired,
+    validateUser: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired,
 };
@@ -293,4 +305,4 @@ const mapStateToProps = (state) => ({
     security: state.security,
 });
 
-export default connect(mapStateToProps, { createNewDoctor, login })(Register);
+export default connect(mapStateToProps, { createNewUser, login, validateUser })(DoctorSignupForm);

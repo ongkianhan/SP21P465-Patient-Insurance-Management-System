@@ -1,4 +1,4 @@
-package com.pfyffe.ProjectManagementTool.web;
+package com.p565sp21group1.patientmanagerspring.web;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -29,7 +29,7 @@ public class WebConfig implements Filter,WebMvcConfigurer
         HttpServletResponse response = (HttpServletResponse) res;
         HttpServletRequest request = (HttpServletRequest) req;
         //System.out.println("WebConfig; "+request.getRequestURI());
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost3000");
         response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, PATCH, OPTIONS, DELETE");
         response.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With,observe");
         response.setHeader("Access-Control-Max-Age", "3600");
