@@ -34,7 +34,7 @@
       "react-app/jest"
     ]
   },
-  "proxy": "http://vita-dev.us-east-1.elasticbeanstalk.com/",
+  "proxy": "http://vita-dev.us-east-1.elasticbeanstalk.com",
   "browserslist": {
     "production": [
       ">0.2%",
