@@ -25,7 +25,7 @@ Amplify.configure({
         endpoints: [
             {
                 name: "patient-manager-spring-api",
-                endpoint: "http://vita-dev.us-east-1.elasticbeanstalk.com"
+                endpoint: "localhost:5000"
             }
         ]
     }

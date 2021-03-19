@@ -1,27 +1,68 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
-import { getDoctor } from "../actions/userActions";
 import { PropTypes } from "prop-types"
-import DateTimePicker from 'react-datetime-picker';
+import classnames from "classnames";
+import { getDoctor } from "../actions/userActions";
+import {createAppointment, validateAppointment} from "../actions/appointmentActions";
 
 class AppointmentScheduler extends Component 
 {
-    constructor() {
+    constructor() 
+    {
         super();
         this.state = {
+            date: "",
             errors: {}
         };
+
+        this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
-    componentDidMount() {
-        const { userId } = this.props.match.params;
-        //this.props.getBacklog(id);
+    componentDidMount()
+    {
+        //Get the doctor id from the URL
+        const {userId} = this.props.match.params;
+        //Select the doctor from the database again
+        this.props.getDoctor(userId, this.props.history);
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps) 
+    {
         if (nextProps.errors) {
-            this.setState({errors: nextProps.errors});
+            this.setState({ errors: nextProps.errors });
         }
+    }
+
+    onChange(e) 
+    {
+        //Update the state when the user updates any form field
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
+    onSubmit(e)
+    {
+        e.preventDefault(); //prevent page refresh
+        //Create appointment
+        var dateFormat = require("dateformat");
+        //var selectedTime = dateFormat(this.state.date, "mm/dd/yyyy h:MM TT");
+        //console.log("Scheduling at "+selectedTime);
+        var appointment = {
+            date: this.state.date,
+        } //todo: fix zero indexing of date?
+        var doctorId = this.props.doctor.doctor.userId;
+    
+        //Validate the appointment
+        const frontEndErrors = validateAppointment(appointment);
+        if (Object.keys(frontEndErrors).length != 0) //if errors exist
+        {
+            this.setState({ errors: frontEndErrors });
+            return;
+        }
+        alert("Scheduled at "+date+"!");
+
+        //Send appointment to backend for persistence
+        this.props.createAppointment(appointment, doctorId, this.props.history);
     }
 
 
@@ -54,13 +95,13 @@ class AppointmentScheduler extends Component
             );
 
             //Build a table of available time intervals
-            for ( ; time.getHours() < endTimeHours; )
+            while (time.getHours() < endTimeHours)
             {
                 //Push one row onto the table as a time interval (ex: "10:30-11:00")
                 let appointmentStartTime = dateFormat(time, "h:MM");
                 time.setMinutes(time.getMinutes()+minuteDuration)
                 let appointmentEndTime = dateFormat(time+minuteDuration, "h:MM");
-                if (time.getHours() == 9)
+                if (time.getHours() == 9) //TODO check if not in doctor's list of appts
                 {
                     tableContent.push(
                         <tr>
@@ -88,31 +129,48 @@ class AppointmentScheduler extends Component
         
  
 
+        const {errors} = this.state;
         return (
             <div className="login">
                 <div className="container">
                 <h1 className="display-4 text-left page-header">Schedule an Appointment</h1>
-                    <div className="row align-items-start" style={{marginTop: "calc(10vmin)"}}>
-                        <div className="col-md-8">
+                    <form onSubmit={this.onSubmit}>
+                        <div className="row align-items-start" style={{marginTop: "calc(10vmin)"}}>
+                            <div className="col-md-8">
 
-                            {/* Date/time picker https://www.npmjs.com/package/react-time-picker*/}
-                            Select a date and time: &nbsp;
-                            <DateTimePicker
-                            />
-                        
-                            {/* Doctor information */}
-                            <p className="text-left page-header">Doctor: Tom Campbell</p>
-                            <p className="text-left page-header">{doctor.firstName}{" "}{doctor.lastName}</p>
-                            <p className="text-left page-header">Date: Not Selected</p>
-                            <p className="text-left page-header">Time: Not Selected</p>
+                                {/* Date/time picker*/}
+                                <input type="date"
+                                className={classnames("form-control textbox",
+                                    {"is-invalid": errors.date})}
+                                name="date"
+                                value={this.state.date}
+                                onChange={this.onChange} />
+                                {errors.date && (
+                                    <div className="invalid-feedback">{errors.date}</div>
+                                )} 
+                            
+                                {/* Doctor information */}
+                                <p className="text-left page-header">Doctor: {doctor.firstName}{" "}{doctor.lastName}</p>
+                                <p className="text-left page-header">Date: {this.state.date}</p>
+                                <p className="text-left page-header">Time: Not Selected</p>
+
+                                {/*Submit button*/}
+                                <div className="row justify-content-center">
+                                    <input
+                                        type="submit"
+                                        className="button-submit button-primary"
+                                        value="Make Appointment"
+                                    />
+                                </div>
+                            </div>
+                            <div className="col-md-4">
+                                <table>
+                                    {tableContent}
+                                </table>
+                            </div>                     
                         </div>
-                        <div className="col-md-4">
-                            <table>
-                                {tableContent}
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                    </form>
+                </div>   
             </div>
         )
     }
@@ -120,13 +178,17 @@ class AppointmentScheduler extends Component
 
 
 AppointmentScheduler.propTypes = {
+    createAppointment: PropTypes.func.isRequired,
+    validateAppointment: PropTypes.func.isRequired,
     doctor: PropTypes.object.isRequired,
-    getDoctor: PropTypes.func.isRequired
+    getDoctor: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired
 } 
 
 //Add the actual doctor state/data to the list of doctors on the page
 const mapStateToProps = state => ({
-    doctor: state.doctor
+    doctor: state.doctor,
+    errors: state.errors
 })
 
-export default connect(mapStateToProps, {getDoctor}) (AppointmentScheduler);
+export default connect(mapStateToProps, {createAppointment, getDoctor, validateAppointment}) (AppointmentScheduler);

@@ -34,21 +34,23 @@ public class AppointmentController
      * patient and the doctor.
      * @param appointment the JSON data used to create a new Appointment
      * @param result contains Spring validation errors
-     * @param patientId
      * @param doctorId
      * @return the new appointment as JSON or errors JSON
      */
-    @PostMapping("/create-appointment/{patientId}&{doctorId}")
+    @PostMapping("/create-appointment/{doctorId}")
     public ResponseEntity<?> createAppointment(@Valid @RequestBody Appointment appointment,
-            BindingResult result, @PathVariable String patientId, @PathVariable String doctorId, Principal principal)
+                                               @PathVariable String doctorId,
+                                               BindingResult result,
+                                               Principal principal)
     {
+        System.out.println("Begin!");
         ResponseEntity<?> errorMap = errorMapValidationService.mapErrors(result);
         if (errorMap != null) return errorMap;
 
-        long patientIdLong = userService.parseUserId(patientId);
         long doctorIdLong = userService.parseUserId(doctorId);
 
-        Appointment newAppointment = appointmentService.addAppointment(patientIdLong, doctorIdLong, appointment);
+        System.out.println("Sending to service!");
+        Appointment newAppointment = appointmentService.addAppointment(doctorIdLong, appointment, principal.getName());
         return new ResponseEntity<Appointment>(newAppointment, HttpStatus.CREATED);
     }
 

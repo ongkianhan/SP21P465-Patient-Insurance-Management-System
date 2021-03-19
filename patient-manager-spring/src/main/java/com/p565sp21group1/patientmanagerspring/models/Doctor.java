@@ -16,7 +16,7 @@ public class Doctor extends User
     @JsonIgnore
     private List<Appointment> appointments = new ArrayList<>();
 
-    @Column(name = "specialization", nullable = false, unique = false)
+    @Column(name = "specialization", unique = false)
     @NotBlank(message = "Specialization cannot be blank")
     private String specialization;
 

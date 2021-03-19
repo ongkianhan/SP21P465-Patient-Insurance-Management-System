@@ -6,3 +6,6 @@ export const GET_ONE_DOCTOR = "GET_ONE_DOCTOR";
 
 //User login
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
+
+//Appointment scheudling
+export const GET_ONE_APPOINTMENT = "GET_ONE_APPOINTMENT";

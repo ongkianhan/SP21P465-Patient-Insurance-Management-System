@@ -20,21 +20,19 @@ public class AppointmentService
     @Autowired
     private UserRepository userRepository;
 
-    public Appointment addAppointment(long patientId, long doctorId, Appointment appointment)
+    public Appointment addAppointment(long doctorId, Appointment appointment, String username)
     {
         try
         {
             //Pair the appointment with the patient...
             //Calling get() retrieves the actual User from the repos
-            Patient patient = (Patient) userRepository.findById(patientId).get();
+            Patient patient = (Patient) userRepository.findByEmail(username);
             appointment.setPatient(patient);
 
             //Pair the appointment with the doctor...
             //Calling get() retrieves the actual User from the repos
             Doctor doctor = (Doctor) userRepository.findById(doctorId).get();
             appointment.setDoctor(doctor);
-
-            //TODO: set any initial values for the Appt if they exist
 
             return appointmentRepository.save(appointment);
         }

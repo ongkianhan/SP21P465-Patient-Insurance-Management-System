@@ -59,7 +59,7 @@ class PatientSignupForm extends Component {
         //Send the signup request
         await this.props.createNewUser(newPatient, "patient", this.props.history);
 
-        if (Object.keys(this.state.errors).length == 0) //if errors exist
+        if (Object.keys(this.state.errors).length == 0) //if no errors exist
         {
             //Automatically login
             const LoginRequest = {
