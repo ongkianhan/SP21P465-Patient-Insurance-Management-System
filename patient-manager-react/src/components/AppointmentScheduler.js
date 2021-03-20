@@ -59,7 +59,7 @@ class AppointmentScheduler extends Component
             this.setState({ errors: frontEndErrors });
             return;
         }
-        alert("Scheduled at "+date+"!");
+        alert("Scheduled at "+this.state.date+"!");
 
         //Send appointment to backend for persistence
         this.props.createAppointment(appointment, doctorId, this.props.history);
