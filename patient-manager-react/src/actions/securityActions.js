@@ -12,14 +12,7 @@ import jwtDecode from "jwt-decode";
 export const createNewUser = (newUser, userType, history) => async dispatch => {
     try
     {
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json;charset=UTF-8',
-                "Access-Control-Allow-Origin": "*",
-            }
-        };
-
-        await axios.post("/api/account/create-"+userType, newUser, axiosConfig);
+        await axios.post("http://vita.us-east-2.elasticbeanstalk.com/api/account/create-"+userType, newUser);
         dispatch({
             type: GET_ERRORS, 
             payload: {} //Clear the errors
@@ -38,15 +31,8 @@ export const createNewUser = (newUser, userType, history) => async dispatch => {
 export const login = LoginRequest => async dispatch => {
     try
     {
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json;charset=UTF-8',
-                "Access-Control-Allow-Origin": "*",
-            }
-        };
-
         //Send a LoginRequest to Spring
-        const res = await axios.post("/api/account/login", LoginRequest, axiosConfig);
+        const res = await axios.post("http://vita.us-east-2.elasticbeanstalk.com/api/account/login", LoginRequest);
         //Extract JWT token from the response data
         const { token } = res.data;
         //Store the token in the localStorage
