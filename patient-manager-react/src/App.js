@@ -18,19 +18,6 @@ import Footer from "./components/Footer";
 import Landing from "./components/Landing";
 import GeneralSignupForm from "./components/SignUp/GeneralSignupForm";
 
-import Amplify, { API } from 'aws-amplify';
-
-Amplify.configure({
-    API: {
-        endpoints: [
-            {
-                name: "patient-manager-spring-api",
-                endpoint: "http://vita.us-east-2.elasticbeanstalk.com/"
-            }
-        ]
-    }
-});
-
 class App extends Component 
 {
   render() 
