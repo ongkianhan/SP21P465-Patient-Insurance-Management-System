@@ -2,17 +2,17 @@ package com.p565sp21group1.patientmanagerspring.exceptions;
 
 public class EmailTakenExceptionResponse
 {
-    private String username;
+    private String email;
 
-    public EmailTakenExceptionResponse(String username) {
-        this.username = username;
+    public EmailTakenExceptionResponse(String email) {
+        this.email = email;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

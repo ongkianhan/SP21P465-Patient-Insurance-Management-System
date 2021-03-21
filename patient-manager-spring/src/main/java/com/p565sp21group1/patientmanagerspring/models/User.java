@@ -29,7 +29,6 @@ public abstract class User implements UserDetails
     private String email;
 
     @NotBlank(message = "Password cannot be blank")
-    @JsonIgnore
     private String password;
 
     @NotBlank(message = "First name cannot be blank")

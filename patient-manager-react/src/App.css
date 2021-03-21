@@ -62,7 +62,8 @@ table {
     border-collapse: collapse;
 }
 
-td, th {
+td,
+th {
     border-collapse: collapse;
     box-sizing: border-box;
 }
@@ -339,7 +340,8 @@ td, th {
 }
 
 /*///////////////// AppointmentScheduler ELEMENTS ///////////////////////*/
-.td-appointment, .th-appointment {
+.td-appointment,
+.th-appointment {
     font-size: calc(1.5vh+1.5vw);
     border: 1px solid #888888;
     text-align: center;
@@ -349,11 +351,112 @@ td, th {
     color: black;
 }
 .td-appointment-open {
-    background-color: #88ff88;
+    background-color: #7cc67c;
     font-weight: bold;
     color: black;
 }
 .td-appointment-taken {
     background-color: #eeeeee;
     color: #888888;
+}
+
+/*///////////////// MODAL POPUP ELEMENTS ///////////////////////*/
+/* Styles are based on https://www.w3schools.com/howto/howto_css_modals.asp */
+/* The Modal (background) */
+.modal-scrim {
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 0;
+    border: 1px solid #888;
+    width: calc(65% + 2vmin) !important;
+    max-width: 100% !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    animation-name: animatetop;
+    animation-duration: 1s;
+}
+
+/* The Close Button */
+.modal-close-button {
+    color: #eeeeee !important;
+    float: right;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.modal-close-button:hover,
+.modal-close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    padding: 2px 4px;
+    background-color: #5cb85c;
+    color: white;
+    text-align: left;
+}
+
+.modal-header-text {
+    font-size: 32px;
+    font-weight: bold;
+    font-family: "Montserrat";
+}
+
+/* Modal Body */
+.modal-body {
+    padding: 2px 16px;
+}
+
+/* Add Animation */
+@keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0;
+    }
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+/*///////////////// TOOLTIP ELEMENTS ///////////////////////*/
+/* Styles are based on https://www.w3schools.com/css/css_tooltip.asp */
+/* Tooltip text */
+.tooltip-text {
+    visibility: hidden;
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+    color: #fff;
+    text-align: center;
+    padding: 4px 1em !important;
+    border-radius: 6px;
+    position: absolute !important;
+    z-index: 1 !important;
+    font-family: Questrial;
+    font-size: 16px;
+}
+.tooltip-text-left {
+    right: 95%;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.td-appointment-open:hover .tooltip-text {
+    visibility: visible;
+}
+.td-appointment-taken:hover .tooltip-text {
+    visibility: visible;
 }

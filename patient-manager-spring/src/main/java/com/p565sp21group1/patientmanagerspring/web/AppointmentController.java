@@ -58,11 +58,11 @@ public class AppointmentController
     public Iterable<Appointment> getAppointmentsByPatientId(@PathVariable String patientId, Principal principal)
     {
         long patientIdLong = userService.parseUserId(patientId);
-        return appointmentService.getAppointmentsByPatientId(patientIdLong);
+        return appointmentService.getAppointmentsByPatientId(patientIdLong, principal.getName());
     }
 
     @GetMapping("/get-by-doctor/{doctorId}")
-    public Iterable<Appointment> getAppointmentsByDoctorId(@PathVariable String doctorId, Principal principal)
+    public Iterable<Appointment> getAppointmentsByDoctorId(@PathVariable String doctorId)
     {
         long doctorIdLong = userService.parseUserId(doctorId);
         return appointmentService.getAppointmentsByDoctorId(doctorIdLong);

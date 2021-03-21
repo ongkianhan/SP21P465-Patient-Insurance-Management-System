@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types"
 import classnames from "classnames";
 import { getDoctor } from "../actions/userActions";
-import {createAppointment, validateAppointment} from "../actions/appointmentActions";
+import {createAppointment, getAppointmentsByDoctorId, validateAppointment} from "../actions/appointmentActions";
+import SuccessPopup from './SuccessPopup';
 
 class AppointmentScheduler extends Component 
 {
@@ -25,6 +26,9 @@ class AppointmentScheduler extends Component
         const {userId} = this.props.match.params;
         //Select the doctor from the database again
         this.props.getDoctor(userId, this.props.history);
+
+        //Get the doctor's current list of appointments to find which are taken
+        this.props.getAppointmentsByDoctorId(userId);
     }
 
     componentWillReceiveProps(nextProps) 
@@ -94,6 +98,10 @@ class AppointmentScheduler extends Component
                 </th>
             );
 
+            //Prepare a filter for which appts are open
+            const {allAppointments} = this.props.appointment;
+            console.log(allAppointments);
+
             //Build a table of available time intervals
             while (time.getHours() < endTimeHours)
             {
@@ -101,11 +109,13 @@ class AppointmentScheduler extends Component
                 let appointmentStartTime = dateFormat(time, "h:MM");
                 time.setMinutes(time.getMinutes()+minuteDuration)
                 let appointmentEndTime = dateFormat(time+minuteDuration, "h:MM");
-                if (time.getHours() == 9) //TODO check if not in doctor's list of appts
+                console.log("Comparing "+time.getMilliseconds());
+                if (/*allAppointments.contains(time.getMilliseconds())*/ true) //check if appt is not taken
                 {
                     tableContent.push(
                         <tr>
                             <td className="td-appointment td-appointment-open">
+                                <span className="tooltip-text tooltip-text-left">Open</span>
                                 {appointmentStartTime}{"-"}{appointmentEndTime}
                             </td>
                         </tr>
@@ -116,6 +126,7 @@ class AppointmentScheduler extends Component
                     tableContent.push(
                         <tr>
                             <td className="td-appointment td-appointment-taken">
+                                <span className="tooltip-text tooltip-text-left">Closed</span>
                                 {appointmentStartTime}{"-"}{appointmentEndTime}
                             </td>
                         </tr>
@@ -131,7 +142,7 @@ class AppointmentScheduler extends Component
 
         const {errors} = this.state;
         return (
-            <div className="login">
+            <div>
                 <div className="container">
                 <h1 className="display-4 text-left page-header">Schedule an Appointment</h1>
                     <form onSubmit={this.onSubmit}>
@@ -167,9 +178,11 @@ class AppointmentScheduler extends Component
                                 <table>
                                     {tableContent}
                                 </table>
-                            </div>                     
+                            </div>
                         </div>
                     </form>
+                    
+                    <SuccessPopup content="Appointment scheduled!"/>
                 </div>   
             </div>
         )
@@ -179,16 +192,19 @@ class AppointmentScheduler extends Component
 
 AppointmentScheduler.propTypes = {
     createAppointment: PropTypes.func.isRequired,
+    getAppointmentsByDoctorId: PropTypes.func.isRequired,
     validateAppointment: PropTypes.func.isRequired,
-    doctor: PropTypes.object.isRequired,
     getDoctor: PropTypes.func.isRequired,
+    appointment: PropTypes.object.isRequired,
+    doctor: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 } 
 
 //Add the actual doctor state/data to the list of doctors on the page
 const mapStateToProps = state => ({
+    appointment: state.appointment,
     doctor: state.doctor,
     errors: state.errors
 })
 
-export default connect(mapStateToProps, {createAppointment, getDoctor, validateAppointment}) (AppointmentScheduler);
+export default connect(mapStateToProps, {createAppointment, getAppointmentsByDoctorId, getDoctor, validateAppointment}) (AppointmentScheduler);
