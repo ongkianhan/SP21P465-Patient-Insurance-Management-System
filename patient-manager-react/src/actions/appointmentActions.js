@@ -4,7 +4,7 @@ import { GET_MANY_APPOINTMENTS, GET_ERRORS } from "./types";
 export const createAppointment = (appointment, doctorId, history) => async dispatch => 
 {
     try {
-        await axios.post(`http://localhost:5000/api/appointments/create-appointment/${doctorId}`, appointment);
+        await axios.post(`/api/appointments/create-appointment/${doctorId}`, appointment);
         dispatch(
         {
             type: GET_ERRORS,
@@ -23,7 +23,7 @@ export const createAppointment = (appointment, doctorId, history) => async dispa
 };
 
 export const getAppointmentsByDoctorId = (doctorId) => async dispatch => {
-    const res = await axios.get(`http://localhost:5000/api/appointments/get-by-doctor/${doctorId}`);
+    const res = await axios.get(`/api/appointments/get-by-doctor/${doctorId}`);
     dispatch ({
         type: GET_MANY_APPOINTMENTS,
         payload: res.data

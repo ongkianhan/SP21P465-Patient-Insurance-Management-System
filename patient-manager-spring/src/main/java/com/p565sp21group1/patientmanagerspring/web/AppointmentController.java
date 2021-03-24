@@ -43,7 +43,6 @@ public class AppointmentController
                                                BindingResult result,
                                                Principal principal)
     {
-        System.out.println("Begin!");
         ResponseEntity<?> errorMap = errorMapValidationService.mapErrors(result);
         if (errorMap != null) return errorMap;
 

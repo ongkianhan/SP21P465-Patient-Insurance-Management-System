@@ -354,6 +354,7 @@ th {
     background-color: #7cc67c;
     font-weight: bold;
     color: black;
+    cursor: pointer;
 }
 .td-appointment-taken {
     background-color: #eeeeee;

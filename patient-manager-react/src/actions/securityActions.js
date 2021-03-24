@@ -12,7 +12,7 @@ import jwtDecode from "jwt-decode";
 export const createNewUser = (newUser, userType, history) => async dispatch => {
     try
     {
-        await axios.post("http://localhost:5000/api/account/create-"+userType, newUser);
+        await axios.post("/api/account/create-"+userType, newUser);
         dispatch({
             type: GET_ERRORS, 
             payload: {} //Clear the errors
@@ -32,7 +32,7 @@ export const login = LoginRequest => async dispatch => {
     try
     {
         //Send a LoginRequest to Spring
-        const res = await axios.post("http://localhost:5000/api/account/login", LoginRequest);
+        const res = await axios.post("/api/account/login", LoginRequest);
         //Extract JWT token from the response data
         const { token } = res.data;
         //Store the token in the localStorage

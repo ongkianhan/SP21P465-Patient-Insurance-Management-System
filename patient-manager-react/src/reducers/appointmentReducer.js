@@ -1,7 +1,7 @@
 import {GET_MANY_APPOINTMENTS, GET_ONE_APPOINTMENT} from "../actions/types";
 
 const initialState = {
-    allAppointment: [],
+    allAppointments: [],
     appointment: {}
 }
 
@@ -13,7 +13,7 @@ export default function(state = initialState, action)
         case GET_MANY_APPOINTMENTS:
             return {
                 ...state,
-                allAppointment: action.payload
+                allAppointments: action.payload
             }
         case GET_ONE_APPOINTMENT:
             return {

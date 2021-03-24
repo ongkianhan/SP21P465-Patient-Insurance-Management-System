@@ -13,10 +13,11 @@ export default class SuccessPopup extends Component
 
     }
     //Show the modal
-    openModal() {
+    show() {
         this.setState({display: "block"});
     }
-    closeModal() {
+    //Close the modal
+    hide() {
         this.setState({display: "none"});
     }
 
@@ -24,7 +25,7 @@ export default class SuccessPopup extends Component
     {
         //When the user clicks on <span> (x), close the modal
         var closeButton = (
-            <span className="modal-close-button" onClick={this.closeModal.bind(this)}>&times;</span>
+            <span className="modal-close-button" onClick={this.hide.bind(this)}>&times;</span>
         )
 
         const {display} = this.state;
