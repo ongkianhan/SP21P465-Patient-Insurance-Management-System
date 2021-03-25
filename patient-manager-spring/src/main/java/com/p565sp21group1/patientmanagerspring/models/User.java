@@ -1,6 +1,7 @@
 package com.p565sp21group1.patientmanagerspring.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.usertype.UserType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -40,6 +41,7 @@ public abstract class User implements UserDetails
     @JsonIgnore
     private List<Conversation> conversations = new ArrayList<>();
 
+    private String userType; //DOC, INS, or PAT
 
 
     public Long getUserId() {
@@ -89,6 +91,15 @@ public abstract class User implements UserDetails
     public void setConversations(List<Conversation> conversations) {
         this.conversations = conversations;
     }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
 
 
     //

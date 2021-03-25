@@ -31,6 +31,7 @@ public class Doctor extends User
     private double longitude;
 
     public Doctor() {
+        this.setUserType("DOC");
     }
 
     public String getSpecialization() {

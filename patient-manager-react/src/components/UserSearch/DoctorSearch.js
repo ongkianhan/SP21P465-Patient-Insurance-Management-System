@@ -5,19 +5,16 @@ import { PropTypes } from "prop-types";
 import DoctorCard from "./DoctorCard";
 import classnames from "classnames";
 
+var noDoctorsMessage = null;
+
 class DoctorSearch extends Component 
 {
     componentDidMount() //When the component loads (life cycle method)
     {
         this.props.getAllDoctors();
-    }
 
-    render() {
-        const {allDoctors} = this.props.doctor;
-        
-        //Display a warning if there are no doctors
-        var noDoctorsMessage = null;
-        if (allDoctors.length === 0)
+        //Display a message if there are no doctors
+        if (this.props.doctor.length === 0)
         {
             noDoctorsMessage = (
                 <div className="alert alert-info text-center" role="alert">
@@ -25,6 +22,10 @@ class DoctorSearch extends Component
                 </div>
             )
         }
+    }
+
+    render() {
+        const {allDoctors} = this.props.doctor;
 
         return (
             <div className="doctorContainer">
