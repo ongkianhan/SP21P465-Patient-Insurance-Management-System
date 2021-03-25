@@ -18,8 +18,8 @@ class AppointmentScheduler extends Component
     {
         super();
         this.state = {
-            date: "",
-            time: new Date(),
+            date: "", /* Stores the month, day, and year temporarily */
+            time: null, /* Stores the actual date and time selection */ 
             formattedDate: dateFormat(new Date(), "mm/dd/yyyy"),
             formattedTime: "Not Selected",
             appointmentTable: <span>Loading appointments...</span>,
@@ -40,7 +40,7 @@ class AppointmentScheduler extends Component
 
         //Get the doctor's current list of appointments to find which are taken
         this.props.getAppointmentsByDoctorId(userId);
-        this.generateAppointmentTable(this.state.time);
+        this.generateAppointmentTable(new Date());
     }
 
     componentWillReceiveProps(nextProps) 
@@ -64,6 +64,15 @@ class AppointmentScheduler extends Component
             var formattedDate = dateFormat(selectedDate, "mm/dd/yyyy");
             this.setState({formattedDate: formattedDate})
 
+            //Update the selected date/time for the appointment in the state
+            var time = this.state.time;
+            if (time != null)
+            {
+                time.setFullYear(selectedDate.getFullYear());
+                time.setMonth(selectedDate.getMonth());
+                time.setDate(selectedDate.getDate());
+            }
+
             //Show a new appointment table based on the target date
             this.generateAppointmentTable(selectedDate);
         }
@@ -72,12 +81,10 @@ class AppointmentScheduler extends Component
     onSubmit(e)
     {
         e.preventDefault(); //prevent page refresh
-        //Create appointment`
-        //var selectedTime = dateFormat(this.state.date, "mm/dd/yyyy h:MM TT");
-        //console.log("Scheduling at "+selectedTime);
+        //Create appointment
         var appointment = {
-            date: this.state.date,
-        } //todo: fix zero indexing of date?
+            date: this.state.time,
+        }
         var doctorId = this.props.doctor.doctor.userId;
     
         //Validate the appointment
@@ -92,14 +99,13 @@ class AppointmentScheduler extends Component
         this.props.createAppointment(appointment, doctorId, this.props.history);
 
         //Show success popup message
+        this.successPopup.current.setContent(
+            "Appointment successfully scheduled with "+this.props.doctor.doctor.firstName+" "+this.props.doctor.doctor.lastName+" on "+this.state.formattedDate+
+            " at "+this.state.formattedTime); //FIXME
         this.successPopup.current.show();
-
     }
 
-    convertDateUsingTimezone(date) {
-        return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: "America/New_York"}));   
-    }
-
+    
     generateAppointmentTable = (selectedDate) => {
         const {allAppointments} = this.props.appointment;
         
@@ -122,24 +128,33 @@ class AppointmentScheduler extends Component
             </th>
         );
 
-        //Prepare a filter for which appts are open
-        for (var i = 0; i < allAppointments.length; i++)
-        {
-            //console.log("Taken time: "+this.convertDateUsingTimezone(new Date(allAppointments[i].date), "America/New_York"));
-            console.log("Not available time "+i+": "+new Date(allAppointments[i].date).getTime());
-        }
-
         //Build a table of available time intervals
         while (time.getHours() < endTimeHours)
         {
-            //Push one row onto the table as a time interval (ex: "10:30-11:00")
+            //Push one row onto the table as a time interval (ex: "10:30-11:00")...
+            //First, prepare formatted start and stop times
             let appointmentStartTime = dateFormat(time, "h:MM");
-            time.setMinutes(time.getMinutes()+minuteDuration)
+            time.setMinutes(time.getMinutes()+minuteDuration);
             let appointmentEndTime = dateFormat(time, "h:MM");
-            console.log("Comparing "+time.getTime());
-            //console.log("Displaying value for:" + allAppointments[time.getTime()]);
-            if (allAppointments[time.getTime()] == undefined) //check if appt is not taken
+            time.setMinutes(time.getMinutes()-minuteDuration);
+            
+            //Check all taken appointments against this time slot.
+            //If it matches one of the taken times, mark it as not available.
+            var isAvailable = true;
+            for (var i = 0; i < allAppointments.length; i++)
             {
+                if (new Date(allAppointments[i].date).getTime() == time.getTime())
+                {
+                    isAvailable = false;
+                    i = allAppointments.length; //end loop
+                }
+            }
+            
+            if (isAvailable)
+            {
+                //Add a new open time slot to the table.
+                //Note that the data-value field holds the end time in milliseconds.
+                //..which is send to handleSelectTime() when the <td> is clicked.
                 tableContent.push(
                     <tr>
                         <td onClick={this.handleSelectTime.bind(this)} data-value={(time).getTime()} className="td-appointment td-appointment-open">
@@ -160,8 +175,9 @@ class AppointmentScheduler extends Component
                     </tr>
                 );
             }
+            //Increment the time
+            time.setMinutes(time.getMinutes()+minuteDuration);
         }
-        console.log("---");
         
         this.setState({ appointmentTable: tableContent });
     }
@@ -172,10 +188,11 @@ class AppointmentScheduler extends Component
         const selectedTime = event.currentTarget.getAttribute("data-value");
         const selectedTimeObject = new Date();
         selectedTimeObject.setTime(selectedTime);
+        
         //Format the time
         const formmattedTime = dateFormat(selectedTimeObject, "h:MM TT");
         //Display the formatted time
-        this.setState({time: selectedTime, formattedTime: formmattedTime});
+        this.setState({time: selectedTimeObject, formattedTime: formmattedTime});
     }
 
 
@@ -187,12 +204,13 @@ class AppointmentScheduler extends Component
         return (
             <div>
                 <div className="container">
-                <h1 className="display-4 text-left page-header">Schedule an Appointment</h1>
+                <h1 className="display-5 text-left page-header">Schedule an Appointment</h1>
                     <form onSubmit={this.onSubmit}>
-                        <div className="row align-items-start" style={{marginTop: "calc(10vmin)"}}>
+                        <div className="row align-items-start" style={{marginTop: "calc(4vmin)"}}>
                             <div className="col-md-8">
 
                                 {/* Date/time picker*/}
+                                <p className="text-left page-header">Select a date for your appointment...</p>
                                 <input type="date"
                                 className={classnames("form-control textbox",
                                     {"is-invalid": errors.date})}
@@ -205,9 +223,13 @@ class AppointmentScheduler extends Component
                                 )} 
                             
                                 {/* Doctor information */}
-                                <p className="text-left page-header">Doctor: {doctor.firstName}{" "}{doctor.lastName}</p>
-                                <p className="text-left page-header">Date: {this.state.formattedDate}</p>
-                                <p className="text-left page-header">Time: {this.state.formattedTime}</p>
+                                <div className="thin-container" style={{marginTop: "1.5em"}}>
+                                    <p className="thin-container-title text-center">Appointment Summary</p>
+                                    <p className="text-left paragraph">Doctor: {doctor.firstName}{" "}{doctor.lastName}</p>
+                                    <p className="text-left paragraph">Date: {this.state.formattedDate}</p>
+                                    <p className="text-left paragraph">Time: {this.state.formattedTime}</p>
+                                    <p className="text-left paragraph">Hospital: {doctor.hospitalName}</p>
+                                </div>
 
                                 {/*Submit button*/}
                                 <div className="row justify-content-center">
@@ -226,7 +248,7 @@ class AppointmentScheduler extends Component
                         </div>
                     </form>
                     
-                    <SuccessPopup ref={this.successPopup} content="Appointment scheduled!"/>
+                    <SuccessPopup ref={this.successPopup} redirect="/dashboard" content="Appointment scheduled!"/>
                 </div>   
             </div>
         )

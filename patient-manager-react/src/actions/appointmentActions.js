@@ -8,7 +8,7 @@ export const createAppointment = (appointment, doctorId, history) => async dispa
         dispatch(
         {
             type: GET_ERRORS,
-            //Clear the errors for the next use of AddProject or UpdateProject form
+            //Clear the errors for the next use of the appointment scheduler
             payload: {} 
         });
     }

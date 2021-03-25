@@ -44,7 +44,7 @@ class App extends Component
                   //Private routes only accessible to users logged in
               }
               <SecuredRoute exact path="/dashboard" component={Dashboard} />
-              <Route exact path="/schedule-appointment/:userId" component={AppointmentScheduler} />
+              <SecuredRoute exact path="/schedule-appointment/:userId" component={AppointmentScheduler} />
             </span>
             {/*<Footer />*/}
           </div>

@@ -74,6 +74,10 @@ th {
     margin-top: 18px;
     margin-bottom: 18px;
 }
+.paragraph {
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
 
 /*.link-to-previous-page {  Unused, can be removed
     padding-top: 18px;
@@ -106,11 +110,11 @@ th {
 }
 
 .primary-bg {
-    background-color: #00aa95;
+    background-color: #00aa95 !important;
 }
 
 .list-container {
-    background-color: #aaaaaa;
+    background-color: #aaaaaa !important;
 }
 
 .button-generic {
@@ -347,14 +351,18 @@ th {
     text-align: center;
 }
 .th-appointment {
-    background-color: #7fd4ca;
+    background-color: #32bbaa;
     color: black;
 }
 .td-appointment-open {
     background-color: #7cc67c;
+    border: 1px solid #bbbbbb;
     font-weight: bold;
     color: black;
+}
+.td-appointment-open:hover {
     cursor: pointer;
+    background-color: #6fb26f;
 }
 .td-appointment-taken {
     background-color: #eeeeee;
