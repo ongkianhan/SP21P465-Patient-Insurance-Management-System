@@ -21,7 +21,7 @@ class DoctorCard extends Component
                         <h4>{doctor.hospitalName}</h4>
                     </div>
                     <div className="col-3 justify-content-end">
-                        <Link to={`/appointments/${doctor.userId}`}>
+                        <Link to={`/schedule-appointment/${doctor.userId}`}>
                             <button className="col my-1 button-primary button-card">
                                 Make Appointment
                             </button>

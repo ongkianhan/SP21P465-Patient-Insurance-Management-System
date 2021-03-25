@@ -52,7 +52,7 @@ public class UserService
         {
             //Show an error if the username is taken
             throw new EmailTakenException(
-                    "The email '" + user.getEmail() + "' is taken. Great minds truly do think alike. ");
+                    "The email '" + user.getEmail() + "' is already registered");
         }
     }
 

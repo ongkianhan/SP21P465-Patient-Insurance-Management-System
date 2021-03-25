@@ -32,6 +32,7 @@ public class Patient extends User
     private double longitude;
 
     public Patient() {
+        this.setUserType("PAT");
     }
 
     public List<Appointment> getAppointments() {

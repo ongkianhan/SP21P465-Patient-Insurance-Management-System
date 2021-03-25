@@ -24,8 +24,8 @@ class Landing extends Component
                     <div className="container">
                         <div className="row" style = {{textAlign:"center",paddingTop:"10%", height:'auto'}}>
                             <div className="col-md-6 text-center">
-                                <h1 className="display-3 mb-4">
-                                    <img src={vitaLogoColor} />
+                                <h1 className="display-3 mb-4" style={{maxWidth: "100%"}}>
+                                    <img src={vitaLogoColor} style={{maxWidth: "100%"}}/>
                                 </h1>
                                 <h1 style = {{textAlign:"left"}}><strong style={{fontFamily:'Titillium Web', fontSize:'32px'}}>Find health insurance, appointments, and doctors with Vita</strong></h1>                               
                             </div>

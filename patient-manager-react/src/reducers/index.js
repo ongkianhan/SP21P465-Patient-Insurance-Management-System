@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import errorReducer from "./errorReducer";
 import doctorReducer from "./doctorReducer";
+import appointmentReducer from "./appointmentReducer";
 import securityReducer from "./securityReducer";
 
 /**
@@ -9,5 +10,6 @@ import securityReducer from "./securityReducer";
 export default combineReducers({
     errors: errorReducer,
     doctor: doctorReducer,
+    appointment: appointmentReducer,
     security: securityReducer
 });
