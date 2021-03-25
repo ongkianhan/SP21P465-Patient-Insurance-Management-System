@@ -9,5 +9,5 @@ public class SecurityConstants
     public static final String SECRET ="SecretKeyToGenJWTs";
     public static final String TOKEN_PREFIX= "Bearer ";
     public static final String HEADER_STRING = "Authorization";
-    public static final long EXPIRATION_TIME = 80_000; //80 seconds
+    public static final long EXPIRATION_TIME = 1800_000; //30 minutes: bad practice, but we do not have a way to refresh tokens FIXME
 }

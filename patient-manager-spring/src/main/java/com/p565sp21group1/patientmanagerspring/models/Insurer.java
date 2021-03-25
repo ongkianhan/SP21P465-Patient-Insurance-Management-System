@@ -16,6 +16,7 @@ public class Insurer extends User
     private String firmName;
 
     public Insurer() {
+        this.setUserType("INS");
     }
 
     public String getFirmName() {

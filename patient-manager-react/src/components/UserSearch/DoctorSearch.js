@@ -1,15 +1,27 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
 import { getAllDoctors } from "../../actions/userActions";
-import { PropTypes } from "prop-types"
+import { PropTypes } from "prop-types";
 import DoctorCard from "./DoctorCard";
 import classnames from "classnames";
+
+var noDoctorsMessage = null;
 
 class DoctorSearch extends Component 
 {
     componentDidMount() //When the component loads (life cycle method)
     {
         this.props.getAllDoctors();
+
+        //Display a message if there are no doctors
+        if (this.props.doctor.length === 0)
+        {
+            noDoctorsMessage = (
+                <div className="alert alert-info text-center" role="alert">
+                    It looks like no doctors could be found...
+                </div>
+            )
+        }
     }
 
     render() {
@@ -24,7 +36,7 @@ class DoctorSearch extends Component
                             
                             <div className="row align-items-center">
                                 <div className="col-10">
-                                    <textarea 
+                                    <input 
                                     className={classnames("form-control")}
                                     placeholder="Search by keywords..."
                                     rows="1"
@@ -32,7 +44,7 @@ class DoctorSearch extends Component
                                         if(e.key === 'Enter')
                                             e.preventDefault()
                                         }}
-                                    ></textarea>
+                                    ></input>
                                 </div>
                                 <div className="col-2 justify-content-end">
                                     <button type="submit" className="button-card button-primary">
@@ -48,6 +60,7 @@ class DoctorSearch extends Component
                             {allDoctors.map(doctor => (
                                 <DoctorCard key={doctor.id} doctor={doctor} />
                             ))}
+                            {noDoctorsMessage}
                         </div>
                     </div>
                 </div>

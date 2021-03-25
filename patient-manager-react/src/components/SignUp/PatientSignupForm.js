@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { createNewPatient } from "../../actions/securityActions";
+import { createNewUser } from "../../actions/securityActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
-import { login } from "../../actions/securityActions";
+import { login, validateUser } from "../../actions/securityActions";
 import { Link } from "react-router-dom";
 
-class Register extends Component {
+class PatientSignupForm extends Component {
     constructor() {
         super();
 
@@ -36,9 +36,9 @@ class Register extends Component {
     }
 
     //When submitting, create the patient
-    onSubmit(e) {
-        //Create the account
+    async onSubmit(e) {
         e.preventDefault();
+        //Create a new patient account
         const newPatient = {
             email: this.state.email,
             password: this.state.password,
@@ -47,16 +47,29 @@ class Register extends Component {
             specialization: this.state.specialization,
             errors: {},
         };
-        this.props.createNewPatient(newPatient, this.props.history);
+    
+        //Validate the user
+        const frontEndErrors = validateUser(newPatient)
+        if (Object.keys(frontEndErrors).length != 0) //if errors exist
+        {
+            this.setState({ errors: frontEndErrors });
+            return;
+        }
 
-        /*/Automatically login
-        const LoginRequest = {
-            email: this.state.email,
-            password: this.state.password,
-        };
-        this.props.login(LoginRequest);
-        //Navigate to the dashboard
-        this.props.history.push("/dashboard");*/
+        //Send the signup request
+        await this.props.createNewUser(newPatient, "patient", this.props.history);
+
+        if (Object.keys(this.state.errors).length == 0) //if no errors exist
+        {
+            //Automatically login
+            const LoginRequest = {
+                email: this.state.email,
+                password: this.state.password,
+            };
+            await this.props.login(LoginRequest);
+            //Navigate to the dashboard
+            this.props.history.push("/dashboard");
+        }
     }
 
     onChange(e) {
@@ -183,9 +196,10 @@ class Register extends Component {
     }
 }
 
-Register.propTypes = {
-    createNewPatient: PropTypes.func.isRequired,
+PatientSignupForm.propTypes = {
+    createNewUser: PropTypes.func.isRequired,
     login: PropTypes.func.isRequired,
+    validateUser: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired,
 };
@@ -195,4 +209,4 @@ const mapStateToProps = (state) => ({
     security: state.security,
 });
 
-export default connect(mapStateToProps, { createNewPatient, login })(Register);
+export default connect(mapStateToProps, { createNewUser, login, validateUser })(PatientSignupForm);

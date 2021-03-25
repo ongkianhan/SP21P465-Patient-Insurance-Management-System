@@ -34,21 +34,22 @@ public class AppointmentController
      * patient and the doctor.
      * @param appointment the JSON data used to create a new Appointment
      * @param result contains Spring validation errors
-     * @param patientId
      * @param doctorId
      * @return the new appointment as JSON or errors JSON
      */
-    @PostMapping("/create-appointment/{patientId}&{doctorId}")
+    @PostMapping("/create-appointment/{doctorId}")
     public ResponseEntity<?> createAppointment(@Valid @RequestBody Appointment appointment,
-            BindingResult result, @PathVariable String patientId, @PathVariable String doctorId, Principal principal)
+                                               @PathVariable String doctorId,
+                                               BindingResult result,
+                                               Principal principal)
     {
         ResponseEntity<?> errorMap = errorMapValidationService.mapErrors(result);
         if (errorMap != null) return errorMap;
 
-        long patientIdLong = userService.parseUserId(patientId);
         long doctorIdLong = userService.parseUserId(doctorId);
 
-        Appointment newAppointment = appointmentService.addAppointment(patientIdLong, doctorIdLong, appointment);
+        System.out.println("Sending to service!");
+        Appointment newAppointment = appointmentService.addAppointment(doctorIdLong, appointment, principal.getName());
         return new ResponseEntity<Appointment>(newAppointment, HttpStatus.CREATED);
     }
 
@@ -56,11 +57,11 @@ public class AppointmentController
     public Iterable<Appointment> getAppointmentsByPatientId(@PathVariable String patientId, Principal principal)
     {
         long patientIdLong = userService.parseUserId(patientId);
-        return appointmentService.getAppointmentsByPatientId(patientIdLong);
+        return appointmentService.getAppointmentsByPatientId(patientIdLong, principal.getName());
     }
 
     @GetMapping("/get-by-doctor/{doctorId}")
-    public Iterable<Appointment> getAppointmentsByDoctorId(@PathVariable String doctorId, Principal principal)
+    public Iterable<Appointment> getAppointmentsByDoctorId(@PathVariable String doctorId)
     {
         long doctorIdLong = userService.parseUserId(doctorId);
         return appointmentService.getAppointmentsByDoctorId(doctorIdLong);

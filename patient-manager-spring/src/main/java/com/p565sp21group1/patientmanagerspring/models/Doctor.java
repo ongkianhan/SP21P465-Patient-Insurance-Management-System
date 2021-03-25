@@ -3,6 +3,7 @@ package com.p565sp21group1.patientmanagerspring.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +16,13 @@ public class Doctor extends User
     @JsonIgnore
     private List<Appointment> appointments = new ArrayList<>();
 
-    @Column(name = "specialization", nullable = false, unique = false)
+    @Column(name = "specialization", unique = false)
+    @NotBlank(message = "Specialization cannot be blank")
     private String specialization;
 
     @Column(name = "hospitalName")
-    private String hospitalName = "";
+    @NotBlank(message = "Hospital name cannot be blank")
+    private String hospitalName;
 
     @Column(name = "latitude", nullable = true, unique = false)
     private double latitude;
@@ -28,6 +31,7 @@ public class Doctor extends User
     private double longitude;
 
     public Doctor() {
+        this.setUserType("DOC");
     }
 
     public String getSpecialization() {
@@ -36,6 +40,14 @@ public class Doctor extends User
 
     public void setSpecialization(String specialization) {
         this.specialization = specialization;
+    }
+
+    public String getHospitalName() {
+        return hospitalName;
+    }
+
+    public void setHospitalName(String hospitalName) {
+        this.hospitalName = hospitalName;
     }
 
     public List<Appointment> getAppointments() {

@@ -7,6 +7,7 @@ import store from "./store";
 import SecuredRoute from "./securityUtils/SecuredRoute";
 
 import DoctorSearch from "./components/UserSearch/DoctorSearch.js";
+import AppointmentScheduler from "./components/AppointmentScheduler.js";
 import DoctorSignupForm from "./components/SignUp/DoctorSignupForm";
 import PatientSignupForm from "./components/SignUp/PatientSignupForm";
 import InsurerSignupForm from "./components/SignUp/InsurerSignupForm";
@@ -15,7 +16,9 @@ import Dashboard from "./components/Dashboard";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Landing from "./components/Landing";
+import InvalidUserTypeLanding from "./components/InvalidUserTypeLanding";
 import GeneralSignupForm from "./components/SignUp/GeneralSignupForm";
+
 
 class App extends Component 
 {
@@ -36,12 +39,13 @@ class App extends Component
               <Route exact path="/patient-signup" component={PatientSignupForm} />
               <Route exact path="/doctor-signup" component={DoctorSignupForm} />
               <Route exact path="/insurer-signup" component={InsurerSignupForm} />
+              <Route exact path="/find-doctors" component={DoctorSearch} />
 
               {
                   //Private routes only accessible to users logged in
               }
               <SecuredRoute exact path="/dashboard" component={Dashboard} />
-              <SecuredRoute exact path="/find-doctors" component={DoctorSearch} />
+              <SecuredRoute exact path="/schedule-appointment/:userId" component={AppointmentScheduler} />
             </span>
             {/*<Footer />*/}
           </div>
