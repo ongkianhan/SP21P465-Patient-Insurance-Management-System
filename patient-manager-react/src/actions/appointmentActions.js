@@ -37,6 +37,11 @@ export const validateAppointment = (appointment) => {
     {
         errorOutput["date"] = "Select a time from the table →";
     }
+    //Check if date is in the past
+    else if (appointment["date"].getTime() <= (new Date()).getTime())
+    {
+        errorOutput["date"] = "You can't schedule an appointment in the past";
+    }
     //Check if the date is in the future
     return errorOutput;
 }
