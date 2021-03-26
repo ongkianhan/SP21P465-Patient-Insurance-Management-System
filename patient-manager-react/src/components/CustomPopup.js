@@ -1,19 +1,35 @@
 import React, { Component } from 'react';
 import {Link} from "react-router-dom";
 
-export default class SuccessPopup extends Component 
+const SUCCESS_COLOR = "#5cb85c";
+const WARNING_COLOR = "#d62b00";
+
+export default class CustomPopup extends Component 
 {
     constructor (props) {
         super(props)
         //Receive the text to place in the popup body
         //and hide the popup
         this.state = {
+            headerText: this.props.content,
             content: this.props.content,
+            backgroundColor: SUCCESS_COLOR,
             display: "none", /* Style which dictates if the modal is "block" (shown) or "none" (hidden) */
-            redirect: this.props.redirect /* Where to take the user after they click the close button */
-            /* Pass null for redirect if no redirect is needed*/
+            redirect: this.props.redirect, /* Where to take the user after they click the close button */
+            /* ...Pass null for redirect if no redirect is needed*/
         }
 
+        //Set a custom color if the popup indicates a warning rather than success
+        if (this.props.isWarning == true)
+        {
+            this.state.backgroundColor = WARNING_COLOR;
+        }
+    }
+
+    
+    //Customize the header
+    setHeaderText(inputString) {
+        this.setState({headerText: inputString});
     }
     //Customize the message
     setContent(inputString) {
@@ -49,8 +65,8 @@ export default class SuccessPopup extends Component
         return (
             <div className="modal-scrim" style={{display: display}}>
                 <div className="modal-content">
-                    <div className="modal-header">
-                        <h2 className="modal-header-text">Success</h2>
+                    <div className="modal-header" style={{ backgroundColor: this.state.backgroundColor }}>
+                        <h2 className="modal-header-text">{this.state.headerText}</h2>
                         {closeButton}
                     </div>
                     <p className="modal-body">{this.state.content}</p>

@@ -2,9 +2,30 @@ import React, { Component } from 'react';
 import {Link} from "react-router-dom";
 import {PropTypes} from "prop-types";
 import defaultProfileIcon from "../../static/defaultProfileIcon.png";
+import { connect } from "react-redux";
+
+var MakeAppointmentButton = null;
 
 class DoctorCard extends Component 
 {
+    constructor()
+    {
+        super();
+    }
+
+    componentDidMount()
+    {
+        //Only show a MakeAppointmentButton if the user is a patient
+        const userType = this.props.userType;
+        if (userType == "PAT")
+        {
+            MakeAppointmentButton = 
+                (<button className="col my-1 button-primary button-card">
+                    Make Appointment
+                </button>)
+        }
+    }
+
     render() 
     {
         const {doctor} = this.props;
@@ -22,9 +43,7 @@ class DoctorCard extends Component
                     </div>
                     <div className="col-3 justify-content-end">
                         <Link to={`/schedule-appointment/${doctor.userId}`}>
-                            <button className="col my-1 button-primary button-card">
-                                Make Appointment
-                            </button>
+                            {MakeAppointmentButton}
                         </Link>
                         <Link to={`/account/${doctor.userId}`}>
                             <button className="col my-1 button-secondary card-button">
