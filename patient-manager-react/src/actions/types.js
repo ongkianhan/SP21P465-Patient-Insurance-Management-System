@@ -10,3 +10,6 @@ export const SET_CURRENT_USER = "SET_CURRENT_USER";
 //Appointment scheduling
 export const GET_ONE_APPOINTMENT = "GET_ONE_APPOINTMENT";
 export const GET_MANY_APPOINTMENTS = "GET_MANY_APPOINTMENTS";
+
+//Profile viewing
+export const GET_CURRENT_USER = "GET_CURRENT_USER";

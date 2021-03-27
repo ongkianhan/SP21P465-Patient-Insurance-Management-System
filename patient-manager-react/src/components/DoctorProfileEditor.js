@@ -1,24 +1,15 @@
 import React, { Component } from "react";
-import { createNewUser } from "../actions/securityActions";
+import { createNewUser, validateUser } from "../actions/securityActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
-import { login, validateUser } from "../actions/securityActions";
 import { Link } from "react-router-dom";
+import { getCurrentUser } from "../actions/userActions";
 
 class DoctorProfileEditor extends Component {
     constructor() {
         super();
 
-        /*this.state = {
-            email: user.email,
-            password: user.password,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            specialization: user.specialization,
-            hospitalName: user.hospitalName,
-            errors: {},
-        };*/
         this.state = {
             email: "",
             password: "",
@@ -32,20 +23,36 @@ class DoctorProfileEditor extends Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
+    componentDidMount()
+    {
+        //Make a request to get all the user's info from the database
+        const userId = this.props.security.user.userId;
+        this.props.getCurrentUser(userId, this.props.history);
+    }
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.errors) {
             this.setState({ errors: nextProps.errors });
         }
 
+        //Set the state to the current user's info so that
+        //it shows on the page
         const {
             email,
             password,
             firstName,
             lastName,
             specialization,
-            hospitalName,
-            errors: {},
-        } = nextProps.security.user;
+            hospitalName
+        } = nextProps.currentUser;
+        this.setState({
+            email,
+            password,
+            firstName,
+            lastName,
+            specialization,
+            hospitalName
+        });
     }
 
     //When submitting, create the doctor
@@ -71,19 +78,11 @@ class DoctorProfileEditor extends Component {
         }
 
         //Send the signup request
-        //await this.props.createNewUser(newDoctor, "doctor", this.props.history, this.props.login);
-        //TODO: Add edit profile action and edit profile Spring method
+        await this.props.createNewUser(newDoctor, "doctor", this.props.history, this.props.login);
 
         if (Object.keys(this.state.errors).length == 0) //if no errors exist
         {
-            /*/Automatically login
-            const LoginRequest = {
-                email: this.state.email,
-                password: this.state.password,
-            };
-            await this.props.login(LoginRequest);
-            //Navigate to the dashboard
-            this.props.history.push("/dashboard");*/
+            //Do something
         }
     }
 
@@ -306,15 +305,17 @@ class DoctorProfileEditor extends Component {
 
 DoctorProfileEditor.propTypes = {
     createNewUser: PropTypes.func.isRequired,
-    login: PropTypes.func.isRequired,
-    validateUser: PropTypes.func.isRequired,
-    errors: PropTypes.object.isRequired,
+    getCurrentUser: PropTypes.func.isRequired,
     security: PropTypes.object.isRequired,
+    validateUser: PropTypes.func.isRequired,
+    currentUser: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-    errors: state.errors,
+    currentUser: state.currentUser,
     security: state.security,
+    errors: state.errors
 });
 
-export default connect(mapStateToProps, { createNewUser, login, validateUser })(DoctorProfileEditor);
+export default connect(mapStateToProps, { createNewUser, getCurrentUser, validateUser })(DoctorProfileEditor);
