@@ -19,6 +19,7 @@ import Landing from "./components/Landing";
 import InvalidUserTypeLanding from "./components/InvalidUserTypeLanding";
 import GeneralSignupForm from "./components/SignUp/GeneralSignupForm";
 import ChatContainer from "./components/Chat/ChatContainer"
+import DoctorProfileEditor from "./components/DoctorProfileEditor"
 
 
 class App extends Component 

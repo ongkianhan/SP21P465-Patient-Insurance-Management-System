@@ -9,15 +9,23 @@ import { Link } from "react-router-dom";
 class DoctorProfileEditor extends Component {
     constructor() {
         super();
-        const { user } = this.props.security;
 
-        this.state = {
+        /*this.state = {
             email: user.email,
             password: user.password,
             firstName: user.firstName,
             lastName: user.lastName,
             specialization: user.specialization,
             hospitalName: user.hospitalName,
+            errors: {},
+        };*/
+        this.state = {
+            email: "",
+            password: "",
+            firstName: "",
+            lastName: "",
+            specialization: "",
+            hospitalName: "",
             errors: {},
         };
         this.onChange = this.onChange.bind(this);
@@ -28,6 +36,16 @@ class DoctorProfileEditor extends Component {
         if (nextProps.errors) {
             this.setState({ errors: nextProps.errors });
         }
+
+        const {
+            email,
+            password,
+            firstName,
+            lastName,
+            specialization,
+            hospitalName,
+            errors: {},
+        } = nextProps.security.user;
     }
 
     //When submitting, create the doctor
@@ -53,18 +71,19 @@ class DoctorProfileEditor extends Component {
         }
 
         //Send the signup request
-        await this.props.createNewUser(newDoctor, "doctor", this.props.history, this.props.login);
+        //await this.props.createNewUser(newDoctor, "doctor", this.props.history, this.props.login);
+        //TODO: Add edit profile action and edit profile Spring method
 
         if (Object.keys(this.state.errors).length == 0) //if no errors exist
         {
-            //Automatically login
+            /*/Automatically login
             const LoginRequest = {
                 email: this.state.email,
                 password: this.state.password,
             };
             await this.props.login(LoginRequest);
             //Navigate to the dashboard
-            this.props.history.push("/dashboard");
+            this.props.history.push("/dashboard");*/
         }
     }
 
@@ -96,12 +115,12 @@ class DoctorProfileEditor extends Component {
                                 </Link>
                             </div>
                             <h1 className="display-4 text-left page-header">
-                                Create an account
+                                Your Profile
                             </h1>
 
                             <div className="thin-container">
                                 <p className="thin-container-title text-center">
-                                    Sign up as Doctor
+                                    Edit Your Profile
                                 </p>
 
                                 <form onSubmit={this.onSubmit}>
@@ -272,7 +291,7 @@ class DoctorProfileEditor extends Component {
                                         <input
                                             type="submit"
                                             className="button-submit button-primary"
-                                            value="Create Account"
+                                            value="Update Account"
                                         />
                                     </div>
                                 </form>
