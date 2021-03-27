@@ -19,6 +19,8 @@ class DoctorProfileEditor extends Component {
             hospitalName: "",
             errors: {},
         };
+
+
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
@@ -39,29 +41,18 @@ class DoctorProfileEditor extends Component {
         //it shows on the page
         const {
             email,
-            password,
             firstName,
             lastName,
             specialization,
-<<<<<<< HEAD
-            hospitalName
-        } = nextProps.currentUser;
-=======
             hospitalName,
-        } = nextProps.security.user;
+        } = this.props.currentUser.currentUser
 
->>>>>>> 9ac59505d67686a2db455521ed8e0ad3252760f4
         this.setState({
             email,
-            password,
             firstName,
             lastName,
             specialization,
-<<<<<<< HEAD
-            hospitalName
-=======
             hospitalName,
->>>>>>> 9ac59505d67686a2db455521ed8e0ad3252760f4
         });
     }
 
@@ -112,16 +103,6 @@ class DoctorProfileEditor extends Component {
                                 className="text-left"
                                 style={{ paddingTop: "2%" }}
                             >
-                                <Link
-                                    to="/choose-role"
-                                    style={{ color: "Green" }}
-                                >
-                                    <strong
-                                        style={{ fontFamily: "Titillium Web" }}
-                                    >
-                                        &lt; Go back to role selection
-                                    </strong>
-                                </Link>
                             </div>
                             <h1 className="display-4 text-left page-header">
                                 Your Profile
@@ -160,6 +141,7 @@ class DoctorProfileEditor extends Component {
                                                     )}
                                                 </div>
                                             </td>
+                                            {/*
                                             <td className="td-textbox-holder">
                                                 <div className="form-group">
                                                     <input
@@ -184,7 +166,7 @@ class DoctorProfileEditor extends Component {
                                                         </div>
                                                     )}
                                                 </div>
-                                            </td>
+                                            </td> */}
                                         </tr>
                                         {/*Row 2*/}
                                         <tr>
