@@ -1,17 +1,17 @@
 # Compiled class file
-*.class
+#*.class
 
 # Log file
-*.log
+#*.log
 
 # Batch file
-*.bat
+#*.bat
 
 # BlueJ files
-*.ctxt
+#*.ctxt
 
 # Mobile Tools for Java (J2ME)
-.mtj.tmp/
+#.mtj.tmp/
 
 # Package Files #
 *.jar
@@ -26,6 +26,6 @@
 hs_err_pid*
 
 #Heroku files
-*.env
+#*.env
 
 node_modules/
