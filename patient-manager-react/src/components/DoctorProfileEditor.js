@@ -44,8 +44,16 @@ class DoctorProfileEditor extends Component {
             lastName,
             specialization,
             hospitalName,
-            errors: {},
         } = nextProps.security.user;
+
+        this.setState({
+            email,
+            password,
+            firstName,
+            lastName,
+            specialization,
+            hospitalName,
+        });
     }
 
     //When submitting, create the doctor
