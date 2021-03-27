@@ -4,7 +4,7 @@ import { PropTypes } from "prop-types"
 import classnames from "classnames";
 import { getDoctor } from "../actions/userActions";
 import {createAppointment, getAppointmentsByDoctorId, validateAppointment} from "../actions/appointmentActions";
-import SuccessPopup from './SuccessPopup';
+import CustomPopup from './CustomPopup';
 
 var dateFormat = require("dateformat");
 //Inclusive start/stop times that doctors will work between
@@ -101,7 +101,7 @@ class AppointmentScheduler extends Component
         //Show success popup message
         this.successPopup.current.setContent(
             "Appointment successfully scheduled with "+this.props.doctor.doctor.firstName+" "+this.props.doctor.doctor.lastName+" on "+this.state.formattedDate+
-            " at "+this.state.formattedTime); //FIXME
+            " at "+this.state.formattedTime);
         this.successPopup.current.show();
     }
 
@@ -248,7 +248,7 @@ class AppointmentScheduler extends Component
                         </div>
                     </form>
                     
-                    <SuccessPopup ref={this.successPopup} redirect="/dashboard" content="Appointment scheduled!"/>
+                    <CustomPopup ref={this.successPopup} redirect="/dashboard" headerText="Success" content="Appointment scheduled!"/>
                 </div>   
             </div>
         )

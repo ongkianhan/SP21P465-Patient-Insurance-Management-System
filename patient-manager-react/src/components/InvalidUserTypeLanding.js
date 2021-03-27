@@ -12,14 +12,16 @@ export default class InvalidUserTypeLanding extends Component
     
     render() 
     {
-        const {display} = this.state;
+        var closeButton = <Link to="/dashboard" className="modal-close-button">&times;</Link>
+
         return (
-            <div className="modal-scrim" style={{display: "block"}}>
+            <div style={{display: "block"}}>
                 <div className="modal-content">
-                    <div className="modal-header">
-                        <h2 className="modal-header-text">Invalid user type</h2>
+                    <div className="modal-header" style={{ backgroundColor: "#d62b00" }}>
+                        <h2 className="modal-header-text">Access Denied</h2>
+                        {closeButton}
                     </div>
-                    <p className="modal-body">You cannot access this feature because you are a doctor</p>
+                    <p className="modal-body">It looks like you don't have permission to access that feature...</p>
                 </div>
             </div>
         )

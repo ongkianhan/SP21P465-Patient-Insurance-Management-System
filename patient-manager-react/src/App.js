@@ -18,6 +18,8 @@ import Footer from "./components/Footer";
 import Landing from "./components/Landing";
 import InvalidUserTypeLanding from "./components/InvalidUserTypeLanding";
 import GeneralSignupForm from "./components/SignUp/GeneralSignupForm";
+import ChatContainer from "./components/Chat/ChatContainer"
+import DoctorProfileEditor from "./components/DoctorProfileEditor"
 
 
 class App extends Component 
@@ -44,8 +46,11 @@ class App extends Component
               {
                   //Private routes only accessible to users logged in
               }
+              <SecuredRoute exact path="/edit-doctor-profile" component={DoctorProfileEditor} />
               <SecuredRoute exact path="/dashboard" component={Dashboard} />
-              <SecuredRoute exact path="/schedule-appointment/:userId" component={AppointmentScheduler} />
+              <SecuredRoute exact path="/schedule-appointment/:userId" userTypeBlacklist={["DOC", "INS"]} component={AppointmentScheduler} />
+              <SecuredRoute exact path="/chat" component={ChatContainer} />
+              <SecuredRoute exact path="/permission-denied" component={InvalidUserTypeLanding} />
             </span>
             {/*<Footer />*/}
           </div>

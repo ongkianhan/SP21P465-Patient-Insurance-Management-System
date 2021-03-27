@@ -57,8 +57,9 @@ class DoctorSearch extends Component
                             
                             <br />
                             {/* Get the entire list of doctors. For each DoctorCard, set its prop as the doctor data */}
+                            {/* Also, attach the user type (PAT, DOC, INS) so only patients can see relevant options */}
                             {allDoctors.map(doctor => (
-                                <DoctorCard key={doctor.id} doctor={doctor} />
+                                <DoctorCard key={doctor.id} doctor={doctor} userType={this.props.security.user.userType} />
                             ))}
                             {noDoctorsMessage}
                         </div>
@@ -73,12 +74,14 @@ class DoctorSearch extends Component
 //Set up methods to retrieve doctors from the database
 DoctorSearch.propTypes = {
     doctor: PropTypes.object.isRequired,
-    getAllDoctors: PropTypes.func.isRequired
+    getAllDoctors: PropTypes.func.isRequired,
+    security: PropTypes.object.isRequired
 } 
 
 //Add the actual doctor state/data to the list of doctors on the page
 const mapStateToProps = state => ({
-    doctor: state.doctor
+    doctor: state.doctor,
+    security: state.security
 })
 
 export default connect(mapStateToProps, {getAllDoctors}) (DoctorSearch);
