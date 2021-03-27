@@ -43,25 +43,16 @@ class DoctorProfileEditor extends Component {
             firstName,
             lastName,
             specialization,
-<<<<<<< HEAD
             hospitalName
         } = nextProps.currentUser;
-=======
-            hospitalName,
-        } = nextProps.security.user;
 
->>>>>>> 9ac59505d67686a2db455521ed8e0ad3252760f4
         this.setState({
             email,
             password,
             firstName,
             lastName,
             specialization,
-<<<<<<< HEAD
             hospitalName
-=======
-            hospitalName,
->>>>>>> 9ac59505d67686a2db455521ed8e0ad3252760f4
         });
     }
 
