@@ -45,6 +45,7 @@ class App extends Component
               {
                   //Private routes only accessible to users logged in
               }
+              <SecuredRoute exact path="/edit-doctor-profile" component={DoctorProfileEditor} />
               <SecuredRoute exact path="/dashboard" component={Dashboard} />
               <SecuredRoute exact path="/schedule-appointment/:userId" userTypeBlacklist={["DOC", "INS"]} component={AppointmentScheduler} />
               <SecuredRoute exact path="/chat" component={ChatContainer} />
