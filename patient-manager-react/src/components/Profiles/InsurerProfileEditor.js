@@ -30,7 +30,6 @@ class InsurerProfileEditor extends Component {
         //Make a request to get all the user's info from the database
         const {userId} = this.props.match.params;
         this.setState({userId: userId});
-        console.log(userId);
         await this.props.getCurrentUser(userId, this.props.history);
 
         const {
@@ -76,11 +75,9 @@ class InsurerProfileEditor extends Component {
             firmName: this.state.firmName,
             errors: {},
         };
-        console.log(newInsurer);
     
         //Validate the user
         const frontEndErrors = validateUser(newInsurer)
-        console.log(frontEndErrors);
         if (Object.keys(frontEndErrors).length != 0) //if errors exist
         {
             this.setState({ errors: frontEndErrors });
@@ -92,36 +89,6 @@ class InsurerProfileEditor extends Component {
 
         if (Object.keys(this.state.errors).length == 0) //if no errors exist
         {
-            console.log("success")
-            //Do something
-            {/*}
-            this.props.currentUser.currentUser = {
-                email:this.state.email,
-                //password,
-                firstName:this.state.firstName,
-                lastName:this.state.lastName,
-                specialization:this.state.specialization,
-                hospitalName:this.state.hospitalName,
-            }
-
-            const {
-                email,
-                //password,
-                firstName,
-                lastName,
-                specialization,
-                hospitalName,
-            } = this.props.currentUser.currentUser;
-            //Display the user's information
-            this.setState({
-                email,
-                //password,
-                firstName,
-                lastName,
-                specialization,
-                hospitalName
-            }); */}
-
             const {userId} = this.props.match.params;
             this.setState({userId: userId});
             await this.props.getCurrentUser(userId, this.props.history);

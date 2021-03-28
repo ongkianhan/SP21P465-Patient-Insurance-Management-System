@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { getAllDoctors } from "../../actions/userActions";
 import { PropTypes } from "prop-types";
 import DoctorCard from "./DoctorCard";
+import DoctorCardForPatientView from "./DoctorCardForPatientView";
 import classnames from "classnames";
 
 var noDoctorsMessage = null;
@@ -57,9 +58,13 @@ class DoctorSearch extends Component
                             
                             <br />
                             {/* Get the entire list of doctors. For each DoctorCard, set its prop as the doctor data */}
-                            {/* Also, attach the user type (PAT, DOC, INS) so only patients can see relevant options */}
+                            {/* Only patients can see relevant options (e.g. a button to schedule an appointment) */}
                             {allDoctors.map(doctor => (
-                                <DoctorCard key={doctor.id} doctor={doctor} userType={this.props.security.user.userType} />
+                                this.props.security.user.userType == "PAT" ? (
+                                    <DoctorCardForPatientView key={doctor.id} doctor={doctor} />
+                                ) : (
+                                    <DoctorCard key={doctor.id} doctor={doctor} />
+                                )
                             ))}
                             {noDoctorsMessage}
                         </div>

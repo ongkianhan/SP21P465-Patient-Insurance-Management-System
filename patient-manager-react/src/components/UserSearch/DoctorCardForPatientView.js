@@ -24,6 +24,11 @@ class DoctorCard extends Component
                         <h4>{doctor.hospitalName}</h4>
                     </div>
                     <div className="col-3 justify-content-end">
+                        <Link to={`/schedule-appointment/${doctor.userId}`}>
+                            <button className="col my-1 button-primary button-card">
+                                Make Appointment
+                            </button>
+                        </Link>
                         <Link to={`/account/${doctor.userId}`}>
                             <button className="col my-1 button-secondary card-button">
                                 View Profile
