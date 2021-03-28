@@ -18,7 +18,7 @@ class Header extends Component {
             <span>
                 <li className="nav-item">
                 <Link to={`/profile/${user.userId}`} className="nav-link">
-                        {user.email}
+                    Profile{/*{user.email}*/}
                     </Link>
                 </li>
                 <li className="nav-item">
