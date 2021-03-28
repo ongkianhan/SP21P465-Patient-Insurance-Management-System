@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import {Link} from "react-router-dom";
 import {PropTypes} from "prop-types";
 import defaultProfileIcon from "../../static/defaultProfileIcon.png";
+import { connect } from "react-redux";
+
+var MakeAppointmentButton = null;
 
 class DoctorCard extends Component 
 {
@@ -21,11 +24,6 @@ class DoctorCard extends Component
                         <h4>{doctor.hospitalName}</h4>
                     </div>
                     <div className="col-3 justify-content-end">
-                        <Link to={`/schedule-appointment/${doctor.userId}`}>
-                            <button className="col my-1 button-primary button-card">
-                                Make Appointment
-                            </button>
-                        </Link>
                         <Link to={`/account/${doctor.userId}`}>
                             <button className="col my-1 button-secondary card-button">
                                 View Profile

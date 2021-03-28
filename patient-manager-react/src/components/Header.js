@@ -17,6 +17,11 @@ class Header extends Component {
         const userIsAuthenticated = (
             <span>
                 <li className="nav-item">
+                <Link to={`/profile/${user.userId}`} className="nav-link">
+                    Profile{/*{user.email}*/}
+                    </Link>
+                </li>
+                <li className="nav-item">
                     <Link to="/dashboard" className="nav-link">
                         Dashboard
                     </Link>
@@ -26,11 +31,7 @@ class Header extends Component {
                         Find Doctors
                     </Link>
                 </li>
-                <li className="nav-item">
-                    <span className="nav-link">
-                        {user.email}
-                    </span>
-                </li>
+                
                 <li className="nav-item">
                     <Link className="nav-link" onClick={this.logout.bind(this)}>
                         Logout

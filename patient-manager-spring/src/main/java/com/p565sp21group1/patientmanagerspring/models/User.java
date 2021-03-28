@@ -29,7 +29,6 @@ public abstract class User implements UserDetails
     @Column(unique = true)
     private String email;
 
-    @NotBlank(message = "Password cannot be blank")
     private String password;
 
     @NotBlank(message = "First name cannot be blank")

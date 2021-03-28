@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { getAllDoctors } from "../../actions/userActions";
 import { PropTypes } from "prop-types";
 import DoctorCard from "./DoctorCard";
+import DoctorCardForPatientView from "./DoctorCardForPatientView";
 import classnames from "classnames";
 
 var noDoctorsMessage = null;
@@ -57,8 +58,13 @@ class DoctorSearch extends Component
                             
                             <br />
                             {/* Get the entire list of doctors. For each DoctorCard, set its prop as the doctor data */}
+                            {/* Only patients can see relevant options (e.g. a button to schedule an appointment) */}
                             {allDoctors.map(doctor => (
-                                <DoctorCard key={doctor.id} doctor={doctor} />
+                                this.props.security.user.userType == "PAT" ? (
+                                    <DoctorCardForPatientView key={doctor.id} doctor={doctor} />
+                                ) : (
+                                    <DoctorCard key={doctor.id} doctor={doctor} />
+                                )
                             ))}
                             {noDoctorsMessage}
                         </div>
@@ -73,12 +79,14 @@ class DoctorSearch extends Component
 //Set up methods to retrieve doctors from the database
 DoctorSearch.propTypes = {
     doctor: PropTypes.object.isRequired,
-    getAllDoctors: PropTypes.func.isRequired
+    getAllDoctors: PropTypes.func.isRequired,
+    security: PropTypes.object.isRequired
 } 
 
 //Add the actual doctor state/data to the list of doctors on the page
 const mapStateToProps = state => ({
-    doctor: state.doctor
+    doctor: state.doctor,
+    security: state.security
 })
 
 export default connect(mapStateToProps, {getAllDoctors}) (DoctorSearch);
