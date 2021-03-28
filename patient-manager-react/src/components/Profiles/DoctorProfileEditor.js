@@ -3,7 +3,6 @@ import { createNewUser, validateUser } from "../../actions/securityActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
-import { Link } from "react-router-dom";
 import { getCurrentUser } from "../../actions/userActions";
 
 class DoctorProfileEditor extends Component {
@@ -31,12 +30,10 @@ class DoctorProfileEditor extends Component {
         //Make a request to get all the user's info from the database
         const {userId} = this.props.match.params;
         this.setState({userId: userId});
-        console.log(userId);
         await this.props.getCurrentUser(userId, this.props.history);
 
         const {
             email,
-            //password,
             firstName,
             lastName,
             specialization,
@@ -45,7 +42,6 @@ class DoctorProfileEditor extends Component {
         //Display the user's information
         this.setState({
             email,
-            //password:"a",
             firstName,
             lastName,
             specialization,
@@ -59,9 +55,6 @@ class DoctorProfileEditor extends Component {
         if (nextProps.errors) {
             this.setState({ errors: nextProps.errors });
         }
-
-        //Set the state to the current user's info so that it shows on the page
-       
     }
     
     
@@ -73,18 +66,15 @@ class DoctorProfileEditor extends Component {
         const newDoctor = {
             userId: this.state.userId,
             email: this.state.email,
-            //password: "a",
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             specialization: this.state.specialization,
             hospitalName: this.state.hospitalName,
             errors: {},
         };
-        console.log(newDoctor);
     
         //Validate the user
         const frontEndErrors = validateUser(newDoctor)
-        console.log(frontEndErrors);
         if (Object.keys(frontEndErrors).length != 0) //if errors exist
         {
             this.setState({ errors: frontEndErrors });
@@ -96,36 +86,6 @@ class DoctorProfileEditor extends Component {
 
         if (Object.keys(this.state.errors).length == 0) //if no errors exist
         {
-            console.log("success")
-            //Do something
-            {/*}
-            this.props.currentUser.currentUser = {
-                email:this.state.email,
-                //password,
-                firstName:this.state.firstName,
-                lastName:this.state.lastName,
-                specialization:this.state.specialization,
-                hospitalName:this.state.hospitalName,
-            }
-
-            const {
-                email,
-                //password,
-                firstName,
-                lastName,
-                specialization,
-                hospitalName,
-            } = this.props.currentUser.currentUser;
-            //Display the user's information
-            this.setState({
-                email,
-                //password,
-                firstName,
-                lastName,
-                specialization,
-                hospitalName
-            }); */}
-
             const {userId} = this.props.match.params;
             this.setState({userId: userId});
             await this.props.getCurrentUser(userId, this.props.history);
