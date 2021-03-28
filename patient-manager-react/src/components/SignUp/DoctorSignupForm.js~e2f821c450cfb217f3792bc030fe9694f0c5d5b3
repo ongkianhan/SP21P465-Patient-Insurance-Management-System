@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { createNewUser, validateUser } from "../actions/securityActions";
+import { createNewUser } from "../../actions/securityActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
+import { login, validateUser } from "../../actions/securityActions";
 import { Link } from "react-router-dom";
-import { getCurrentUser } from "../actions/userActions";
 
-class DoctorProfileEditor extends Component {
+class DoctorSignupForm extends Component {
     constructor() {
         super();
 
@@ -19,41 +19,22 @@ class DoctorProfileEditor extends Component {
             hospitalName: "",
             errors: {},
         };
-
-
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    componentDidMount()
-    {
-        //Make a request to get all the user's info from the database
-        const userId = this.props.security.user.userId;
-        this.props.getCurrentUser(userId, this.props.history);
+    componentDidMount() {
+        //Instantly bring the user to their dashboard
+        //if they are already logged in
+        if (this.props.security.validToken) {
+            this.props.history.push("/dashboard");
+        }
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.errors) {
             this.setState({ errors: nextProps.errors });
         }
-
-        //Set the state to the current user's info so that
-        //it shows on the page
-        const {
-            email,
-            firstName,
-            lastName,
-            specialization,
-            hospitalName,
-        } = this.props.currentUser.currentUser
-
-        this.setState({
-            email,
-            firstName,
-            lastName,
-            specialization,
-            hospitalName
-        });
     }
 
     //When submitting, create the doctor
@@ -61,12 +42,12 @@ class DoctorProfileEditor extends Component {
         e.preventDefault();
         //Create a new doctor account
         const newDoctor = {
-            email: this.email,
-            password: this.password,
-            firstName: this.firstName,
-            lastName: this.lastName,
-            specialization: this.specialization,
-            hospitalName: this.hospitalName,
+            email: this.state.email,
+            password: this.state.password,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            specialization: this.state.specialization,
+            hospitalName: this.state.hospitalName,
             errors: {},
         };
     
@@ -83,7 +64,14 @@ class DoctorProfileEditor extends Component {
 
         if (Object.keys(this.state.errors).length == 0) //if no errors exist
         {
-            //Do something
+            //Automatically login
+            const LoginRequest = {
+                email: this.state.email,
+                password: this.state.password,
+            };
+            await this.props.login(LoginRequest);
+            //Navigate to the dashboard
+            this.props.history.push("/doctor-dashboard");
         }
     }
 
@@ -103,14 +91,24 @@ class DoctorProfileEditor extends Component {
                                 className="text-left"
                                 style={{ paddingTop: "2%" }}
                             >
+                                <Link
+                                    to="/choose-role"
+                                    style={{ color: "Green" }}
+                                >
+                                    <strong
+                                        style={{ fontFamily: "Titillium Web" }}
+                                    >
+                                        &lt; Go back to role selection
+                                    </strong>
+                                </Link>
                             </div>
                             <h1 className="display-4 text-left page-header">
-                                Your Profile
+                                Create an account
                             </h1>
 
                             <div className="thin-container">
                                 <p className="thin-container-title text-center">
-                                    Edit Your Profile
+                                    Sign up as Doctor
                                 </p>
 
                                 <form onSubmit={this.onSubmit}>
@@ -141,7 +139,6 @@ class DoctorProfileEditor extends Component {
                                                     )}
                                                 </div>
                                             </td>
-                                            {/*
                                             <td className="td-textbox-holder">
                                                 <div className="form-group">
                                                     <input
@@ -166,7 +163,7 @@ class DoctorProfileEditor extends Component {
                                                         </div>
                                                     )}
                                                 </div>
-                                            </td> */}
+                                            </td>
                                         </tr>
                                         {/*Row 2*/}
                                         <tr>
@@ -282,7 +279,7 @@ class DoctorProfileEditor extends Component {
                                         <input
                                             type="submit"
                                             className="button-submit button-primary"
-                                            value="Update Account"
+                                            value="Create Account"
                                         />
                                     </div>
                                 </form>
@@ -295,19 +292,17 @@ class DoctorProfileEditor extends Component {
     }
 }
 
-DoctorProfileEditor.propTypes = {
+DoctorSignupForm.propTypes = {
     createNewUser: PropTypes.func.isRequired,
-    getCurrentUser: PropTypes.func.isRequired,
-    security: PropTypes.object.isRequired,
+    login: PropTypes.func.isRequired,
     validateUser: PropTypes.func.isRequired,
-    currentUser: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired,
+    security: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-    currentUser: state.currentUser,
+    errors: state.errors,
     security: state.security,
-    errors: state.errors
 });
 
-export default connect(mapStateToProps, { createNewUser, getCurrentUser, validateUser })(DoctorProfileEditor);
+export default connect(mapStateToProps, { createNewUser, login, validateUser })(DoctorSignupForm);
