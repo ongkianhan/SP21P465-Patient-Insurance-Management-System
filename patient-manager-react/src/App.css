@@ -1,0 +1,470 @@
+/*///////////////// PRE-WRITTEN CSS FROM REACT ///////////////////////*/
+
+.App {
+    text-align: center;
+}
+
+.App-logo {
+    height: 40vmin;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
+}
+
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.App-link {
+    color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/*///////////////// HTML TAGS ///////////////////////*/
+
+* {
+    font-family: "Montserrat";
+    font-size: 14pt;
+}
+
+button {
+    background-color: #aaaaaa;
+    color: #ffffff;
+    border: none;
+    padding: 12px;
+}
+
+input {
+    font-size: 16px !important;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td,
+th {
+    border-collapse: collapse;
+    box-sizing: border-box;
+}
+
+/*///////////////// REPEATABLE ELEMENTS ///////////////////////*/
+
+.page-header {
+    margin-top: 18px;
+    margin-bottom: 18px;
+}
+.paragraph {
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+
+/*.link-to-previous-page {  Unused, can be removed
+    padding-top: 18px;
+    font-size: 12px !important;
+    font-family: Titillium Web !important;
+    color: green !important;
+    text-align: left !important;
+}*/
+
+.thin-container {
+    border-radius: 15px;
+    border: #888888 solid 1px;
+    padding: 48px;
+    padding-top: 0px;
+    width: 100%;
+}
+
+.thin-container-title {
+    margin-top: 24px !important;
+    margin-bottom: 12px !important;
+}
+
+.textbox {
+    font-size: 16px !important;
+    width: 100%;
+}
+
+.td-textbox-holder {
+    padding-right: calc(12px + 1vmin);
+}
+
+.primary-bg {
+    background-color: #00aa95 !important;
+}
+
+.list-container {
+    background-color: #aaaaaa !important;
+}
+
+.button-generic {
+    margin-top: 24px;
+    padding: 12px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    font-weight: bold;
+    font-family: "Questrial";
+    font-size: 36px;
+    border: none;
+    border-radius: 20px;
+    color: #ffffff;
+    background-color: #aaaaaa;
+}
+
+.button-generic:hover {
+    text-decoration: none;
+    color: #dddddd;
+}
+
+.button-jumbo {
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    font-size: 36px;
+}
+
+.button-card {
+    font-size: 18px;
+    font-family: "Questrial";
+    background-color: #aaaaaa;
+    color: #ffffff;
+    border: none;
+    padding: 12px;
+}
+
+.button-primary {
+    background-color: #00aa00 !important;
+    border-radius: 20px;
+    color: #ffffff;
+}
+
+.button-secondary {
+    background-color: #0000aa !important;
+    border-radius: 20px;
+    color: #ffffff;
+}
+
+.button-submit {
+    width: 50%;
+    margin-top: 24px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    border: none;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/*///////////////// SINGLE-USE ELEMENTS ///////////////////////*/
+
+.button-landing-page {
+    width: 50% !important;
+    height: auto !important;
+    font-size: 24px !important;
+    font-family: "Titillium Web" !important;
+    border-radius: 18px !important;
+    border: none !important;
+}
+
+.nav-link {
+    white-space: nowrap;
+    overflow: hidden;
+    color: white;
+}
+.nav-link:hover {
+    color: white;
+}
+.nav-td {
+    height: 100%;
+}
+
+/*///////////////// NAVBAR ELEMENTS ///////////////////////*/
+/* Styles are based on https://codepen.io/skwbr/pen/QjaBLV */
+.nav-horizontal {
+    background-color: #00aa95;
+    overflow: hidden;
+    height: 3em;
+    width: 100%;
+}
+
+.nav-container {
+    background-color: #00aa95;
+    overflow: hidden;
+    height: 3em;
+    width: 100%;
+    height: 5em;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.nav-list {
+    background-color: #00aa95;
+    overflow: hidden;
+    height: 3em;
+    width: 100%;
+    display: inline-table;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+.nav-item {
+    overflow: hidden;
+    height: 3em;
+    display: table-cell;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+.nav-link {
+    display: inline-table !important;
+    margin: 0 auto !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    height: 3em !important;
+    width: 100% !important;
+    display: block !important;
+    padding: 0 1em !important;
+    text-decoration: none !important;
+    color: #ffffff !important;
+    height: 3em !important;
+    line-height: 3 !important;
+}
+.nav-link:hover {
+    text-decoration: none !important;
+    border-bottom: 3px solid white !important;
+}
+
+/*///////////////// FOOTER ELEMENTS ///////////////////////*/
+.footer-horizontal {
+    background-color: #00aa95;
+    overflow: hidden;
+    height: 2em;
+    width: 100%;
+    margin-bottom: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.footer-container {
+    background-color: #00aa95;
+    overflow: hidden;
+    height: 3em;
+    width: 100%;
+    height: 2em;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 0px !important;
+}
+.footer-item {
+    display: inline-table !important;
+    margin: 0 auto !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    height: auto !important;
+    width: 100% !important;
+    display: block !important;
+    padding: 0 0.5em !important;
+    text-decoration: none !important;
+    color: #ffffff !important;
+    height: 2em !important;
+    line-height: 3 !important;
+    font-size: 12px !important;
+}
+.footer-item:hover {
+    text-decoration: none !important;
+}
+.footer-list {
+    background-color: #00aa95;
+    overflow: hidden;
+    height: 2em;
+    width: 100%;
+    display: inline-table;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+/*///////////////// GeneralSignupForm ELEMENTS ///////////////////////*/
+.td-option-for-signup {
+    border-bottom: 6px solid #00aa95 !important;
+    padding: 0px !important;
+}
+.image-option-for-signup {
+    width: 80% !important;
+    margin: 0px !important;
+    filter: opacity(100%);
+}
+.image-option-for-signup:hover {
+    width: 100%;
+    filter: opacity(100%);
+}
+.div-option-for-signup {
+    height: 100% !important;
+    width: 100% !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+    color: black !important;
+    border: 1px solid #888888;
+}
+.div-option-for-signup:hover {
+    background-color: #00aa95;
+    color: white !important;
+}
+.link-option-for-signup {
+    height: 100% !important;
+    width: 100% !important;
+    color: white !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+.link-option-for-signup:hover {
+    text-decoration: none !important;
+}
+
+/*///////////////// AppointmentScheduler ELEMENTS ///////////////////////*/
+.td-appointment,
+.th-appointment {
+    font-size: calc(1.5vh+1.5vw);
+    border: 1px solid #888888;
+    text-align: center;
+}
+.th-appointment {
+    background-color: #32bbaa;
+    color: black;
+}
+.td-appointment-open {
+    background-color: #7cc67c;
+    border: 1px solid #bbbbbb;
+    font-weight: bold;
+    color: black;
+}
+.td-appointment-open:hover {
+    cursor: pointer;
+    background-color: #6fb26f;
+}
+.td-appointment-taken {
+    background-color: #eeeeee;
+    color: #888888;
+}
+
+/*///////////////// MODAL POPUP ELEMENTS ///////////////////////*/
+/* Styles are based on https://www.w3schools.com/howto/howto_css_modals.asp */
+/* The Modal (background) */
+.modal-scrim {
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 0;
+    border: 1px solid #888;
+    width: calc(65% + 2vmin) !important;
+    max-width: 100% !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    animation-name: animatetop;
+    animation-duration: 1s;
+}
+
+/* The Close Button */
+.modal-close-button {
+    color: #eeeeee !important;
+    float: right;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.modal-close-button:hover,
+.modal-close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    padding: 2px 4px;
+    color: white;
+    text-align: left;
+}
+
+.modal-header-text {
+    font-size: 32px;
+    font-weight: bold;
+    font-family: "Montserrat";
+}
+
+/* Modal Body */
+.modal-body {
+    padding: 2px 16px;
+}
+
+/* Add Animation */
+@keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0;
+    }
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+/*///////////////// TOOLTIP ELEMENTS ///////////////////////*/
+/* Styles are based on https://www.w3schools.com/css/css_tooltip.asp */
+/* Tooltip text */
+.tooltip-text {
+    visibility: hidden;
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+    color: #fff;
+    text-align: center;
+    padding: 4px 1em !important;
+    border-radius: 6px;
+    position: absolute !important;
+    z-index: 1 !important;
+    font-family: Questrial;
+    font-size: 16px;
+}
+.tooltip-text-left {
+    right: 95%;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.td-appointment-open:hover .tooltip-text {
+    visibility: visible;
+}
+.td-appointment-taken:hover .tooltip-text {
+    visibility: visible;
+}
