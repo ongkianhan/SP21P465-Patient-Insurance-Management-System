@@ -11,6 +11,7 @@ class DoctorProfileEditor extends Component {
         super();
 
         this.state = {
+            userId: "",
             email: "",
             password: "",
             firstName: "",
@@ -20,35 +21,38 @@ class DoctorProfileEditor extends Component {
             errors: {},
         };
 
-
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    componentDidMount()
+    async componentDidMount()
     {
         //Make a request to get all the user's info from the database
-        const userId = this.props.security.user.userId;
-        this.props.getCurrentUser(userId, this.props.history);
+        const {userId} = this.props.match.params;
+        this.setState({userId: userId});
+        console.log(userId);
+        await this.props.getCurrentUser(userId, this.props.history);
     }
 
     componentWillReceiveProps(nextProps) {
+        //Show errors if they exist
         if (nextProps.errors) {
             this.setState({ errors: nextProps.errors });
         }
 
-        //Set the state to the current user's info so that
-        //it shows on the page
+        //Set the state to the current user's info so that it shows on the page
         const {
             email,
+            password,
             firstName,
             lastName,
             specialization,
             hospitalName,
-        } = this.props.currentUser.currentUser
-
+        } = nextProps.currentUser.currentUser;
+        //Display the user's information
         this.setState({
             email,
+            password,
             firstName,
             lastName,
             specialization,
@@ -61,14 +65,16 @@ class DoctorProfileEditor extends Component {
         e.preventDefault();
         //Create a new doctor account
         const newDoctor = {
-            email: this.email,
-            password: this.password,
-            firstName: this.firstName,
-            lastName: this.lastName,
-            specialization: this.specialization,
-            hospitalName: this.hospitalName,
+            userId: this.state.userId,
+            email: this.state.email,
+            password: this.state.password,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            specialization: this.state.specialization,
+            hospitalName: this.state.hospitalName,
             errors: {},
         };
+        console.log(newDoctor);
     
         //Validate the user
         const frontEndErrors = validateUser(newDoctor)

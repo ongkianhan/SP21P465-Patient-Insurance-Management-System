@@ -17,7 +17,7 @@ class Header extends Component {
         const userIsAuthenticated = (
             <span>
                 <li className="nav-item">
-                <Link to="/edit-doctor-profile" className="nav-link">
+                <Link to={`/edit-doctor-profile/${user.userId}`} className="nav-link">
                         {user.email}
                     </Link>
                 </li>
