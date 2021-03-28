@@ -40,8 +40,20 @@ public class UserService
     {
         try
         {
-            //Encode the password
-            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            //Check if the user already exists
+            if (user.getUserId() != null) //Existing user
+            {
+                //Retrieve the old user data from the database
+                User oldUserData = userRepository.findById(user.getUserId()).get();
+                //Use the old password again
+                user.setPassword(oldUserData.getPassword());
+            }
+            else //New user
+            {
+                //Encode the password
+                user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            }
+
             //Throw error if username taken
             user.setUsername(user.getUsername());
 

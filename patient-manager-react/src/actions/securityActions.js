@@ -67,7 +67,7 @@ export const logout = () => dispatch => {
 };
 
 
-export const validateUser = ( user) => {
+export const validateUser = (user) => {
     const errorOutput = {};
     //Check if the first name or last name contain a number
     if (/\d/.test(user.firstName))
@@ -77,6 +77,24 @@ export const validateUser = ( user) => {
     if (/\d/.test(user.lastName))
     {
         errorOutput["lastName"] = "Last name cannot contain numbers";
+    }
+
+    //Check for a blank fields
+    if (user.email == "")
+    {
+        errorOutput["email"] = "Email address cannot be blank";
+    }
+    if (user.password == "")
+    {
+        errorOutput["password"] = "Password cannot be blank";
+    }
+    if (user.firstName == "")
+    {
+        errorOutput["firstName"] = "First name cannot be blank";
+    }
+    if (user.lastName == "")
+    {
+        errorOutput["lastName"] = "Last name cannot be blank";
     }
     return errorOutput;
 }
