@@ -23,7 +23,15 @@ class LoginForm extends Component
         //Instantly bring the user to their dashboard
         //if they are already logged in
         if (this.props.security.validToken) {
-            this.props.history.push("/dashboard");
+            if(this.props.security.user.userType=="DOC"){
+                this.props.history.push("/doctor-dashboard");
+            }
+            if(this.props.security.user.userType=="PAT"){
+                this.props.history.push("/patient-dashboard");
+            }
+            if(this.props.security.user.userType=="INS"){
+                this.props.history.push("/insurer-dashboard");
+            }
         }
     }
 
@@ -32,7 +40,16 @@ class LoginForm extends Component
         //Instantly bring the user to their dashboard
         //if they are already logged in
         if (nextProps.security.validToken) {
-            this.props.history.push("/dashboard");
+            if(nextProps.security.user.userType=="DOC"){
+                this.props.history.push("/doctor-dashboard");
+            }
+            else if(nextProps.security.user.userType=="PAT"){
+                this.props.history.push("/patient-dashboard");
+            }
+            else if(nextProps.security.user.userType=="INS"){
+                this.props.history.push("/insurer-dashboard");
+            }
+            
         }
 
         //Show errors if they exist

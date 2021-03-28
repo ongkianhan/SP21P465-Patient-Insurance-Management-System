@@ -14,6 +14,18 @@ class Header extends Component {
     render() {
         const { validToken, user } = this.props.security;
 
+        let linkToDashboard;
+
+        if(user.userType == "DOC"){
+            linkToDashboard = "/doctor-dashboard"
+        }
+        else if(user.userType == "PAT"){
+            linkToDashboard = "/patient-dashboard"
+        }
+        else if(user.userType == "INS"){
+            linkToDashboard = "/insurer-dashboard"
+        }
+
         const userIsAuthenticated = (
             <span>
                 <li className="nav-item">
@@ -22,7 +34,7 @@ class Header extends Component {
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/dashboard" className="nav-link">
+                    <Link to={linkToDashboard} className="nav-link">
                         Dashboard
                     </Link>
                 </li>

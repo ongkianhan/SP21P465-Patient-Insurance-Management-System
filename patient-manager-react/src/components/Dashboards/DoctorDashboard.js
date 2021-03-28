@@ -13,8 +13,8 @@ class Dashboard extends Component
     render() {
         return (
             <div>
-                <h1>Temporary dashboard</h1>
-                <p>{this.props.security.user.userType}</p>
+                <h1>Welcome to the Doctor Dashboard</h1>
+                <p>{/*this.props.security.user.userType*/}</p>
             </div>
         )
     }
