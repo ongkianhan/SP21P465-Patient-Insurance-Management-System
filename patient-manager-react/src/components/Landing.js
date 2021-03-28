@@ -11,8 +11,19 @@ class Landing extends Component
     {
         //Instantly bring the user to their dashboard
         //if they are already logged in
+        
+
         if (this.props.security.validToken) {
-            this.props.history.push("/dashboard");
+            if(this.props.security.user.userType == "DOC"){
+                this.props.history.push("/doctor-dashboard");
+            }
+            else if(this.props.security.user.userType == "PAT"){
+                this.props.history.push("/patient-dashboard");
+            }
+            else if(this.props.security.user.userType == "INS"){
+                this.props.history.push("/insurer-dashboard");
+            }
+            
         }
     }
 
