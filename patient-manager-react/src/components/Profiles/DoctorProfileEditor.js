@@ -3,7 +3,6 @@ import { createNewUser, validateUser } from "../../actions/securityActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
-import { Link } from "react-router-dom";
 import { getCurrentUser } from "../../actions/userActions";
 
 class DoctorProfileEditor extends Component {
@@ -23,15 +22,6 @@ class DoctorProfileEditor extends Component {
 
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-    }
-
-    async componentDidMount()
-    {
-        //Make a request to get all the user's info from the database
-        const {userId} = this.props.match.params;
-        this.setState({userId: userId});
-        console.log(userId);
-        await this.props.getCurrentUser(userId, this.props.history);
     }
 
     componentWillReceiveProps(nextProps) {

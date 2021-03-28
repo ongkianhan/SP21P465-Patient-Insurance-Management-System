@@ -8,7 +8,6 @@ import store from "./store";
 //Custom routes
 import SecuredRoute from "./securityUtils/SecuredRoute";
 import DashboardRoute from "./securityUtils/DashboardRoute";
-import ProfileRoute from "./securityUtils/ProfileRoute";
 
 //Components
 import DoctorSearch from "./components/UserSearch/DoctorSearch.js";
@@ -17,16 +16,13 @@ import DoctorSignupForm from "./components/SignUp/DoctorSignupForm";
 import PatientSignupForm from "./components/SignUp/PatientSignupForm";
 import InsurerSignupForm from "./components/SignUp/InsurerSignupForm";
 import Login from "./components/SignUp/LoginForm";
-import DoctorDashboard from "./components/Dashboards/DoctorDashboard";
-import PatientDashboard from "./components/Dashboards/PatientDashboard";
-import InsurerDashboard from "./components/Dashboards/InsurerDashboard";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Landing from "./components/Landing";
 import InvalidUserTypeLanding from "./components/InvalidUserTypeLanding";
 import GeneralSignupForm from "./components/SignUp/GeneralSignupForm";
 import ChatContainer from "./components/Chat/ChatContainer"
-import DoctorProfileEditor from "./components/Profiles/DoctorProfileEditor"
+import ProfileContainer from "./components/Profiles/ProfileContainer"
 
 
 class App extends Component 
@@ -49,11 +45,11 @@ class App extends Component
               <Route exact path="/doctor-signup" component={DoctorSignupForm} />
               <Route exact path="/insurer-signup" component={InsurerSignupForm} />
               <Route exact path="/find-doctors" component={DoctorSearch} />
+              <Route exact path="/profile/:userId" component={ProfileContainer} />
 
               {
                   //Private routes only accessible to users logged in
               }
-              <ProfileRoute exact path="/profile/:userId" />
               <DashboardRoute exact path="/dashboard" />
               <SecuredRoute exact path="/schedule-appointment/:userId" userTypeBlacklist={["DOC", "INS"]} component={AppointmentScheduler} />
               <SecuredRoute exact path="/chat" component={ChatContainer} />
