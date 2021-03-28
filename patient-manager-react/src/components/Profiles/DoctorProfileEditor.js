@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { createNewUser, validateUser } from "../actions/securityActions";
+import { createNewUser, validateUser } from "../../actions/securityActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
 import { Link } from "react-router-dom";
-import { getCurrentUser } from "../actions/userActions";
+import { getCurrentUser } from "../../actions/userActions";
 
 class DoctorProfileEditor extends Component {
     constructor() {
