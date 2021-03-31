@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import { getAppointmentsByDoctorId } from "../../actions/appointmentActions";
-import DoctorAppointmentCard from "../DoctorAppointmentCard";
+import DoctorAppointmentCard from "./DoctorAppointmentCard";
 
 var noAppointmentsMessage
 
@@ -16,19 +16,6 @@ class Dashboard extends Component
 
         
         //Display a message if there are no appointments
-        console.log(this.props.appointment)
-        console.log(this.props.appointment.allAppointments)
-        if (this.props.appointment.length===0)
-        {
-            noAppointmentsMessage = (
-                <div className="alert alert-info text-center" role="alert">
-                    It looks like no appointments could be found...
-                </div>
-            )
-        }
-        else{
-            noAppointmentsMessage = (<span/>)
-        }
     }
 
     constructor()
@@ -37,11 +24,25 @@ class Dashboard extends Component
     }
 
     render() {
+
+        if (this.props.appointment.allAppointments.length===0)
+        {
+            noAppointmentsMessage = (
+                <div className="container row align-items-left pl-5" style = {{width:'100vh', height:'15vh'}}>
+                    <div className="card card-body bg-light">
+                        <h4>It looks like no appointment could be found...</h4>
+                    </div>
+                </div>
+            )
+        }
+        else{
+            noAppointmentsMessage = (<span/>)
+        }
        
         const {allAppointments} = this.props.appointment
         return (
-            <div>
-                <h3 className="pl-5 text-left pb-2">Your upcoming appointments</h3>
+            <div className="container row">
+                <h3 className="pl-5 pb-2 font-weight-bold text-center col-10">Your upcoming appointments</h3>
                 {/*this.props.security.user.userType*/}
                 
                 {noAppointmentsMessage}

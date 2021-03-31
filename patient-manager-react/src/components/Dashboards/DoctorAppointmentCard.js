@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from "react-router-dom";
 import {PropTypes} from "prop-types";
-import defaultProfileIcon from "../static/defaultProfileIcon.png";
 import { connect } from "react-redux";
 
 
@@ -31,13 +30,13 @@ class DoctorAppointmentCard extends Component
     
         const {appointment} = this.props;
         return (
-            <div className="container row align-items-left pl-5" style = {{width:'100vh'}}>
+            <div className="container row pl-5" style = {{width:'100vh'}}>
             <div className="card card-body bg-light">
                 <div className="row align-items-center">
                     <div className="col-8 text-left">
                         <h1>{appointment.patient.firstName} {appointment.patient.lastName}</h1>
                         <h3>{date} {AMorPM}</h3>
-                        <h5></h5>
+                        {/*<h5>Age: {appointment.patient.age}</h5>*/}
                         <p></p>
                     </div>
                     <div className="col-4">
