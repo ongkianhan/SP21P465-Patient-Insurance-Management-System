@@ -47,7 +47,7 @@ public class AppointmentService
     {
         //FIXME might not work correctly if the user is in a different time zone than the server?
         Date now = new Date(); //pass in the current time to only show upcoming Appointments
-        return appointmentRepository.getAppointmentsByPatientId(patientId, now);
+        return appointmentRepository.getAppointmentsByPatientId(patientId);
     }
 
     public Iterable<Appointment> getAppointmentsByDoctorId(long doctorId)

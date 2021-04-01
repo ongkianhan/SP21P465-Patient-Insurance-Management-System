@@ -35,7 +35,7 @@ class PatientAppointmentCard extends Component
                     </div>
                     <div className="col-4">
                         <Link to=""><h1 className="button-secondary btn-lg">Show Directions</h1></Link>
-                        <Link to=""><h1 className="button-secondary btn-lg">View Doctor</h1></Link>
+                        <Link to={`/account/${appointment.doctor.userId}`}><h1 className="button-secondary btn-lg">View Doctor</h1></Link>
                         {this.props.review ? (
                         <Link to=""><h1 className="button-secondary btn-lg">Write Review</h1></Link> ) :
                         (<span/>)

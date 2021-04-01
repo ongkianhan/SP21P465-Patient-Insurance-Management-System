@@ -13,9 +13,8 @@ public interface AppointmentRepository extends CrudRepository<Appointment, Long>
 {
     @Query("SELECT a FROM Appointment a " +
             "WHERE a.patient.id = :patientId " +
-            "AND a.date > :now " +
             "ORDER BY a.date ")
-    List<Appointment> getAppointmentsByPatientId(long patientId, Date now);
+    List<Appointment> getAppointmentsByPatientId(long patientId);
 
     @Query("SELECT a FROM Appointment a " +
             "WHERE a.doctor.id = :doctorId " +

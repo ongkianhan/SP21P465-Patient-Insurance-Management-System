@@ -27,6 +27,7 @@ class DoctorProfileEditor extends Component {
 
     async componentDidMount()
     {
+        console.log("hello")
         //Make a request to get all the user's info from the database
         const {userId} = this.props.match.params;
         this.setState({userId: userId});
@@ -55,6 +56,7 @@ class DoctorProfileEditor extends Component {
         if (nextProps.errors) {
             this.setState({ errors: nextProps.errors });
         }
+        
     }
     
     
@@ -99,6 +101,7 @@ class DoctorProfileEditor extends Component {
     }
 
     render() {
+        
         const { errors } = this.state;
 
         let successMessage;
