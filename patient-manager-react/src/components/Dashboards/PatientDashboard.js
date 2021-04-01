@@ -59,7 +59,7 @@ class Dashboard extends Component
                     
                 ))}
                 {futureAppointments ? (
-                    <h3 className="pl-5 pb-2 font-weight-bold text-center col-10">Your upcoming appointments</h3>) :
+                    <h3 className="pl-5 pb-3 font-weight-bold text-center col-10">Your upcoming appointments</h3>) :
                     (<span/>)
                 }
             
@@ -75,7 +75,7 @@ class Dashboard extends Component
                 ))}
 
                 {pastAppointments ? (
-                    <h3 className="pl-5 pb-2 pt-2 font-weight-bold text-center col-10">Your Past appointments</h3>) :
+                    <h3 className="pl-5 pb-2 pt-3 font-weight-bold text-center col-10">Your Past appointments</h3>) :
                     (<span/>)
                 }
 
