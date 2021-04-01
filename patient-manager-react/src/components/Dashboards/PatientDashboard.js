@@ -5,6 +5,8 @@ import { getAppointmentsByPatientId } from "../../actions/appointmentActions";
 import PatientAppointmentCard from "./PatientAppointmentCard";
 
 var noAppointmentsMessage
+var futureAppointments = false
+var pastAppointments = false
 
 class Dashboard extends Component
 {
@@ -14,7 +16,7 @@ class Dashboard extends Component
         //const {userId} = this.props.match.params;
         await this.props.getAppointmentsByPatientId(this.props.security.user.userId)
 
-        console.log(this.props.appointment)
+        //console.log(this.props.appointment)
         //Display a message if there are no appointments
     }
 
@@ -41,15 +43,49 @@ class Dashboard extends Component
        
         const {allAppointments} = this.props.appointment
 
+        
+
         return (
             <div className="container row">
-                <h3 className="pl-5 pb-2 font-weight-bold text-center col-10">Your upcoming appointments</h3>
+                
+                
                 {/*this.props.security.user.userType*/}
+
+                {allAppointments.map(appointment => (
+                    
+                    (new Date(appointment.date).getTime()) >= (new Date()).getTime() ? (
+                        futureAppointments = true) :
+                        (pastAppointments = true)
+                    
+                ))}
+                {futureAppointments ? (
+                    <h3 className="pl-5 pb-2 font-weight-bold text-center col-10">Your upcoming appointments</h3>) :
+                    (<span/>)
+                }
+            
                 
                 {noAppointmentsMessage}
 
                 {allAppointments.map(appointment => (
-                    <PatientAppointmentCard key={appointment.appointmentId} appointment={appointment}/>
+                    
+                    (new Date(appointment.date).getTime()) >= (new Date()).getTime() ? (
+                        <PatientAppointmentCard key={appointment.appointmentId} appointment={appointment} review = {false}/>) :
+                        (<span/>)
+                    
+                ))}
+
+                {pastAppointments ? (
+                    <h3 className="pl-5 pb-2 font-weight-bold text-center col-10">Your Past appointments</h3>) :
+                    (<span/>)
+                }
+
+
+                {allAppointments.map(appointment => (
+                    
+                    (new Date(appointment.date).getTime()) <= (new Date()).getTime() ? (
+                        <PatientAppointmentCard key={appointment.appointmentId} appointment={appointment} review={true}/>) :
+                        (<span/>)
+                    
                 ))}
                 
                 {/*allAppointments.map(appointment => (<DoctorAppointmentCard key={appointment.id} appointment={appointment}/>))*/}
