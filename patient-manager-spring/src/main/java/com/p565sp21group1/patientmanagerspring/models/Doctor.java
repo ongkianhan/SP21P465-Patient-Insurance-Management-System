@@ -30,6 +30,8 @@ public class Doctor extends User
     @Column(name = "longitude", nullable = true, unique = false)
     private double longitude;
 
+    private boolean supportsCovidCare = false;
+
     public Doctor() {
         this.setUserType("DOC");
     }
@@ -72,5 +74,13 @@ public class Doctor extends User
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public boolean isSupportsCovidCare() {
+        return supportsCovidCare;
+    }
+
+    public void setSupportsCovidCare(boolean supportsCovidCare) {
+        this.supportsCovidCare = supportsCovidCare;
     }
 }

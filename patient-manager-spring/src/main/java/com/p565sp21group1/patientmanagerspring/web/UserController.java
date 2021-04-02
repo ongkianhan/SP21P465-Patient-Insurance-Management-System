@@ -6,6 +6,7 @@ import com.p565sp21group1.patientmanagerspring.models.Doctor;
 import com.p565sp21group1.patientmanagerspring.models.Insurer;
 import com.p565sp21group1.patientmanagerspring.models.Patient;
 import com.p565sp21group1.patientmanagerspring.models.User;
+import com.p565sp21group1.patientmanagerspring.payload.DoctorSearchRequest;
 import com.p565sp21group1.patientmanagerspring.payload.JwtLoginSuccessResponse;
 import com.p565sp21group1.patientmanagerspring.payload.LoginRequest;
 import com.p565sp21group1.patientmanagerspring.security.JwtTokenProvider;
@@ -96,6 +97,12 @@ public class UserController
 
     @GetMapping("/all-doctors")
     public Iterable<Doctor> getAllDoctors(){return userService.getAllDoctors();}
+
+    @GetMapping("/search-doctors")
+    public Iterable<Doctor> getDoctorsByFilter(@Valid @RequestBody DoctorSearchRequest filter)
+    {
+        return userService.getDoctorsByFilter(filter);
+    }
 
     @GetMapping("/{userId}")
     public User getUserById(@PathVariable String userId)

@@ -4,6 +4,7 @@ import com.p565sp21group1.patientmanagerspring.exceptions.UserNotFoundException;
 import com.p565sp21group1.patientmanagerspring.exceptions.EmailTakenException;
 import com.p565sp21group1.patientmanagerspring.models.Doctor;
 import com.p565sp21group1.patientmanagerspring.models.User;
+import com.p565sp21group1.patientmanagerspring.payload.DoctorSearchRequest;
 import com.p565sp21group1.patientmanagerspring.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -85,9 +86,9 @@ public class UserService
         }
     }
 
-    public Iterable<Doctor> filterDoctors()
+    public Iterable<Doctor> getDoctorsByFilter(DoctorSearchRequest filter)
     {
         //TODO
-        return new ArrayList<Doctor>();
+        return userRepository.getDoctorsByFilter(filter);
     }
 }

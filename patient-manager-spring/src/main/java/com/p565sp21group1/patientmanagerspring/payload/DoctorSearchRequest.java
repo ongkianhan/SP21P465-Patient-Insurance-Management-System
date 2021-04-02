@@ -12,6 +12,8 @@ public class DoctorSearchRequest
 
     private long longitude;
 
+    private int maxRadius = Integer.MAX_VALUE;
+
     private boolean supportsCovidCare;
 
     public DoctorSearchRequest() {
@@ -47,6 +49,14 @@ public class DoctorSearchRequest
 
     public void setLongitude(long longitude) {
         this.longitude = longitude;
+    }
+
+    public int getMaxRadius() {
+        return maxRadius;
+    }
+
+    public void setMaxRadius(int maxRadius) {
+        this.maxRadius = maxRadius;
     }
 
     public boolean isSupportsCovidCare() {

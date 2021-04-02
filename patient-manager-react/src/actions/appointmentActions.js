@@ -30,6 +30,14 @@ export const getAppointmentsByDoctorId = (doctorId) => async dispatch => {
     });
 }
 
+export const getAppointmentsByPatientId = (patientId) => async dispatch => {
+    const res = await axios.get(`/api/appointments/get-by-patient/${patientId}`);
+    dispatch ({
+        type: GET_MANY_APPOINTMENTS,
+        payload: res.data
+    });
+}
+
 export const validateAppointment = (appointment) => {
     const errorOutput = {};
     //Check if date is blank

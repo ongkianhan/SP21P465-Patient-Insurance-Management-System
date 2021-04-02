@@ -55,6 +55,7 @@ class DoctorProfileEditor extends Component {
         if (nextProps.errors) {
             this.setState({ errors: nextProps.errors });
         }
+        
     }
     
     
@@ -99,6 +100,7 @@ class DoctorProfileEditor extends Component {
     }
 
     render() {
+        
         const { errors } = this.state;
 
         let successMessage;

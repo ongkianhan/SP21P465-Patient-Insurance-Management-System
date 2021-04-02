@@ -23,6 +23,7 @@ import InvalidUserTypeLanding from "./components/InvalidUserTypeLanding";
 import GeneralSignupForm from "./components/SignUp/GeneralSignupForm";
 import ChatContainer from "./components/Chat/ChatContainer"
 import ProfileContainer from "./components/Profiles/ProfileContainer"
+import AccountContainer from "./components/Accounts/AccountContainer"
 
 
 class App extends Component 
@@ -46,6 +47,7 @@ class App extends Component
               <Route exact path="/insurer-signup" component={InsurerSignupForm} />
               <Route exact path="/find-doctors" component={DoctorSearch} />
               <Route exact path="/profile/:userId" component={ProfileContainer} />
+              <Route exact path="/account/:userId" component={AccountContainer} />
 
               {
                   //Private routes only accessible to users logged in

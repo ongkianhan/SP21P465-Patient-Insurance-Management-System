@@ -1,11 +1,9 @@
 package com.p565sp21group1.patientmanagerspring.web;
 
-import com.p565sp21group1.patientmanagerspring.exceptions.PermissionDeniedException;
 import com.p565sp21group1.patientmanagerspring.models.Appointment;
 import com.p565sp21group1.patientmanagerspring.models.Doctor;
 import com.p565sp21group1.patientmanagerspring.services.AppointmentService;
 import com.p565sp21group1.patientmanagerspring.services.ErrorMapValidationService;
-import com.p565sp21group1.patientmanagerspring.services.PermissionService;
 import com.p565sp21group1.patientmanagerspring.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,7 +46,6 @@ public class AppointmentController
 
         long doctorIdLong = userService.parseUserId(doctorId);
 
-        System.out.println("Sending to service!");
         Appointment newAppointment = appointmentService.addAppointment(doctorIdLong, appointment, principal.getName());
         return new ResponseEntity<Appointment>(newAppointment, HttpStatus.CREATED);
     }
