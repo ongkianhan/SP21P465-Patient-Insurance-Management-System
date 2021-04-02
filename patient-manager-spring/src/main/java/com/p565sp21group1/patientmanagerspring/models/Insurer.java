@@ -5,6 +5,8 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Insurer")
@@ -26,4 +28,23 @@ public class Insurer extends User
     public void setFirmName(String firmName) {
         this.firmName = firmName;
     }
+
+    @Column(name = "latitude", nullable = true, unique = false)     //location for insurer is required for maps
+    private double latitude;
+
+    @Column(name = "longitude", nullable = true, unique = false)
+    private double longitude;
+
+    public List<InsurancePackage> getInsurancePackageOfferings() {
+        return InsurancePackageOfferings;
+    }
+
+    public List<InsurancePackage> setInsurancePackageOfferings(List<InsurancePacakge> offerings)
+    {
+        this.InsurancePackageOfferings = offerings;
+    }
+
+    public List<InsurancePackage> InsurancePackageOfferings = new ArrayList<>();
+
+
 }
