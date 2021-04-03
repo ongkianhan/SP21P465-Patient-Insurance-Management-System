@@ -7,16 +7,17 @@ import { getCurrentUser } from "../../actions/userActions";
 import defaultProfileIcon from "../../static/defaultProfileIcon.png";
 import {Link} from "react-router-dom";
 
-class DoctorAccount extends Component {
+class InsurerAccount extends Component {
     constructor() {
         super();        
     }
 
-    //When submitting, create the doctor
 
     render() {
-
+        
         const {currentUser} = this.props.currentUser
+
+        console.log(currentUser)
         return (
             <div className="container">
                 <div className="row">
@@ -25,31 +26,32 @@ class DoctorAccount extends Component {
                     </div>
                     <div className = "col-6 text-left">
                         <h1 className = "font-weight-bold">{currentUser.firstName} {currentUser.lastName}</h1>
-                        <h3>{currentUser.specialization}</h3>
-                        <h3>{currentUser.hospitalName}</h3>
+                        <h3>{currentUser.email}</h3>
+                        <h3>{currentUser.company}</h3>
                     </div>
                     <div className = "col-3 text-left">
-                    {this.props.security.user.userType == "PAT" ? (
-                        <Link to={`/schedule-appointment/${currentUser.userId}`}>
-                            <button className="col my-1 button-primary button-card">
-                                Make Appointment
-                            </button>
-                        </Link>
-                    ) : (<span/>)}
                         
-                        <Link to={""}>
+                        {/*<Link to={""}>
                             <button className="col my-1 button-secondary button-card">
                                 Show Directions
                             </button>
-                        </Link>
-                    </div>
-                    <div className="row pt-3 pl-5">
-                        <div className = "col- text-left">
-                            <h1>Reviews</h1>
-                            <h3>0 Stars | 0 Reviews</h3>
-                        </div>
+                    </Link>*/}
                     </div>
                 </div>
+                {/*<div className="row pt-5">
+                    <div className="col-6 text-left">
+                    {currentUser.drinking ? (
+                        <h2>Does drink</h2>
+                    ) : (<h2>Does not drink</h2>)}
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-6 text-left">
+                    {currentUser.smoking ? (
+                        <h2>Does smoke</h2>
+                    ) : (<h2>Does not smoke</h2>)}
+                    </div>
+                </div>*/}
             </div>
         );
     }
@@ -57,7 +59,7 @@ class DoctorAccount extends Component {
 
 
 
-DoctorAccount.propTypes = {
+InsurerAccount.propTypes = {
     getCurrentUser: PropTypes.func.isRequired,
     security: PropTypes.object.isRequired,
     validateUser: PropTypes.func.isRequired,
@@ -71,4 +73,4 @@ const mapStateToProps = (state) => ({
     errors: state.errors
 });
 
-export default connect(mapStateToProps, { getCurrentUser, validateUser })(DoctorAccount);
+export default connect(mapStateToProps, { getCurrentUser, validateUser })(InsurerAccount);

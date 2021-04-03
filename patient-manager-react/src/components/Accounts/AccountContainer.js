@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { DOC, PAT, INS } from "../../actions/userRoles";
 import DoctorAccount from "./DoctorAccount";
-//import PatientAccount from "./PatientAccount";
-//import InsurerAccount from "./InsurerAccount";
+import PatientAccount from "./PatientAccount";
+import InsurerAccount from "./InsurerAccount";
 import { getCurrentUser } from "../../actions/userActions";
 
 class ProfileContainer extends Component 
@@ -29,10 +29,10 @@ class ProfileContainer extends Component
                 TargetProfile = DoctorAccount;
                 break;
             case PAT:
-                TargetProfile = DoctorAccount//PatientAccount;
+                TargetProfile = PatientAccount;
                 break;
             case INS:
-                TargetProfile = DoctorAccount//InsurerAccount;
+                TargetProfile = InsurerAccount;
                 break;
         }
 
