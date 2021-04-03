@@ -40,7 +40,7 @@ class DoctorAppointmentCard extends Component
                         <p></p>
                     </div>
                     <div className="col-4">
-                        <Link to=""><button className="col my-1 button-secondary card-button">View Patient</button></Link>
+                        <Link to={`/account/${appointment.patient.userId}`}><button className="col my-1 button-secondary card-button">View Patient</button></Link>
                     </div>
                 </div>
             </div>
