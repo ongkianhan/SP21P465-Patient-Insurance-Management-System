@@ -18,6 +18,9 @@ public interface UserRepository extends CrudRepository<User, Long>
     @Query("SELECT d FROM Doctor d")
     Iterable<Doctor> getAllDoctors();
 
+    @Query("SELECT d.specialization FROM Doctor d")
+    Iterable<String> getAllSpecializations();
+
     @Query(value="SELECT d FROM Doctor d WHERE " +
             "(" +
                 ":#{#filter.keywords} LIKE CONCAT('%', d.firstName, '%') " +

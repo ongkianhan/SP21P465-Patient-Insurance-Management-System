@@ -88,7 +88,11 @@ public class UserService
 
     public Iterable<Doctor> getDoctorsByFilter(DoctorSearchRequest filter)
     {
-        //TODO
         return userRepository.getDoctorsByFilter(filter);
+    }
+
+    public Iterable<String> getAllSpecializations()
+    {
+        return userRepository.getAllSpecializations();
     }
 }

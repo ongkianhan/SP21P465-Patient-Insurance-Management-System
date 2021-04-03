@@ -104,6 +104,12 @@ public class UserController
         return userService.getDoctorsByFilter(filter);
     }
 
+    @GetMapping("/doctor-specializations")
+    public Iterable<String> getAllSpecializations()
+    {
+        return userService.getAllSpecializations();
+    }
+
     @GetMapping("/{userId}")
     public User getUserById(@PathVariable String userId)
     {

@@ -35,16 +35,4 @@ public class Insurer extends User
     @Column(name = "longitude", nullable = true, unique = false)
     private double longitude;
 
-    public List<InsurancePackage> getInsurancePackageOfferings() {
-        return InsurancePackageOfferings;
-    }
-
-    public List<InsurancePackage> setInsurancePackageOfferings(List<InsurancePacakge> offerings)
-    {
-        this.InsurancePackageOfferings = offerings;
-    }
-
-    public List<InsurancePackage> InsurancePackageOfferings = new ArrayList<>();
-
-
 }

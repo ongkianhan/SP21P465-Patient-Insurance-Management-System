@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_ERRORS, GET_MANY_DOCTORS, GET_ONE_DOCTOR, GET_CURRENT_USER } from "./types";
+import { GET_ERRORS, GET_MANY_DOCTORS, GET_ONE_DOCTOR, GET_CURRENT_USER, GET_ALL_SPECIALIZATIONS } from "./types";
 
 export const getAllDoctors = () => async dispatch => {
     const res = await axios.get("/api/account/all-doctors");
@@ -34,4 +34,12 @@ export const getCurrentUser = (id, history) => async dispatch => {
     } catch (error) {
         history.push("/dashboard");
     }
+}
+
+export const getAllSpecializations = () => async dispatch => {
+    const res = await axios.get("/api/account/doctor-specializations");
+    dispatch ({
+        type: GET_ALL_SPECIALIZATIONS,
+        payload: res.data
+    });
 }
