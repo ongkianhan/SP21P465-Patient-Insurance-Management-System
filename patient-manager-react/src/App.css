@@ -71,7 +71,7 @@ th {
 /*///////////////// REPEATABLE ELEMENTS ///////////////////////*/
 
 .page-header {
-    margin-top: 18px;
+    margin-top: 12px;
     margin-bottom: 18px;
 }
 .paragraph {
@@ -467,4 +467,118 @@ th {
 }
 .td-appointment-taken:hover .tooltip-text {
     visibility: visible;
+}
+
+
+/*///////////////// CHAT ELEMENTS ///////////////////////*/
+.chat-primary-container {
+    margin-left: 10vmax;
+    margin-right: 10vmax;
+}
+.chat-table-container {
+    border: 1px solid #666666;
+}
+.chat-conversation-container {
+    border: 1px solid #aaaaaa;
+    width: 20vmax;
+}
+.chat-viewport-container {
+    width: 60vmax;
+    height: 60vh;
+    margin: 0px;
+    background-color: #f2f2f2;
+}
+.message-container {
+    height: 90%;
+    background-color: #f2f2f2;
+    padding-top: auto;
+    padding-bottom: auto;
+    overflow-y:auto;
+}
+.chatbar-container {
+    height: 10%;
+    background-color: #dddddd;
+}
+#chatBar {
+    font-size: 75% !important;
+    border: none;
+    background-color: white;
+    border-radius: 10px;
+    width: 98%;
+    height: 85% !important;
+}
+#chatSendButtonContainer {
+    width: 18%;
+}
+#chatSendButton {
+    font-size: 80% !important;
+    font-weight: bold;
+    text-align: center;
+    height: 100% !important;
+    color: white;
+    background-color: #4093da;
+    border-radius: 10px;
+    padding: 6px 20% 6px 20%;
+}
+.message-header {
+    font-size: 10px;
+    width: auto;
+    margin-top: 2px;
+    margin-bottom: 0px;
+}
+.message {
+    font-size: 16px;
+    width: auto;
+    color: #111111;
+    border-radius: 10px;
+    padding: 2px 2px 2px 6px;
+    margin-bottom: 2px;
+}
+.received {
+    text-align: left;
+    margin-left: 6px;
+    margin-right: 53%;
+}
+.sent {
+    text-align: right;
+    margin-left: 53%;
+    margin-right: 6px;
+}
+.message-received {
+    background-color: #6fa9db;
+    padding-left: 8px;
+}
+.message-sent {
+    background-color: #b2e5df;
+    padding-right: 8px;
+}
+
+/*///////////////// CONVERSATION CARD ELEMENTS ///////////////////////*/
+.conv-unread-indicator {
+    height: 1em;
+    padding: 0.15em;
+    background-color: #dddddd;
+}
+.conv-has-unread {
+    color: white;
+    font-size: 20px;
+    font-family: "Montserrat";
+    border-radius: 50%;
+    color: white;
+    background-color: #2255ee;
+    padding: 0.8em;
+    padding-left: 0.5em;
+    height: 1.5em;
+    width: 1.5em;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+.conv-title {
+    font-size: 16px;
+    font-family: "Montserrat";
+    font-weight: bold;
+    padding: 0.25em;
+    background-color: #dddddd;
+    text-align: left;
 }

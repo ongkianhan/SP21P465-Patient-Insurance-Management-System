@@ -17,8 +17,8 @@ class Header extends Component {
         const userIsAuthenticated = (
             <span>
                 <li className="nav-item">
-                <Link to={`/profile/${user.userId}`} className="nav-link">
-                    Profile{/*{user.email}*/}
+                    <Link to="/find-doctors" className="nav-link">
+                        Find Doctors
                     </Link>
                 </li>
                 <li className="nav-item">
@@ -27,8 +27,13 @@ class Header extends Component {
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/find-doctors" className="nav-link">
-                        Find Doctors
+                    <Link to={`/chat`} className="nav-link">
+                        Chat
+                    </Link>
+                </li>
+                <li className="nav-item">
+                    <Link to={`/profile/${user.userId}`} className="nav-link">
+                        Profile
                     </Link>
                 </li>
                 
@@ -73,7 +78,7 @@ class Header extends Component {
                                     <img
                                         style={{
                                             paddingTop: "1vmin",
-                                            paddingBottom: "1vmin",
+                                            paddingBottom: "1.25vmin",
                                             height: "calc(48px + 2vmin)",
                                             width: "auto",
                                         }}

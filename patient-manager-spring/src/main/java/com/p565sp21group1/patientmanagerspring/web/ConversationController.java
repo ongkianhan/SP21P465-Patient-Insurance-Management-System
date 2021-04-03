@@ -35,7 +35,7 @@ public class ConversationController
         return conversationService.getRecentMessages(conversationIdLong);
     }
 
-    @PostMapping("/user-{userId}/{conversationId}")
+    @PostMapping("/sender-{userId}/conversation-{conversationId}")
     public ResponseEntity<?> addMessageToConversation(@Valid @RequestBody Message message,
                                                       BindingResult result,
                                                       @PathVariable String conversationId,
@@ -54,17 +54,16 @@ public class ConversationController
         return new ResponseEntity<Message>(message1, HttpStatus.CREATED);
     }
 
-    @PostMapping("/create-conversation/{userId1}&{userId2}")
+    @PostMapping("/create-conversation/{senderId}&{otherUserEmail}")
     public ResponseEntity<?> createConversation(@Valid @RequestBody Conversation conversation,
-                                               BindingResult result, @PathVariable String userId1, @PathVariable String userId2,
+                                               BindingResult result, @PathVariable String senderId, @PathVariable String otherUserEmail,
                                                Principal principal)
     {
         ResponseEntity<?> errorMap = errorMapValidationService.mapErrors(result);
         if (errorMap != null) return errorMap;
 
-        long userId1Long = userService.parseUserId(userId1);
-        long userId2Long = userService.parseUserId(userId2);
-        Conversation newConversation = conversationService.createConversation(userId1Long, userId2Long, conversation);
+        long senderIdLong = userService.parseUserId(senderId);
+        Conversation newConversation = conversationService.createConversation(senderIdLong, otherUserEmail, conversation);
 
         return new ResponseEntity<Conversation>(newConversation, HttpStatus.CREATED);
     }
