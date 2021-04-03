@@ -1,6 +1,15 @@
 import axios from "axios";
 import { GET_ERRORS, GET_MANY_DOCTORS, GET_ONE_DOCTOR, GET_CURRENT_USER, GET_ALL_SPECIALIZATIONS } from "./types";
 
+export const getDoctorsByFilter = (filter) => async dispatch => {
+    console.log(filter);
+    const res = await axios.get("/api/account/search-doctors", filter);
+    dispatch ({
+        type: GET_MANY_DOCTORS,
+        payload: res.data
+    });
+}
+
 export const getAllDoctors = () => async dispatch => {
     const res = await axios.get("/api/account/all-doctors");
     dispatch ({
@@ -8,7 +17,6 @@ export const getAllDoctors = () => async dispatch => {
         payload: res.data
     });
 }
-
 
 //Get doctor (used for AppointmentScheduler)
 export const getDoctor = (id, history) => async dispatch => {

@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { getAllSpecializations } from "../../actions/userActions";
 import { PropTypes } from "prop-types";
 
+const NO_PREFERENCE_OPTION = "No preference";
+
 class SpecializationDropdown extends Component 
 {
     
@@ -10,7 +12,7 @@ class SpecializationDropdown extends Component
     {
         super();
         this.state = {
-            dropdownItems: <span>Loading appointments...</span>
+            dropdownItems: <span>Loading items...</span>
         };
     }
 
@@ -23,10 +25,19 @@ class SpecializationDropdown extends Component
 
 
     generateDropdownList = () => {
+        if (this.props.doctor == null) return;
         const allSpecializations = this.props.doctor.allSpecializations;
         
+        //Prepare the dropdown list
         let dropdownItems = [];
         let uniqueSet = {};
+        //Add the default item to the dropdown list
+        dropdownItems.push(
+            <option key={allSpecializations.length} onChange={this.handleSelectItem.bind(this)}>
+                {NO_PREFERENCE_OPTION}
+            </option>
+        );
+
         //Iterate through every specialization from the database
         for (var i = 0; i < allSpecializations.length; i++)
         {
@@ -36,13 +47,12 @@ class SpecializationDropdown extends Component
             {
                 //Add an item to the dropdown list
                 dropdownItems.push(
-                    <option key={specialization}>
+                    <option key={i}>
                         {specialization}
                     </option>
                 );
 
-                //Add this specialization to the set
-                //so that it does not appear again
+                //Add this specialization to the set so that it does not appear again
                 uniqueSet[specialization] = true;
             }
         }
@@ -50,10 +60,16 @@ class SpecializationDropdown extends Component
         this.setState({ dropdownItems: dropdownItems });
     }
 
+    handleSelectItem(event)
+    {
+        const selectedOption = event.target.value;
+        this.props.setSpecialization(selectedOption);
+    }
+
     render() {
         return (
-            <div class="dropdown">
-                <select className="btn btn-secondary dropdown-toggle" name="cars" id="cars">
+            <div className="dropdown">
+                <select className="btn btn-secondary dropdown-toggle" onChange={this.handleSelectItem.bind(this)}>
                     {this.state.dropdownItems}
                 </select>
             </div>
