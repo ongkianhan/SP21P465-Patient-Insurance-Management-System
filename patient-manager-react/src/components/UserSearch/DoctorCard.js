@@ -12,7 +12,7 @@ class DoctorCard extends Component
     {
         const {doctor} = this.props;
         return (
-            <div className="container">
+            <div className="card-container">
             <div className="card card-body bg-light mb-3">
                 <div className="row align-items-center">
                     <div className="col-3">

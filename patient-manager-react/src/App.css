@@ -66,6 +66,8 @@ td,
 th {
     border-collapse: collapse;
     box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
 }
 
 /*///////////////// REPEATABLE ELEMENTS ///////////////////////*/
@@ -114,7 +116,7 @@ th {
 }
 
 .light-gray-bg {
-    background-color: #999999 !important;
+    background-color: #bbbbbb !important;
 }
 
 .button-generic {
@@ -621,4 +623,31 @@ th {
     font-weight: thin;
     padding-right: 30px;
     cursor: pointer;
+}
+
+/*///////////////// DOCTOR/PACKAGE SEARCH ELEMENTS ///////////////////////*/
+.card-container {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    width: 100% !important;
+}
+#searchBar {
+    border: 1px solid #aaaaaa;
+    background-color: white;
+    height: 42px;
+    margin: 0px 2% 0px 0px !important;
+    padding-left: 12px;
+    padding-right: 6px;
+    width: 98% !important;
+    border-radius: 20px;
+}
+#searchButton {
+    font-size: 18px;
+    font-family: "Questrial";
+    color: #ffffff;
+    border: none;
+    padding: 8px 2px 8px 2px !important;
+    width: 100%;
+}
+.td-align-left {
 }

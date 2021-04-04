@@ -36,8 +36,8 @@ class DoctorSearch extends Component {
     setSpecialization(input) {
         specialization = input;
     }
-    setSupportsCovidCare(input) {
-        supportsCovidCare = input;
+    setSupportsCovidCare(e) {
+        supportsCovidCare = e.checked; //TODO
     }
 
     filterDoctors() {
@@ -61,16 +61,14 @@ class DoctorSearch extends Component {
             <div className="doctorContainer">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-12">
-                            <h1 className="display-4 text-left page-header">
-                                Find Doctors
-                            </h1>
-                            TEMPORARY LAYOUT. MUST BE UPDATED!
+                        <h1 className="display-4 text-left page-header">
+                            Find Doctors
+                        </h1>
 
-                            <div className="row align-items-center">
-                                <div className="col-10">
+                        <table>
+                            <tr>
+                                <td>
                                     <input
-                                        className={classnames("form-control")}
                                         placeholder="Search by keywords..."
                                         rows="1"
                                         id="searchBar"
@@ -81,59 +79,63 @@ class DoctorSearch extends Component {
                                                 this.setKeywords(document.querySelector('#searchBar').value);
                                         }}
                                     ></input>
-                                </div>
-                                <div className="col-2 justify-content-end">
+                                </td>
+                                <td>
                                     <button
                                         type="submit"
-                                        className="button-card button-primary"
+                                        className="button-primary"
+                                        id="searchButton"
                                         onClick={this.filterDoctors.bind(this)}
                                     >
                                         Search
                                     </button>
-                                </div>
-                            </div>
+                                </td>
+                            </tr>
+                        </table>
 
-                            <p>Advanced Search</p>
-                            <div className="row align-items-center light-gray-bg">
-                                <div>
-                                    <SpecializationDropdown setSpecialization={this.setSpecialization} />
-                                </div>
-                                <div className="form-check">
-                                    <input
-                                        className={classnames(
-                                            "form-check-input"
-                                        )}
-                                        type="checkbox"
-                                        onChange={this.setSupportsCovidCare.bind(this)}
-                                        id="supportsCovidCareCheckbox"
-                                    ></input>
-                                    <label
-                                        className="form-check-label"
-                                    >
-                                        Supports COVID-19 Care?
-                                    </label>
-                                </div>
-                            </div>
+                        <p style={{margin: "18px 0px 0px 0px"}}>Advanced Search</p>
+                        <table className="light-gray-bg" style={{borderRadius: "20px"}}>
+                            <td>
+                                Specialty:
+                            </td>
+                            <td className="td-align-left">
+                                <SpecializationDropdown setSpecialization={this.setSpecialization} />
+                            </td>
+                            <td className="form-check">
+                                <input
+                                    className={classnames(
+                                        "form-check-input"
+                                    )}
+                                    type="checkbox"
+                                    onChange={this.setSupportsCovidCare.bind(this)}
+                                    id="supportsCovidCareCheckbox"
+                                ></input>
+                                <label
+                                    className="form-check-label"
+                                >
+                                    Supports COVID-19 Care?
+                                </label>
+                            </td>
+                        </table>
 
-                            <br />
-                            <br />
-                            {/* Get the entire list of doctors. For each DoctorCard, set its prop as the doctor data */}
-                            {/* Only patients can see relevant options (e.g. a button to schedule an appointment) */}
-                            {allDoctors.map((doctor) =>
-                                this.props.security.user.userType == "PAT" ? (
-                                    <DoctorCardForPatientView
-                                        key={doctor.id}
-                                        doctor={doctor}
-                                    />
-                                ) : (
-                                    <DoctorCard
-                                        key={doctor.id}
-                                        doctor={doctor}
-                                    />
-                                )
-                            )}
-                            {noDoctorsMessage}
-                        </div>
+                        <br />
+                        <br />
+                        {/* Get the entire list of doctors. For each DoctorCard, set its prop as the doctor data */}
+                        {/* Only patients can see relevant options (e.g. a button to schedule an appointment) */}
+                        {allDoctors.map((doctor) =>
+                            this.props.security.user.userType == "PAT" ? (
+                                <DoctorCardForPatientView
+                                    key={doctor.id}
+                                    doctor={doctor}
+                                />
+                            ) : (
+                                <DoctorCard
+                                    key={doctor.id}
+                                    doctor={doctor}
+                                />
+                            )
+                        )}
+                        {noDoctorsMessage}
                     </div>
                 </div>
             </div>

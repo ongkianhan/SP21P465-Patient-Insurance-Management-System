@@ -22,7 +22,6 @@ export default class ConversationCard extends Component {
                     </span>
                 </td>
                 <td className="conv-title">
-                    {}
                     {this.props.conversation.namesInvolved.map(name => (
                         <span key={name}>{name}</span>
                     ))}
