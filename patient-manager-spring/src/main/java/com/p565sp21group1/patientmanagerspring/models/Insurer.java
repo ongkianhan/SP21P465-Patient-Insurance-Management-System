@@ -1,12 +1,8 @@
 package com.p565sp21group1.patientmanagerspring.models;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "Insurer")
@@ -34,5 +30,19 @@ public class Insurer extends User
 
     @Column(name = "longitude", nullable = true, unique = false)
     private double longitude;
+
+
+    public List<InsurancePackage> getInsurancePackageOfferings() {
+        return InsurancePackageOfferings;
+    }
+
+    public void setInsurancePackageOfferings(List<InsurancePackage> offerings)
+    {
+        this.InsurancePackageOfferings = offerings;
+    }
+
+    public List<InsurancePackage> InsurancePackageOfferings = new ArrayList<>();
+
+
 
 }
