@@ -23,7 +23,7 @@ class PatientAppointmentCard extends Component
     }
         const {appointment} = this.props;
         return (
-            <div className="container row pl-5" style = {{width:'100vh'}}>
+            <div className="container row pl-5">
             <div className="card card-body bg-light">
                 <div className="row align-items-center">
                     <div className="col-8 text-left">

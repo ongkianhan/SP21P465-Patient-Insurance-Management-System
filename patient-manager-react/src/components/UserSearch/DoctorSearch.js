@@ -65,6 +65,7 @@ class DoctorSearch extends Component {
                             <h1 className="display-4 text-left page-header">
                                 Find Doctors
                             </h1>
+                            TEMPORARY LAYOUT. MUST BE UPDATED!
 
                             <div className="row align-items-center">
                                 <div className="col-10">

@@ -1,6 +1,7 @@
 package com.p565sp21group1.patientmanagerspring.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,6 +19,9 @@ public class Conversation
     @JoinColumn(name = "userId", nullable = false)
     @JsonIgnore //do not show all user JSON for each conversation
     private List<User> usersInvolved = new ArrayList<>();
+
+    @Transient
+    private List<String> namesInvolved = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "conversation", orphanRemoval = true)
     private List<Message> messages = new ArrayList<>();
@@ -55,5 +59,24 @@ public class Conversation
 
     public void setMessages(List<Message> messages) {
         this.messages = messages;
+    }
+
+    public List<String> getNamesInvolved() {
+        return this.namesInvolved;
+    }
+
+    public void setNamesInvolved(List<String> namesInvolved) {
+        this.namesInvolved = namesInvolved;
+    }
+
+    public void updateNamesInvolved(long userIdToExclude) {
+        //Add a list of the first+last names of each user involved
+        //in this conversation to this object
+        this.namesInvolved = new ArrayList<String>();
+        for (User user : usersInvolved)
+        {
+            if (user.getUserId() != userIdToExclude) //do not include the user accessing the object
+                this.namesInvolved.add(user.getFirstName() + " " + user.getLastName());
+        }
     }
 }

@@ -54,11 +54,11 @@ export default class CustomPopup extends Component
         var closeButton;
         if (this.state.redirect != null) {
             //Redirect the user version
-            closeButton = <Link to={`${this.state.redirect}`} className="modal-close-button" onClick={this.hide.bind(this)}>&times;</Link>
+            closeButton = <Link to={`${this.state.redirect}`} className="modal-close-button" onClick={this.hide.bind(this)} style={{ color: "#eeeeee" }}>&times;</Link>
         }
         else {
             //Only close the modal version
-            closeButton = <span className="modal-close-button" onClick={this.hide.bind(this)}>&times;</span>
+            closeButton = <span className="modal-close-button" onClick={this.hide.bind(this)} style={{ color: "#eeeeee" }} >&times;</span>
         }
 
         const {display} = this.state;

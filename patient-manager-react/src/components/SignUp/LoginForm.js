@@ -32,7 +32,7 @@ class LoginForm extends Component
         //Instantly bring the user to their dashboard
         //if they are already logged in
         if (nextProps.security.validToken) {
-            this.props.history.push("/dashboard");
+            this.props.history.push("/dashboard");            
         }
 
         //Show errors if they exist

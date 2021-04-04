@@ -14,6 +14,6 @@ export default combineReducers({
     doctor: doctorReducer,
     currentUser: currentUserReducer,
     appointment: appointmentReducer,
-    chat: chatReducer,
+    conversation: chatReducer,
     security: securityReducer
 });

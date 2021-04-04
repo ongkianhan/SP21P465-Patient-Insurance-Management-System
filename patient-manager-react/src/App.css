@@ -399,7 +399,6 @@ th {
 
 /* The Close Button */
 .modal-close-button {
-    color: #eeeeee !important;
     float: right;
     font-size: 32px;
     font-weight: bold;
@@ -479,8 +478,10 @@ th {
     border: 1px solid #666666;
 }
 .chat-conversation-container {
-    border: 1px solid #aaaaaa;
+    /*border: 1px solid #aaaaaa;*/
     width: 20vmax;
+    overflow-y:auto; /*Scrollable*/
+    height: 50vh; /*TEMPORARY:CHANGE ASAP*/
 }
 .chat-viewport-container {
     width: 60vmax;
@@ -493,7 +494,7 @@ th {
     background-color: #f2f2f2;
     padding-top: auto;
     padding-bottom: auto;
-    overflow-y:auto;
+    overflow-y:auto; /*Scrollable*/
 }
 .chatbar-container {
     height: 10%;
@@ -520,6 +521,8 @@ th {
     border-radius: 10px;
     padding: 6px 20% 6px 20%;
 }
+
+/*///////////////// MESSAGE ELEMENTS ///////////////////////*/
 .message-header {
     font-size: 10px;
     width: auto;
@@ -554,6 +557,9 @@ th {
 }
 
 /*///////////////// CONVERSATION CARD ELEMENTS ///////////////////////*/
+.conv-card-container {
+    border: 1px solid #bbaaaaaa;
+}
 .conv-unread-indicator {
     height: 1em;
     padding: 0.15em;
@@ -574,6 +580,9 @@ th {
     display: flex;
     align-items: center;
 }
+.conv-title:hover .conv-unread-indicator {
+    background-color: white;
+}
 .conv-title {
     font-size: 16px;
     font-family: "Montserrat";
@@ -581,4 +590,35 @@ th {
     padding: 0.25em;
     background-color: #dddddd;
     text-align: left;
+}
+#buttonNewConversation {
+    font-size: 14px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #bcbcbc;
+    cursor: pointer;
+    float: bottom;
+}
+
+/*///////////////// CONVERSATION POUP ELEMENTS ///////////////////////*/
+.button-popup-confirmation {
+    padding: 6px 18px 6px 18px;
+    margin-top: 12px;
+    margin-bottom: 18px;
+}
+.label-conv-popup {
+    font-size: 16px;
+    margin: 18px 10% 0px 10%;
+    text-align: center;
+}
+.input-conv-popup {
+    margin: 0px 30px 18px 30px;
+    text-align: center;
+}
+.modal-close-button-text {
+    text-align: right;
+    font-size: 16px;
+    font-weight: thin;
+    padding-right: 30px;
+    cursor: pointer;
 }

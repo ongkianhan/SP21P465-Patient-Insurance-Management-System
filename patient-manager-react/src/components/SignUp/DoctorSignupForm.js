@@ -71,7 +71,7 @@ class DoctorSignupForm extends Component {
             };
             await this.props.login(LoginRequest);
             //Navigate to the dashboard
-            this.props.history.push("/dashboard");
+            this.props.history.push("/doctor-dashboard");
         }
     }
 

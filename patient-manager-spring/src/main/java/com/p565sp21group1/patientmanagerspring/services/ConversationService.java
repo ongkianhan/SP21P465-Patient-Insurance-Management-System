@@ -35,20 +35,27 @@ public class ConversationService
             //Pair the conversation with user 1...
             //Calling get() retrieves the actual User from the repos
             User user2 = (User) userRepository.findByEmail(otherUserEmail);
+            if (user2 == null) throw new Exception();
             conversation.addUserInvolved(user2);
 
             return conversationRepository.save(conversation);
         }
         catch (Exception ex)
         {
-            throw new UserNotFoundException("One of the users could not be found.");
+            throw new UserNotFoundException("That user could not be found. Ensure their email address is correct.");
         }
     }
 
 
     public Iterable<Conversation> getConversationsByUserId(long userId)
     {
-        return conversationRepository.getConversationsByUserId(userId);
+        //Retrieve the conversations associated with this user from the database
+        Iterable<Conversation> conversations = conversationRepository.getConversationsByUserId(userId);
+        //Add the first/last names of each user in the conversation to the object
+        for (Conversation conv : conversations) {
+            conv.updateNamesInvolved(userId);
+        }
+        return conversations;
     }
 
 
