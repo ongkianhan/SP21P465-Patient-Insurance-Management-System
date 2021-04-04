@@ -4,6 +4,7 @@ import doctorReducer from "./doctorReducer";
 import currentUserReducer from "./currentUserReducer";
 import appointmentReducer from "./appointmentReducer";
 import securityReducer from "./securityReducer";
+import chatReducer from "./chatReducer";
 
 /**
  * Use this version of the index to manage Redux store variables
@@ -13,5 +14,6 @@ export default combineReducers({
     doctor: doctorReducer,
     currentUser: currentUserReducer,
     appointment: appointmentReducer,
+    chat: chatReducer,
     security: securityReducer
 });

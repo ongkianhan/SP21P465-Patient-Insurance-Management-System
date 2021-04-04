@@ -23,18 +23,18 @@ public class ConversationService
     MessageRepository messageRepository;
 
 
-    public Conversation createConversation(long userId1, long userId2, Conversation conversation)
+    public Conversation createConversation(long senderId, String otherUserEmail, Conversation conversation)
     {
         try
         {
             //Pair the conversation with user 1...
             //Calling get() retrieves the actual User from the repos
-            User user1 = (User) userRepository.findById(userId1).get();
+            User user1 = (User) userRepository.findById(senderId).get();
             conversation.addUserInvolved(user1);
 
             //Pair the conversation with user 1...
             //Calling get() retrieves the actual User from the repos
-            User user2 = (User) userRepository.findById(userId2).get();
+            User user2 = (User) userRepository.findByEmail(otherUserEmail);
             conversation.addUserInvolved(user2);
 
             return conversationRepository.save(conversation);

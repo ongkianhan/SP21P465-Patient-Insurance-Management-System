@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getAllDoctors } from "../../actions/userActions";
+import { getAllDoctors, getDoctorsByFilter } from "../../actions/userActions";
 import { PropTypes } from "prop-types";
 import DoctorCard from "./DoctorCard";
 import DoctorCardForPatientView from "./DoctorCardForPatientView";
@@ -8,6 +8,12 @@ import classnames from "classnames";
 import SpecializationDropdown from "./SpecializationDropdown";
 
 var noDoctorsMessage = null;
+
+//Filter options
+var keywords = "";
+var specialization = "";
+var supportsCovidCare = false;
+
 
 class DoctorSearch extends Component {
     componentDidMount() { //When the component loads (life cycle method)
@@ -21,6 +27,31 @@ class DoctorSearch extends Component {
                 </div>
             );
         }
+    }
+
+    //Setter methods for the filter options
+    setKeywords(input) {
+        keywords = input;
+    }
+    setSpecialization(input) {
+        specialization = input;
+    }
+    setSupportsCovidCare(input) {
+        supportsCovidCare = input;
+    }
+
+    filterDoctors() {
+        console.log("Filtering!");
+
+        //Create a filter request
+        var doctorSearchRequest = {
+            keywords: keywords,
+            specialization: specialization,
+            supportsCovidCare: supportsCovidCare
+        }
+
+        //Query the database to filter the doctors
+        this.props.getDoctorsByFilter(doctorSearchRequest);
     }
 
     render() {
@@ -41,9 +72,12 @@ class DoctorSearch extends Component {
                                         className={classnames("form-control")}
                                         placeholder="Search by keywords..."
                                         rows="1"
+                                        id="searchBar"
                                         onKeyPress={(e) => {
                                             if (e.key === "Enter")
                                                 e.preventDefault();
+                                            else //Trigger an update to the 'keywords' instance var
+                                                this.setKeywords(document.querySelector('#searchBar').value);
                                         }}
                                     ></input>
                                 </div>
@@ -51,6 +85,7 @@ class DoctorSearch extends Component {
                                     <button
                                         type="submit"
                                         className="button-card button-primary"
+                                        onClick={this.filterDoctors.bind(this)}
                                     >
                                         Search
                                     </button>
@@ -60,7 +95,7 @@ class DoctorSearch extends Component {
                             <p>Advanced Search</p>
                             <div className="row align-items-center light-gray-bg">
                                 <div>
-                                    <SpecializationDropdown />
+                                    <SpecializationDropdown setSpecialization={this.setSpecialization} />
                                 </div>
                                 <div className="form-check">
                                     <input
@@ -68,11 +103,11 @@ class DoctorSearch extends Component {
                                             "form-check-input"
                                         )}
                                         type="checkbox"
+                                        onChange={this.setSupportsCovidCare.bind(this)}
                                         id="supportsCovidCareCheckbox"
                                     ></input>
                                     <label
                                         className="form-check-label"
-                                        for="supportsCovidCareCheckbox"
                                     >
                                         Supports COVID-19 Care?
                                     </label>
@@ -109,13 +144,14 @@ class DoctorSearch extends Component {
 DoctorSearch.propTypes = {
     doctor: PropTypes.object.isRequired,
     getAllDoctors: PropTypes.func.isRequired,
+    getDoctorsByFilter: PropTypes.func.isRequired,
     security: PropTypes.object.isRequired,
 };
 
 //Add the actual doctor state/data to the list of doctors on the page
 const mapStateToProps = (state) => ({
     doctor: state.doctor,
-    security: state.security,
+    security: state.security
 });
 
-export default connect(mapStateToProps, { getAllDoctors })(DoctorSearch);
+export default connect(mapStateToProps, { getAllDoctors, getDoctorsByFilter })(DoctorSearch);

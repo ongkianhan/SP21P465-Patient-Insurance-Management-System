@@ -54,7 +54,7 @@ class App extends Component
               }
               <DashboardRoute exact path="/dashboard" />
               <SecuredRoute exact path="/schedule-appointment/:userId" userTypeBlacklist={["DOC", "INS"]} component={AppointmentScheduler} />
-              <SecuredRoute exact path="/chat" component={ChatContainer} />
+              <Route exact path="/chat" component={ChatContainer} />
               <SecuredRoute exact path="/permission-denied" component={InvalidUserTypeLanding} />
             </span>
             {/*<Footer />*/}
