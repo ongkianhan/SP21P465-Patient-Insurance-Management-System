@@ -17,3 +17,4 @@ public class PatientManagerSpringApplication
 		SpringApplication.run(PatientManagerSpringApplication.class, args);
 	}
 }
+

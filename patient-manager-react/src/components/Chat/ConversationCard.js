@@ -22,7 +22,9 @@ export default class ConversationCard extends Component {
                     </span>
                 </td>
                 <td className="conv-title">
-                    Dr. T Colin Campbell, Dr. Alan Goldhamer{this.state.content}
+                    {this.props.conversation.namesInvolved.map(name => (
+                        <span key={name}>{name}</span>
+                    ))}
                 </td>
             </table>
         )

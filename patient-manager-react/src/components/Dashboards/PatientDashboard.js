@@ -10,14 +10,9 @@ var pastAppointments = false
 
 class Dashboard extends Component
 {
-
-    async componentDidMount() //When the component loads (life cycle method)
+    async componentDidMount()
     {
-        //const {userId} = this.props.match.params;
         await this.props.getAppointmentsByPatientId(this.props.security.user.userId)
-
-        //console.log(this.props.appointment)
-        //Display a message if there are no appointments
     }
 
     constructor()
@@ -47,9 +42,6 @@ class Dashboard extends Component
 
         return (
             <div className="container row">
-                
-                
-                {/*this.props.security.user.userType*/}
 
                 {allAppointments.map(appointment => (
                     
@@ -87,10 +79,6 @@ class Dashboard extends Component
                         (<span/>)
                     
                 ))}
-                
-                {/*allAppointments.map(appointment => (<DoctorAppointmentCard key={appointment.id} appointment={appointment}/>))*/}
-
-
                 
             </div>
         )
