@@ -13,45 +13,78 @@ var noDoctorsMessage = null;
 var keywords = "";
 var specialization = "";
 var supportsCovidCare = false;
-
+const NO_SPECIALIZATION_OPTION = "No preference";
+const NO_DOCTORS_MESSAGE = (
+    <div className="alert alert-info text-center" style={{width: "100%"}}>
+        It looks like no doctors could be found...
+    </div>
+);
 
 class DoctorSearch extends Component {
+    constructor()
+    {
+        super();
+        this.state = {
+            forceInterfaceUpdate: "" /*Allows us to force a user interface update programmatically*/
+        }
+    }
+
     componentDidMount() { //When the component loads (life cycle method)
         this.props.getAllDoctors();
 
         //Display a message if there are no doctors
         if (this.props.doctor.length === 0) {
-            noDoctorsMessage = (
-                <div className="alert alert-info text-center" role="alert">
-                    It looks like no doctors could be found...
-                </div>
-            );
+            noDoctorsMessage = NO_DOCTORS_MESSAGE;
         }
     }
 
     //Setter methods for the filter options
-    setKeywords(input) {
+    /*setKeywords(input) {
         keywords = input;
-    }
+    }*///unused
     setSpecialization(input) {
         specialization = input;
     }
     setSupportsCovidCare(e) {
-        supportsCovidCare = e.checked; //TODO
+        supportsCovidCare = e.target.checked;
     }
 
     filterDoctors() {
-        console.log("Filtering!");
-
         //Create a filter request
         var doctorSearchRequest = {
-            keywords: keywords,
-            specialization: specialization,
-            supportsCovidCare: supportsCovidCare
+            "keywords": document.querySelector('#searchBar').value,
+            "specialization": specialization,
+            "supportsCovidCare": supportsCovidCare
+        }
+        //Remove the specialization if the user did not select one
+        if (specialization == NO_SPECIALIZATION_OPTION) {
+            doctorSearchRequest["specialization"] = "";
         }
 
         //Query the database to filter the doctors
         this.props.getDoctorsByFilter(doctorSearchRequest);
+    }
+
+    componentDidUpdate()
+    {
+        //Display a message if there are no doctors
+        var {allDoctors} = this.props.doctor;
+        if (allDoctors.length == undefined || allDoctors.length < 1) {
+            //Show a message stating that there are no doctors.
+            noDoctorsMessage = NO_DOCTORS_MESSAGE;
+            //Force a user interface update. Use the constant NO_DOCTORS_MESSAGE
+            //to prevent infinite calls to componentDidUpdate()
+            if (this.state.forceInterfaceUpdate == "")
+                this.setState({forceInterfaceUpdate: NO_DOCTORS_MESSAGE})
+        }
+        else {
+            //Retract any message stating that there are no doctors.
+            noDoctorsMessage = <span/>;
+            //Force a user interface update. Use the constant NO_DOCTORS_MESSAGE
+            //to prevent infinite calls to componentDidUpdate()
+            if (this.state.forceInterfaceUpdate == NO_DOCTORS_MESSAGE)
+                this.setState({forceInterfaceUpdate: ""})
+        }
     }
 
     render() {
@@ -75,8 +108,6 @@ class DoctorSearch extends Component {
                                         onKeyPress={(e) => {
                                             if (e.key === "Enter")
                                                 e.preventDefault();
-                                            else //Trigger an update to the 'keywords' instance var
-                                                this.setKeywords(document.querySelector('#searchBar').value);
                                         }}
                                     ></input>
                                 </td>
@@ -95,10 +126,10 @@ class DoctorSearch extends Component {
 
                         <p style={{margin: "18px 0px 0px 0px"}}>Advanced Search</p>
                         <table className="light-gray-bg" style={{borderRadius: "20px"}}>
-                            <td>
+                            <td className="text-right">
                                 Specialty:
                             </td>
-                            <td className="td-align-left">
+                            <td>
                                 <SpecializationDropdown setSpecialization={this.setSpecialization} />
                             </td>
                             <td className="form-check">
@@ -113,7 +144,7 @@ class DoctorSearch extends Component {
                                 <label
                                     className="form-check-label"
                                 >
-                                    Supports COVID-19 Care?
+                                    I need COVID-19 care
                                 </label>
                             </td>
                         </table>
@@ -135,6 +166,7 @@ class DoctorSearch extends Component {
                                 />
                             )
                         )}
+                        
                         {noDoctorsMessage}
                     </div>
                 </div>

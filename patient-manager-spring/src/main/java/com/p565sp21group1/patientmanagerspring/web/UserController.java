@@ -98,10 +98,11 @@ public class UserController
     @GetMapping("/all-doctors")
     public Iterable<Doctor> getAllDoctors(){return userService.getAllDoctors();}
 
-    @GetMapping("/search-doctors")
-    public Iterable<Doctor> getDoctorsByFilter(@Valid @RequestBody DoctorSearchRequest filter)
+    @PostMapping("/search-doctors")
+    public ResponseEntity<?> getDoctorsByFilter(@Valid @RequestBody DoctorSearchRequest filter)
     {
-        return userService.getDoctorsByFilter(filter);
+        Iterable<Doctor> filteredDoctors = userService.getDoctorsByFilter(filter);
+        return ResponseEntity.ok(filteredDoctors);
     }
 
     @GetMapping("/doctor-specializations")

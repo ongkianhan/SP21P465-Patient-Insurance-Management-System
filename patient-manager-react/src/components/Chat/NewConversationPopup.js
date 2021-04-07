@@ -53,7 +53,7 @@ class NewConversationPopup extends Component {
         return (
             <div className="modal-scrim" style={{display: display}}>
                 <div className="modal-content">
-                    <span className="modal-header-text">Start a Conversation billpatience3@gmail.com</span>
+                    <span className="modal-header-text">Start a Conversation</span>
                     
                     <span className="label-conv-popup">Enter the email of the user you want to talk to</span>
                     <input

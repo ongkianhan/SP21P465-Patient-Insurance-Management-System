@@ -22,15 +22,19 @@ public interface UserRepository extends CrudRepository<User, Long>
     Iterable<String> getAllSpecializations();
 
     @Query(value="SELECT d FROM Doctor d WHERE " +
-            "(" +
-                ":#{#filter.keywords} LIKE CONCAT('%', d.firstName, '%') " +
-                "OR :#{#filter.keywords} LIKE CONCAT('%', d.lastName, '%') " +
-                "OR :#{#filter.keywords} LIKE CONCAT('%', d.hospitalName, '%') " +
-                "OR :#{#filter.keywords} LIKE CONCAT('%', d.specialization, '%')" +
+            "(" + /*Check for key words*/
+                "d.firstName LIKE CONCAT('%', :#{#filter.keywords}, '%') " +
+                "OR d.lastName LIKE CONCAT('%', :#{#filter.keywords}, '%') " +
+                "OR d.hospitalName LIKE CONCAT('%', :#{#filter.keywords}, '%') " +
+                "OR d.specialization LIKE CONCAT('%', :#{#filter.keywords}, '%') " +
             ") " +
-            "AND (" +
+            "AND (" + /*Doctor must support COVID care if the user requests it*/
                 ":#{#filter.supportsCovidCare} = d.supportsCovidCare " +
                 "OR :#{#filter.supportsCovidCare} = false" +
+            ")" +
+            "AND (" + /*Specialization must match the filter if the user specifies it*/
+                ":#{#filter.specialization} = ''" +
+                "OR :#{#filter.specialization} = d.specialization" +
             ")")
     Iterable<Doctor> getDoctorsByFilter(DoctorSearchRequest filter);
 }
