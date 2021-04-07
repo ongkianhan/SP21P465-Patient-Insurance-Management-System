@@ -8,11 +8,11 @@ public class DoctorSearchRequest
 
     private String specialization;
 
-    private long latitude;
+    //private long latitude;
 
-    private long longitude;
+    //private long longitude;
 
-    private int maxRadius = Integer.MAX_VALUE;
+    //private int maxRadius = Integer.MAX_VALUE;
 
     private boolean supportsCovidCare;
 
@@ -33,30 +33,6 @@ public class DoctorSearchRequest
 
     public void setSpecialization(String specialization) {
         this.specialization = specialization;
-    }
-
-    public long getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(long latitude) {
-        this.latitude = latitude;
-    }
-
-    public long getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(long longitude) {
-        this.longitude = longitude;
-    }
-
-    public int getMaxRadius() {
-        return maxRadius;
-    }
-
-    public void setMaxRadius(int maxRadius) {
-        this.maxRadius = maxRadius;
     }
 
     public boolean isSupportsCovidCare() {

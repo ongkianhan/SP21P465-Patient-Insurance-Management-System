@@ -116,7 +116,7 @@ th {
 }
 
 .light-gray-bg {
-    background-color: #bbbbbb !important;
+    background-color: #c0c0c0 !important;
 }
 
 .button-generic {
@@ -629,6 +629,7 @@ th {
 .card-container {
     margin-left: 0px !important;
     margin-right: 0px !important;
+    margin-top: 1vmax !important;
     width: 100% !important;
 }
 #searchBar {
@@ -650,4 +651,7 @@ th {
     width: 100%;
 }
 .td-align-left {
+    margin-left: 0px !important;
+    padding-left: 0px !important;
+    left: 0px;
 }

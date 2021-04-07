@@ -3,11 +3,16 @@ import { GET_ERRORS, GET_MANY_DOCTORS, GET_ONE_DOCTOR, GET_CURRENT_USER, GET_ALL
 
 export const getDoctorsByFilter = (filter) => async dispatch => {
     console.log(filter);
-    const res = await axios.get("/api/account/search-doctors", filter);
+    try {
+    const res = await axios.post("/api/account/search-doctors", filter);
     dispatch ({
         type: GET_MANY_DOCTORS,
         payload: res.data
     });
+}
+catch (error) {
+    console.error(error.response);
+}
 }
 
 export const getAllDoctors = () => async dispatch => {
