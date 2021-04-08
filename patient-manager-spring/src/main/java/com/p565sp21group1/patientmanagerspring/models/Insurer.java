@@ -32,16 +32,23 @@ public class Insurer extends User
     private double longitude;
 
 
-    public List<InsurancePackage> getInsurancePackageOfferings() {
-        return InsurancePackageOfferings;
+    public List<InsurancePackage> getInsurancePackageList() {
+        return insurancePackagesList;
     }
 
-    public void setInsurancePackageOfferings(List<InsurancePackage> offerings)
+    public void setInsurancePackageList(List<InsurancePackage> offerings)
     {
-        this.InsurancePackageOfferings = offerings;
+        this.insurancePackagesList = offerings;
     }
 
-    public List<InsurancePackage> InsurancePackageOfferings = new ArrayList<>();
+    @ManyToMany
+    public List<InsurancePackage> insurancePackagesList = new ArrayList<>();
+
+    public List<InsurancePackage> addInsurancePackage(InsurancePackage thisInsurancePackage, List<InsurancePackage> insurancePackages)
+    {
+        this.insurancePackagesList.add(thisInsurancePackage);
+        return insurancePackages;
+    }
 
 
 

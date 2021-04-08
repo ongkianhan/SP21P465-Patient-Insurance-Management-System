@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 import java.util.*;
 
 @Entity
-
+@Table
 public class InsurancePackage
 {
     //to be used to construct an object of InsurancePackage
@@ -41,6 +41,7 @@ public class InsurancePackage
     public InsurancePackage() {
 
     }
+
 
     public void setPackageName(String packageName)
     {
@@ -123,5 +124,18 @@ public class InsurancePackage
         this.firmName = firmName;
     }
 
-
+    @Override
+    public String toString() {
+        return "InsurancePackage{" +
+                "firmName='" + firmName + '\'' +
+                ", packageName='" + packageName + '\'' +
+                ", packageDetails='" + packageDetails + '\'' +
+                ", insurancePackageID=" + insurancePackageID +
+                ", premium=" + premium +
+                ", deductible=" + deductible +
+                ", copayment=" + copayment +
+                ", coInsurance=" + coInsurance +
+                ", maximumOutOfPocket=" + maximumOutOfPocket +
+                '}';
+    }
 }

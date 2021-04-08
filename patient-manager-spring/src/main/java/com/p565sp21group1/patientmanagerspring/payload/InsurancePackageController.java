@@ -2,11 +2,12 @@ package com.p565sp21group1.patientmanagerspring.payload;
 
 
 import com.p565sp21group1.patientmanagerspring.models.InsurancePackage;
+import com.p565sp21group1.patientmanagerspring.models.Insurer;
+import com.p565sp21group1.patientmanagerspring.models.Patient;
 import com.p565sp21group1.patientmanagerspring.services.InsurancePackageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.*;
 
 
@@ -21,10 +22,22 @@ public class InsurancePackageController {
         this.insurancePackageService = insurancePackageService;
     }
 
-    @GetMapping
-    public List<InsurancePackage> getInsurancePackageList()
+
+    public List<InsurancePackage> getInsurancePackageList(Insurer insurer)
     {
-        return insurancePackageService.getInsurancePackageList();
+        return insurancePackageService.getInsurancePackageList(insurer);
+    }
+
+
+    public List<InsurancePackage> getInsurancePackageList(Patient patient)
+    {
+        return insurancePackageService.getInsurancePackageList(patient);
+    }
+
+
+    public void addInsurancePackage(@RequestBody InsurancePackage thisPackage)
+    {
+        insurancePackageService.addInsurancePackage(thisPackage);
     }
 
 }

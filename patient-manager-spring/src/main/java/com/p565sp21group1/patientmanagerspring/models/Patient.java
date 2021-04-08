@@ -83,4 +83,24 @@ public class Patient extends User
         this.longitude = longitude;
     }
 
+
+    // patient should only be able to see the insurance packages they have, not edit them
+
+    public List<InsurancePackage> getInsurancePackages() {
+        return insurancePackagesList;
+    }
+
+    public void setInsurancePackageList(List<InsurancePackage> insurancePackages)
+    {
+        this.insurancePackagesList = insurancePackages;
+    }
+
+    @ManyToMany
+    public List<InsurancePackage> insurancePackagesList = new ArrayList<>();
+
+    public List<InsurancePackage> addInsurancePackage(InsurancePackage thisInsurancePackage, List<InsurancePackage> insurancePackages)
+    {
+        this.insurancePackagesList.add(thisInsurancePackage);
+        return insurancePackages;
+    }
 }
