@@ -77,6 +77,11 @@ public class InsurancePackage
     }
 
     public double premium, deductible, copayment, coInsurance, maximumOutOfPocket;
+    // premium = monthly payment, 
+    // deductible = deductible is how much you’ll pay for a covered procedure before your insurance starts to pay,
+    // copayment = fixed amount that you pay for a specific service or prescription medication.
+    // coinsurance = it’s a percentage of the cost that you pay for covered services.
+    // maximum out of pocket = out-of-pocket limit, is the most you’d ever have to pay for covered health care services in a year.
 
     public double getPremium() { return premium; }
 
