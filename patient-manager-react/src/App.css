@@ -393,10 +393,10 @@ th {
     padding: 0;
     border: 1px solid #888;
     width: calc(65% + 2vmin) !important;
-    max-width: 100% !important;
+    max-width: calc(65% + 2vmin);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    animation-name: animatetop;
-    animation-duration: 1s;
+    /*animation-name: animatetop;
+    animation-duration: 1s;*/
 }
 
 /* The Close Button */
@@ -480,10 +480,9 @@ th {
     border: 1px solid #666666;
 }
 .chat-conversation-container {
-    /*border: 1px solid #aaaaaa;*/
     width: 20vmax;
     overflow-y:auto; /*Scrollable*/
-    height: 50vh; /*TEMPORARY:CHANGE ASAP*/
+    height: 60vh;
 }
 .chat-viewport-container {
     width: 60vmax;
@@ -522,6 +521,7 @@ th {
     background-color: #4093da;
     border-radius: 10px;
     padding: 6px 20% 6px 20%;
+    cursor: pointer;
 }
 
 /*///////////////// MESSAGE ELEMENTS ///////////////////////*/
@@ -561,26 +561,32 @@ th {
 /*///////////////// CONVERSATION CARD ELEMENTS ///////////////////////*/
 .conv-card-container {
     border: 1px solid #bbaaaaaa;
+    background-color: #dedede;
+    cursor: pointer;
 }
 .conv-unread-indicator {
     height: 1em;
     padding: 0.15em;
-    background-color: #dddddd;
 }
-.conv-has-unread {
-    color: white;
+.conv-number-unread {
     font-size: 20px;
     font-family: "Montserrat";
-    border-radius: 50%;
+    border-radius: 40%;
     color: white;
-    background-color: #2255ee;
     padding: 0.8em;
-    padding-left: 0.5em;
+    padding-left: 0.45em;
+    margin-left: 0.25em;
     height: 1.5em;
     width: 1.5em;
     overflow: hidden;
     display: flex;
     align-items: center;
+}
+.conv-is-read {
+    background-color: #00000000;
+}
+.conv-has-unread {
+    background-color: #2255ee;
 }
 .conv-title:hover .conv-unread-indicator {
     background-color: white;
@@ -590,7 +596,6 @@ th {
     font-family: "Montserrat";
     font-weight: bold;
     padding: 0.25em;
-    background-color: #dddddd;
     text-align: left;
 }
 #buttonNewConversation {
@@ -599,7 +604,6 @@ th {
     padding-bottom: 12px;
     background-color: #bcbcbc;
     cursor: pointer;
-    float: bottom;
 }
 
 /*///////////////// CONVERSATION POUP ELEMENTS ///////////////////////*/
@@ -616,6 +620,8 @@ th {
 .input-conv-popup {
     margin: 0px 30px 18px 30px;
     text-align: center;
+    width: calc(100%-60px);
+    max-width: calc(100%-60px);
 }
 .modal-close-button-text {
     text-align: right;

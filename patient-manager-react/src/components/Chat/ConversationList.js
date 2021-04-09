@@ -32,22 +32,18 @@ class ConversationList extends Component {
     }
     
     render() {
-        //if (this.props.conversation == undefined) { return <span />; }
-        console.log("Chat: "+this.props.conversation)
         const {allConversations} = this.props.conversation;
         return (
-            <div>
-                <div className="chat-conversation-container">
-                    {/* Conversations */}
-                    {allConversations.map(conversation => (
-                        <ConversationCard key={conversation.conversationId} conversation={conversation} />
-                    ))}
-                </div>
+            <div className="chat-conversation-container">
+                {/* Conversations */}
+                {allConversations.map(conversation => (
+                    <ConversationCard key={conversation.conversationId} conversation={conversation} selectConversation={this.props.selectConversation} />
+                ))}
 
                 {/*New Conversation Button*/}
-                <p id="buttonNewConversation" onClick={this.showNewConversationPopup.bind(this)}>
+                <div id="buttonNewConversation" onClick={this.showNewConversationPopup.bind(this)}>
                     New Conversation
-                </p>
+                </div>
 
                 {this.state.popup}
             </div>

@@ -25,9 +25,21 @@ export const createConversation = (senderId, recipientEmail, history) => async d
 
 export const getConversationsByUserId = (userId) => async dispatch => {
     const res = await axios.get(`/api/conversations/get-by-user/${userId}`);
-    console.log("res: "+res);
     dispatch ({
         type: GET_MANY_CONVERSATIONS,
         payload: res.data
     });
 }
+
+export const getConversationById = (conversationId) => async dispatch => {
+    const res = await axios.get(`/api/conversations/view/${conversationId}`);
+    dispatch ({
+        type: GET_ONE_CONVERSATION,
+        payload: res.data
+    });
+}
+
+export const addMessageToConversation = (senderId, conversationId, message) => async dispatch => 
+{
+    await axios.post(`/api/conversations/sender-${senderId}/conversation-${conversationId}`, message);
+};
