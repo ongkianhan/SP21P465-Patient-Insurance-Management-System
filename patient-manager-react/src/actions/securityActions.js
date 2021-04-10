@@ -12,6 +12,7 @@ import jwtDecode from "jwt-decode";
 export const createNewUser = (newUser, userType, history) => async dispatch => {
     try
     {
+        console.log(newUser)
         await axios.post("/api/account/create-"+userType, newUser);
         dispatch({
             type: GET_ERRORS, 
@@ -95,6 +96,10 @@ export const validateUser = (user) => {
     if (user.lastName == "")
     {
         errorOutput["lastName"] = "Last name cannot be blank";
+    }
+    if (user.latitude == "" || user.longitude == "")
+    {
+        errorOutput["address"] = "Address is blank or invalid";
     }
     return errorOutput;
 }

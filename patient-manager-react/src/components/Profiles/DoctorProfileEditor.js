@@ -4,6 +4,14 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
 import { getCurrentUser } from "../../actions/userActions";
+import Geocode from "react-geocode";
+
+Geocode.setLanguage("en");
+Geocode.setLocationType("ROOFTOP");
+Geocode.enableDebug();
+
+Geocode.setApiKey("AIzaSyDx1alSX-eHys1ZzIMmIyFO07hPmvA_5A8");
+
 
 class DoctorProfileEditor extends Component {
     constructor() {
@@ -17,6 +25,9 @@ class DoctorProfileEditor extends Component {
             lastName: "",
             specialization: "",
             hospitalName: "",
+            latitude: "",
+            longitude: "",
+            address:"",
             errors: {},
             hasSuccess:false
         };
@@ -32,20 +43,38 @@ class DoctorProfileEditor extends Component {
         this.setState({userId: userId});
         await this.props.getCurrentUser(userId, this.props.history);
 
+
+
         const {
             email,
             firstName,
             lastName,
             specialization,
             hospitalName,
+            latitude,
+            longitude,
         } = this.props.currentUser.currentUser;
         //Display the user's information
+
+        console.log(latitude, longitude)
+
+        await Geocode.fromLatLng(latitude, longitude).then(
+            (response) => {
+              const address = response.results[0].formatted_address;
+              this.state.address = address
+              console.log(address);
+            },
+            (error) => {
+              console.error(error);
+            }
+          );
+
         this.setState({
             email,
             firstName,
             lastName,
             specialization,
-            hospitalName
+            hospitalName,
         });
     }
 
@@ -70,9 +99,22 @@ class DoctorProfileEditor extends Component {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             specialization: this.state.specialization,
+            latitude: this.state.latitude,
+            longitude: this.state.longitude,
             hospitalName: this.state.hospitalName,
             errors: {},
         };
+
+        await Geocode.fromAddress(this.state.address).then(
+            (response) => {
+              newDoctor.latitude= response.results[0].geometry.location.lat;
+              newDoctor.longitude= response.results[0].geometry.location.lng;
+              
+            },
+            (error) => {
+              console.error(error);
+            }
+          );
     
         //Validate the user
         const frontEndErrors = validateUser(newDoctor)
@@ -164,6 +206,33 @@ class DoctorProfileEditor extends Component {
                                                     {errors.email && (
                                                         <div className="invalid-feedback">
                                                             {errors.email}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </td>
+                                            <td className="td-textbox-holder">
+                                                <div className="form-group">
+                                                    <input
+                                                        type="text"
+                                                        className={classnames(
+                                                            "form-control textbox",
+                                                            {
+                                                                "is-invalid":
+                                                                    errors.address,
+                                                            }
+                                                        )}
+                                                        placeholder="Address"
+                                                        name="address"
+                                                        value={
+                                                            this.state.address
+                                                        }
+                                                        onChange={this.onChange}
+                                                    />
+                                                    {errors.address && (
+                                                        <div className="invalid-feedback">
+                                                            {
+                                                                errors.address
+                                                            }
                                                         </div>
                                                     )}
                                                 </div>

@@ -5,8 +5,21 @@ import { connect } from "react-redux";
 import classnames from "classnames";
 import { login, validateUser } from "../../actions/securityActions";
 import { Link } from "react-router-dom";
+import Geocode from "react-geocode";
+
+Geocode.setLanguage("en");
+Geocode.setLocationType("ROOFTOP");
+Geocode.enableDebug();
+
+Geocode.setApiKey("AIzaSyDx1alSX-eHys1ZzIMmIyFO07hPmvA_5A8");
+
+//credit for this method goes to https://www.npmjs.com/package/react-geocode
+
+
 
 class DoctorSignupForm extends Component {
+
+
     constructor() {
         super();
 
@@ -17,11 +30,15 @@ class DoctorSignupForm extends Component {
             lastName: "",
             specialization: "",
             hospitalName: "",
+            address: "",
+            latitude:"",
+            longitude:"",
             errors: {},
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
+
 
     componentDidMount() {
         //Instantly bring the user to their dashboard
@@ -41,6 +58,10 @@ class DoctorSignupForm extends Component {
     async onSubmit(e) {
         e.preventDefault();
         //Create a new doctor account
+
+
+        //credit for this method goes to https://www.npmjs.com/package/react-geocode
+
         const newDoctor = {
             email: this.state.email,
             password: this.state.password,
@@ -48,8 +69,21 @@ class DoctorSignupForm extends Component {
             lastName: this.state.lastName,
             specialization: this.state.specialization,
             hospitalName: this.state.hospitalName,
+            latitude: this.state.latitude,
+            longitude: this.state.longitude,
             errors: {},
         };
+
+        await Geocode.fromAddress(this.state.address).then(
+            (response) => {
+              newDoctor.latitude= response.results[0].geometry.location.lat;
+              newDoctor.longitude= response.results[0].geometry.location.lng;
+              
+            },
+            (error) => {
+              console.error(error);
+            }
+          );
     
         //Validate the user
         const frontEndErrors = validateUser(newDoctor)
@@ -267,6 +301,35 @@ class DoctorSignupForm extends Component {
                                                         <div className="invalid-feedback">
                                                             {
                                                                 errors.hospitalName
+                                                            }
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                        <td className="td-textbox-holder">
+                                                <div className="form-group">
+                                                    <input
+                                                        type="text"
+                                                        className={classnames(
+                                                            "form-control textbox",
+                                                            {
+                                                                "is-invalid":
+                                                                    errors.address,
+                                                            }
+                                                        )}
+                                                        placeholder="Address"
+                                                        name="address"
+                                                        value={
+                                                            this.state.address
+                                                        }
+                                                        onChange={this.onChange}
+                                                    />
+                                                    {errors.address && (
+                                                        <div className="invalid-feedback">
+                                                            {
+                                                                errors.address
                                                             }
                                                         </div>
                                                     )}
