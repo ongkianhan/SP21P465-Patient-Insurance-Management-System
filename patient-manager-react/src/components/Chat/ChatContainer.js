@@ -16,6 +16,13 @@ class ChatContainer extends Component {
         }
     }
 
+    async componentDidMount()
+    {
+        //Make a request to get all the user's info from the database
+        //so that the current user's name can align their own messages to the right in MessageViewport
+        await this.props.getCurrentUser(this.props.security.user.userId, this.props.history);
+    }
+
     selectConversation = (id) => {
         //Pull the messages from the database
         this.props.getConversationById(id);
@@ -27,15 +34,10 @@ class ChatContainer extends Component {
         return (
             <div className="chat-primary-container">
                 <h1 className="display-5 text-left page-header">Chat</h1>
-
-                <table className="chat-table-container">
-                    <td>
-                        <ConversationList selectConversation={this.selectConversation} />
-                    </td>
-                    <td>
-                        <MessageViewport conversationId={this.state.conversationId} currentUser={this.props.currentUser} />
-                    </td>
-                </table>
+                <div className="row chat-table-container">
+                    <ConversationList selectConversation={this.selectConversation} />
+                    <MessageViewport conversationId={this.state.conversationId} currentUser={this.props.currentUser} />
+                </div>
             </div>
         )
     }
@@ -46,11 +48,13 @@ ChatContainer.propTypes = {
     conversation: PropTypes.object.isRequired,
     getCurrentUser: PropTypes.func.isRequired,
     currentUser: PropTypes.object.isRequired,
+    security: PropTypes.object.isRequired,
 } 
 
 const mapStateToProps = state => ({
     conversation: state.conversation,
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    security: state.security,
 })
 
 export default connect(mapStateToProps, {getConversationById, getCurrentUser}) (ChatContainer);

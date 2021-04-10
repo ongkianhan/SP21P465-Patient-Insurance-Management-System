@@ -34,7 +34,7 @@ class ConversationList extends Component {
     render() {
         const {allConversations} = this.props.conversation;
         return (
-            <div className="chat-conversation-container">
+            <div className="col-3 chat-conversation-container">
                 {/* Conversations */}
                 {allConversations.map(conversation => (
                     <ConversationCard key={conversation.conversationId} conversation={conversation} selectConversation={this.props.selectConversation} />
