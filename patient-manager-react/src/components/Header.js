@@ -80,6 +80,7 @@ class Header extends Component {
                                             paddingTop: "1vmin",
                                             paddingBottom: "1.25vmin",
                                             height: "calc(48px + 2vmin)",
+                                            maxHeight: "9vh",
                                             width: "auto",
                                         }}
                                         src={vitaLogoWhite}

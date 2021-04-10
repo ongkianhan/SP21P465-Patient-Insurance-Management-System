@@ -5,17 +5,11 @@ export default class Footer extends Component
 {
     render() {
         return (
-            <span>
-                <nav className="footer-horizontal">
-                    <div className="footer-container">
-                        <ul className="footer-list">
-                            <span className="footer-item">
-                                © Copyright Vita 2021
-                            </span>
-                        </ul>
-                    </div>
-                </nav>
-            </span>
+            <div className="footer-container">
+                <span className="footer-text">
+                    © Copyright Vita 2021
+                </span>
+            </div>
         );
     }
 }

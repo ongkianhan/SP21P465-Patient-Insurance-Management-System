@@ -35,7 +35,7 @@ class App extends Component
         <Router>
           <div className="App">
             <Header />
-            <span style={{marginLeft: "25vh", marginRight: "25vh"}}>
+            <span style={{marginLeft: "25vw", marginRight: "25vw"}}>
               {
                 //Public routes
               }
@@ -57,8 +57,8 @@ class App extends Component
               <SecuredRoute exact path="/chat" component={ChatContainer} />
               <SecuredRoute exact path="/permission-denied" component={InvalidUserTypeLanding} />
             </span>
-            {/*<Footer />*/}
           </div>
+          <Footer />
         </Router>
       </Provider>
     );
