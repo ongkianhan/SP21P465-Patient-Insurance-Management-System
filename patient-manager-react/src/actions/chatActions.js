@@ -4,14 +4,13 @@ import { GET_MANY_CONVERSATIONS, GET_ONE_CONVERSATION, GET_ERRORS } from "./type
 export const createConversation = (senderId, recipientEmail, history) => async dispatch => 
 {
     try {
-        await axios.post(`/api/conversations/create-conversation/${senderId}&${recipientEmail}`, {});
+        const res = await axios.post(`/api/conversations/create-conversation/${senderId}&${recipientEmail}`, {});
         dispatch(
         {
-            type: GET_ERRORS,
-            //Clear the errors for the next use of the appointment scheduler
-            payload: {} 
+            type: GET_ONE_CONVERSATION,
+            payload: res.data
         });
-        return true; //signify success
+        return true;
     }
     catch (err)
     {

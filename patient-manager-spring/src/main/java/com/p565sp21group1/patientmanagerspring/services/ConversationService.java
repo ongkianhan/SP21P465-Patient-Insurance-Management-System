@@ -25,25 +25,32 @@ public class ConversationService
 
     public Conversation createConversation(long senderId, String otherUserEmail, Conversation conversation)
     {
+        User user1, user2;
         try
         {
             //Pair the conversation with user 1...
             //Calling get() retrieves the actual User from the repos
-            User user1 = (User) userRepository.findById(senderId).get();
+            user1 = (User) userRepository.findById(senderId).get();
             conversation.addUserInvolved(user1);
 
             //Pair the conversation with user 1...
             //Calling get() retrieves the actual User from the repos
-            User user2 = (User) userRepository.findByEmail(otherUserEmail);
+            user2 = (User) userRepository.findByEmail(otherUserEmail);
             if (user2 == null) throw new Exception();
             conversation.addUserInvolved(user2);
-
-            return conversationRepository.save(conversation);
         }
         catch (Exception ex)
         {
             throw new UserNotFoundException("That user could not be found. Ensure their email address is correct.");
         }
+
+        //Ensure user is not starting a conversation with themself
+        if (user1.getUserId() == user2.getUserId())
+        {
+            throw new UserNotFoundException("You cannot start a conversation with yourself!");
+        }
+
+        return conversationRepository.save(conversation);
     }
 
 

@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types"
 import classnames from "classnames";
-import { getDoctor } from "../actions/userActions";
-import {createAppointment, getAppointmentsByDoctorId, validateAppointment} from "../actions/appointmentActions";
-import CustomPopup from './CustomPopup';
+import { getDoctor } from "../../actions/userActions";
+import {createAppointment, getAppointmentsByDoctorId, validateAppointment} from "../../actions/appointmentActions";
+import AppointmentConfirmedPopup from "./AppointmentConfirmedPopup";
 
 var dateFormat = require("dateformat");
 //Inclusive start/stop times that doctors will work between
@@ -207,10 +207,9 @@ class AppointmentScheduler extends Component
                 <h1 className="display-5 text-left page-header">Schedule an Appointment</h1>
                     <form onSubmit={this.onSubmit}>
                         <div className="row align-items-start" style={{marginTop: "calc(4vmin)"}}>
-                            <div className="col-md-8">
-
+                            <div className="col-md-12">
                                 {/* Date/time picker*/}
-                                <p className="text-left page-header">Select a date for your appointment...</p>
+                                <p className="text-left page-header">Use the calendar to select a date for your appointment...</p>
                                 <input type="date"
                                 className={classnames("form-control textbox",
                                     {"is-invalid": errors.date})}
@@ -221,6 +220,10 @@ class AppointmentScheduler extends Component
                                 {errors.date && (
                                     <div className="invalid-feedback">{errors.date}</div>
                                 )} 
+                            </div>
+                        </div>
+                        <div className="row align-items-start" style={{marginTop: "calc(1vmin)"}}>
+                            <div className="col-md-8">
                             
                                 {/* Doctor information */}
                                 <div className="thin-container" style={{marginTop: "1.5em"}}>
@@ -240,7 +243,7 @@ class AppointmentScheduler extends Component
                                     />
                                 </div>
                             </div>
-                            <div className="col-md-4">
+                            <div className="col-md-4" style={{marginTop: "1.5em"}}>
                                 <table>
                                     {this.state.appointmentTable}
                                 </table>
@@ -248,7 +251,7 @@ class AppointmentScheduler extends Component
                         </div>
                     </form>
                     
-                    <CustomPopup ref={this.successPopup} redirect="/dashboard" headerText="Success" content="Appointment scheduled!"/>
+                    <AppointmentConfirmedPopup ref={this.successPopup} redirect="/dashboard" headerText="Success" content="Appointment scheduled!"/>
                 </div>   
             </div>
         )

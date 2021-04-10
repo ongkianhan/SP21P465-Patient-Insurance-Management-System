@@ -207,7 +207,8 @@ th {
 .nav-horizontal {
     background-color: #00aa95;
     overflow: hidden;
-    height: 8vh;
+    min-height: 8vh;
+    max-height: 3em;
     width: 100%;
 }
 

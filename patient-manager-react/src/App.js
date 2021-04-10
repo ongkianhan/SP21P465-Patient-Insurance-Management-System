@@ -11,7 +11,7 @@ import DashboardRoute from "./securityUtils/DashboardRoute";
 
 //Components
 import DoctorSearch from "./components/UserSearch/DoctorSearch.js";
-import AppointmentScheduler from "./components/AppointmentScheduler.js";
+import AppointmentScheduler from "./components/AppointmentScheduling/AppointmentScheduler";
 import DoctorSignupForm from "./components/SignUp/DoctorSignupForm";
 import PatientSignupForm from "./components/SignUp/PatientSignupForm";
 import InsurerSignupForm from "./components/SignUp/InsurerSignupForm";

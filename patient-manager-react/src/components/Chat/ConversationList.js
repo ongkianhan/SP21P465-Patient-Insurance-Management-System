@@ -14,6 +14,7 @@ class ConversationList extends Component {
         this.state = {
             popup: null
         }
+        this.updateConversationList = this.updateConversationList.bind(this);
     }
 
     async componentDidMount() 
@@ -23,12 +24,19 @@ class ConversationList extends Component {
         await this.props.getConversationsByUserId(userId);
     }
 
+    updateConversationList() 
+    {
+        //Retrieve this user's list of conversations
+        const userId = this.props.security.user.userId;
+        this.props.getConversationsByUserId(userId);
+    }
+
     async showNewConversationPopup() 
     {
         //Destroy the old conv popup if it exists
         await this.setState({popup: null})
         //Create a new conv popup and show it
-        this.setState({popup: <NewConversationPopup />})
+        this.setState({popup: <NewConversationPopup updateConversationList={this.updateConversationList} />})
     }
     
     render() {

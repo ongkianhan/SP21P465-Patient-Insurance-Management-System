@@ -31,6 +31,9 @@ class NewConversationPopup extends Component {
         const senderId = this.props.security.user.userId;
         var success = await this.props.createConversation(senderId, this.state.recipientEmail, this.props.history);
 
+        //Update the ConversationList user interface
+        this.props.updateConversationList();
+
         //Clear the text box and hide the modal if there are no errors
         if (success === true) {
             this.setState({recipientEmail: "", display: "none"});
