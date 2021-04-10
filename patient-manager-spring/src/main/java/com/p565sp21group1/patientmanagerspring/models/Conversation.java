@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name="Conversation")
@@ -62,7 +64,7 @@ public class Conversation
     }
 
     public List<String> getNamesInvolved() {
-        return this.namesInvolved;
+        return namesInvolved;
     }
 
     public void setNamesInvolved(List<String> namesInvolved) {

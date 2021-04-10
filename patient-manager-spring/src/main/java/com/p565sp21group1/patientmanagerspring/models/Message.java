@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 
 @Entity
 @Table(name="T_Message") //"Message" is a reserved table
@@ -25,6 +26,9 @@ public class Message
     @JoinColumn(name = "userId", updatable = false, nullable = false)
     @JsonIgnore
     private User sender;
+
+    @Transient
+    private String senderName;
 
     public Message() {
     }
@@ -59,5 +63,19 @@ public class Message
 
     public void setSender(User sender) {
         this.sender = sender;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
+
+    public void updateSenderName() {
+        //When retrieving the message from the DB, include the sender's first/last
+        //name in the result but not the user's entire info
+        this.senderName = this.sender.getFirstName() + " " + this.sender.getLastName();
     }
 }

@@ -7,7 +7,8 @@ class MessageViewport extends Component {
     constructor() {
         super();
         this.state = {
-            messageEntry: ""
+            messageEntry: "",
+            messages: []
         }
         this.onChange = this.onChange.bind(this);
     }
@@ -27,10 +28,16 @@ class MessageViewport extends Component {
     sendMessage() {
         const senderId = this.props.security.user.userId;
         var message = {
+            /*Sender name is not persisted to database*/
+            senderName: this.props.currentUser.currentUser.firstName + " " + this.props.currentUser.currentUser.lastName, 
             content: this.state.messageEntry
         }
         //Add the new message to the database
-        addMessageToConversation(senderId, this.props.conversationId, message);
+        this.props.addMessageToConversation(senderId, this.props.conversationId, message);
+        
+        //Add message to user interface
+        this.props.conversation.conversation.push(message);
+        this.setState({messages: this.props.conversation.conversation});
     }
 
     render() {
@@ -41,10 +48,22 @@ class MessageViewport extends Component {
             <div className="chat-viewport-container">
                 <div className="message-container">
 
-                {/*this.props.conversation.conversation.map(conversation => (
-                    <p className="message-header received">Dr T. Colin Campbell</p>
-                ))*/}
-                    <p className="message-header received">Dr T. Colin Campbell</p>
+                    {this.props.conversation.conversation.map(message => 
+                        message.senderName != this.props.currentUser.currentUser.firstName + " " + this.props.currentUser.currentUser.lastName 
+                        ? (
+                        <span>
+                            <p className="message-header received">{message.senderName}</p>
+                            <p className="message message-received received">{message.content}</p>
+                        </span>
+                        ) : (
+                        <span>
+                            <p className="message-header sent">{message.senderName}</p>
+                            <p className="message message-sent sent">{message.content}</p>
+                        </span>
+                        )
+                    )}
+
+                    {/*<p className="message-header received">Dr T. Colin Campbell</p>
                     <p className="message message-received received">Dummy message. </p>
 
                     <p className="message-header sent">You</p>
@@ -54,7 +73,7 @@ class MessageViewport extends Component {
                     <p className="message message-received received">Dummy message. </p>
 
                     <p className="message-header sent">You</p>
-                    <p className="message message-sent sent">Dummy message. </p>
+                <p className="message message-sent sent">Dummy message. </p>*/}
                 </div>
                 <table className="chatbar-container">
                     <td>

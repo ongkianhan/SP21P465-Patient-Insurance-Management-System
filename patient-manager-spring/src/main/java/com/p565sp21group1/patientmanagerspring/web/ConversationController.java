@@ -31,8 +31,15 @@ public class ConversationController
     @GetMapping("/view/{conversationId}")
     public Iterable<Message> getConversationById(@PathVariable String conversationId, Principal principal)
     {
+        //Get the messages from the database
         long conversationIdLong = userService.parseUserId(conversationId);
-        return conversationService.getRecentMessages(conversationIdLong);
+        Iterable<Message> messageList = conversationService.getRecentMessages(conversationIdLong);
+        //Add the name of the sender to each message
+        for (Message message : messageList)
+        {
+            message.updateSenderName();
+        }
+        return messageList;
     }
 
     @PostMapping("/sender-{userId}/conversation-{conversationId}")

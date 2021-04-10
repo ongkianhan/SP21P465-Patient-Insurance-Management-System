@@ -22,6 +22,7 @@ export default class ConversationCard extends Component {
         }
 
         return (
+
             <table className="conv-card-container" onClick={selectConversation.bind(this)}>
                 <td className="conv-unread-indicator">
                     {this.state.numberUnread > 0 ? (

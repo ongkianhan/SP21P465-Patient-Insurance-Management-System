@@ -15,6 +15,6 @@ public interface MessageRepository extends CrudRepository<Message, Long>
 {
     @Query(value = "SELECT m FROM Message m " +
             "WHERE m.conversation.conversationId = :conversationId " +
-            "ORDER BY m.id DESC")
+            "ORDER BY m.id")
     List<Message> getRecentMessages(long conversationId);
 }
