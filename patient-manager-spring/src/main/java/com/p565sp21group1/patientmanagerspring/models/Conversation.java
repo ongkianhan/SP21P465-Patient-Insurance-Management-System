@@ -28,6 +28,9 @@ public class Conversation
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "conversation", orphanRemoval = true)
     private List<Message> messages = new ArrayList<>();
 
+    @Transient
+    private int numberUnread = 0;
+
 
     public Conversation() {
     }
@@ -70,6 +73,15 @@ public class Conversation
     public void setNamesInvolved(List<String> namesInvolved) {
         this.namesInvolved = namesInvolved;
     }
+
+    public int getNumberUnread() {
+        return numberUnread;
+    }
+
+    public void setNumberUnread(int numberUnread) {
+        this.numberUnread = numberUnread;
+    }
+
 
     public void updateNamesInvolved(long userIdToExclude) {
         //Add a list of the first+last names of each user involved

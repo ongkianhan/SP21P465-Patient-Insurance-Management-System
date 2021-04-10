@@ -53,7 +53,7 @@ class MessageViewport extends Component {
     }
 
     render() {
-        if (this.props.conversationId < 0 || this.props.conversation == undefined || this.props.conversation.conversation == undefined) {
+        if (this.props.conversationId < 0 || this.props.conversation == undefined || this.props.conversation.conversation.length == undefined) {
             return <span className="chat-viewport-container" />;
         }
         return (

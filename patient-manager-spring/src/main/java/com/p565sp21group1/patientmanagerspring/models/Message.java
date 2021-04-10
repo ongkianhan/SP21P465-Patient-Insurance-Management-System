@@ -17,10 +17,16 @@ public class Message
     @NotBlank(message = "Message cannot be blank")
     private String content;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "conversationId", updatable = false, nullable = false)
     @JsonIgnore
     private Conversation conversation;
+
+    //A message may belong to an UnreadInbox or only a conversation
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "unreadInboxId", updatable = false, nullable = true)
+    @JsonIgnore
+    private UnreadInbox unreadInbox;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", updatable = false, nullable = false)
@@ -72,6 +78,15 @@ public class Message
     public void setSenderName(String senderName) {
         this.senderName = senderName;
     }
+
+    public UnreadInbox getUnreadInbox() {
+        return unreadInbox;
+    }
+
+    public void setUnreadInbox(UnreadInbox unreadInbox) {
+        this.unreadInbox = unreadInbox;
+    }
+
 
     public void updateSenderName() {
         //When retrieving the message from the DB, include the sender's first/last

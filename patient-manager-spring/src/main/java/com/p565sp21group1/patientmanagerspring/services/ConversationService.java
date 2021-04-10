@@ -4,11 +4,13 @@ import com.p565sp21group1.patientmanagerspring.exceptions.UserNotFoundException;
 import com.p565sp21group1.patientmanagerspring.models.*;
 import com.p565sp21group1.patientmanagerspring.repositories.ConversationRepository;
 import com.p565sp21group1.patientmanagerspring.repositories.MessageRepository;
+import com.p565sp21group1.patientmanagerspring.repositories.UnreadInboxRepository;
 import com.p565sp21group1.patientmanagerspring.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ConversationService
@@ -21,6 +23,9 @@ public class ConversationService
 
     @Autowired
     MessageRepository messageRepository;
+
+    @Autowired
+    UnreadInboxRepository unreadInboxRepository;
 
 
     public Conversation createConversation(long senderId, String otherUserEmail, Conversation conversation)
@@ -58,11 +63,34 @@ public class ConversationService
     {
         //Retrieve the conversations associated with this user from the database
         Iterable<Conversation> conversations = conversationRepository.getConversationsByUserId(userId);
-        //Add the first/last names of each user in the conversation to the object
-        for (Conversation conv : conversations) {
+        for (Conversation conv : conversations)
+        {
+            //Add the first/last names of each user in the conversation to the object
             conv.updateNamesInvolved(userId);
         }
+
+        //Also, update each convo with the number of unread messages for that user
+        List<Message> allUnreads = unreadInboxRepository.getUnreadMessagesByUserId(userId);
+        for (Message unreadMessage : allUnreads)
+        {
+            long parentConversationId = unreadMessage.getConversation().getConversationId();
+            //Find the target conversation in the user's conversation list
+            for (Conversation conv : conversations)
+            {
+                if (conv.getConversationId() == parentConversationId)
+                {
+                    //Update the conversation with the number of unread messages for this user
+                    conv.setConversationId(1 + conv.getConversationId());
+                }
+            }
+        }
+
         return conversations;
+    }
+
+    public int getTotalNumberOfUnreadMessagesByUserId(long userId)
+    {
+        return unreadInboxRepository.getTotalNumberOfUnreadMessagesByUserId(userId);
     }
 
 
@@ -76,7 +104,13 @@ public class ConversationService
         User sender = userRepository.findById(userId).get();
         message.setSender(sender);
 
-        //TODO also save it to an Inbox table
+        //Also save the message to the unread inbox of every user in the conversation
+        for (User userInvolved : conversation.getUsersInvolved())
+        {
+            //Add the message to the user's inbox
+            userInvolved.getUnreadInbox().addUnreadMessage(message);
+            unreadInboxRepository.save(userInvolved.getUnreadInbox());
+        }
 
         return messageRepository.save(message);
     }

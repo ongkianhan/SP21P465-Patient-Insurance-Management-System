@@ -81,4 +81,11 @@ public class ConversationController
         long userIdLong = userService.parseUserId(userId);
         return conversationService.getConversationsByUserId(userIdLong);
     }
+
+    @GetMapping("/get-number-unread/{userId}")
+    public int getTotalNumberOfUnreadMessagesByUserId(@PathVariable String userId, Principal principal)
+    {
+        long userIdLong = userService.parseUserId(userId);
+        return conversationService.getTotalNumberOfUnreadMessagesByUserId(userIdLong);
+    }
 }

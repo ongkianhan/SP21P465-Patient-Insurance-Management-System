@@ -36,9 +36,13 @@ public abstract class User implements UserDetails
     @NotBlank(message = "Last name cannot be blank")
     private String lastName;
 
-    @OneToMany(mappedBy = "usersInvolved", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, orphanRemoval = true)
+    @OneToMany(mappedBy = "usersInvolved", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, orphanRemoval = true)
     @JsonIgnore
     private List<Conversation> conversations = new ArrayList<>();
+
+    @OneToOne(mappedBy = "owner", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, orphanRemoval = true)
+    @JsonIgnore
+    private UnreadInbox unreadInbox;
 
     private String userType; //DOC, INS, or PAT
 
@@ -99,7 +103,13 @@ public abstract class User implements UserDetails
         this.userType = userType;
     }
 
+    public UnreadInbox getUnreadInbox() {
+        return unreadInbox;
+    }
 
+    public void setUnreadInbox(UnreadInbox unreadInbox) {
+        this.unreadInbox = unreadInbox;
+    }
 
     //
     //  REQUIRED METHODS FOR UserDetails
