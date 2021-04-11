@@ -13,8 +13,6 @@ Geocode.enableDebug();
 
 Geocode.setApiKey("AIzaSyDx1alSX-eHys1ZzIMmIyFO07hPmvA_5A8");
 
-//credit for this method goes to https://www.npmjs.com/package/react-geocode
-
 
 
 class DoctorSignupForm extends Component {
@@ -33,6 +31,7 @@ class DoctorSignupForm extends Component {
             address: "",
             latitude:"",
             longitude:"",
+            supportsCovidCare:false,
             errors: {},
         };
         this.onChange = this.onChange.bind(this);
@@ -59,9 +58,6 @@ class DoctorSignupForm extends Component {
         e.preventDefault();
         //Create a new doctor account
 
-
-        //credit for this method goes to https://www.npmjs.com/package/react-geocode
-
         const newDoctor = {
             email: this.state.email,
             password: this.state.password,
@@ -71,6 +67,7 @@ class DoctorSignupForm extends Component {
             hospitalName: this.state.hospitalName,
             latitude: this.state.latitude,
             longitude: this.state.longitude,
+            supportsCovidCare: this.state.supportsCovidCare,
             errors: {},
         };
 
@@ -107,6 +104,10 @@ class DoctorSignupForm extends Component {
             //Navigate to the dashboard
             this.props.history.push("/dashboard");
         }
+    }
+
+    setSupportsCovidCare(e) {
+        this.state.supportsCovidCare = e.target.checked;
     }
 
     onChange(e) {
@@ -333,6 +334,24 @@ class DoctorSignupForm extends Component {
                                                             }
                                                         </div>
                                                     )}
+                                                </div>
+                                            </td>
+
+                                            <td className="td-form-check">
+                                                <div className="form-group">
+                                                    <input
+                                                        className={classnames(
+                                                            "form-check-input"
+                                                        )}
+                                                        type="checkbox"
+                                                        onChange={this.setSupportsCovidCare.bind(this)}
+                                                        id="supportsCovidCareCheckbox"
+                                                    ></input>
+                                                    <label
+                                                        className="form-check-label"
+                                                    >
+                                                        Do you offer COVID-19 care?
+                                                    </label>
                                                 </div>
                                             </td>
                                         </tr>

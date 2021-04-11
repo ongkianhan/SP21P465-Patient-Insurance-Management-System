@@ -23,27 +23,27 @@ class PatientAppointmentCard extends Component
     }
         const {appointment} = this.props;
         return (
-            <div className="container row pl-5">
-            <div className="card card-body bg-light">
-                <div className="row align-items-center">
-                    <div className="col-8 text-left">
-                        <h1 className = "font-weight-bold">{appointment.doctor.firstName} {appointment.doctor.lastName}</h1>
-                        <h3>{date} {AMorPM}</h3>
-                        <h3>{appointment.doctor.hospitalName}</h3>
-                        {/*<h5>Age: {appointment.patient.age}</h5>*/}
-                        <p></p>
-                    </div>
-                    <div className="col-4">
-                        <Link to=""><button className="col my-1 button-secondary card-button">Show Directions</button></Link>
-                        <Link to={`/account/${appointment.doctor.userId}`}><button className="col my-1 button-secondary card-button">View Doctor</button></Link>
-                        {this.props.review ? (
-                        <Link to=""><button className="col my-1 button-secondary card-button">Write Review</button></Link> ) :
-                        (<span/>)
-                        }
+                <div className="container">
+                    <div className="card card-body bg-light">
+                        <div className="row align-items-center">
+                            <div className="col-8 text-left">
+                                <h1 className = "font-weight-bold">{appointment.doctor.firstName} {appointment.doctor.lastName}</h1>
+                                <h3>{date} {AMorPM}</h3>
+                                <h3>{appointment.doctor.hospitalName}</h3>
+                                {/*<h5>Age: {appointment.patient.age}</h5>*/}
+                                <p></p>
+                            </div>
+                            <div className="col-4">
+                                <Link to=""><button className="col my-1 btn btn-primary card-button">Show Directions</button></Link>
+                                <Link to={`/account/${appointment.doctor.userId}`}><button className="col my-1 btn btn-info card-button">View Doctor</button></Link>
+                                {this.props.review ? (
+                                <Link to=""><button className="col my-1 btn btn-secondary card-button">Write Review</button></Link> ) :
+                                (<span/>)
+                                }
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            </div>
         )
     }
 }

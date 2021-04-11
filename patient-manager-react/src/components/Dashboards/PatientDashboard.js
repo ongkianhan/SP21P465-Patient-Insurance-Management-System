@@ -25,7 +25,7 @@ class Dashboard extends Component
         if (this.props.appointment.allAppointments.length===0)
         {
             noAppointmentsMessage = (
-                <div className="container row align-items-left pl-5" style = {{width:'100vh', height:'15vh'}}>
+                <div className="container pl-5" style = {{width:'100vh', height:'15vh'}}>
                     <div className="card card-body bg-light">
                         <h4>It looks like no appointments could be found...</h4>
                     </div>
@@ -41,7 +41,7 @@ class Dashboard extends Component
         
 
         return (
-            <div className="container row">
+            <div className="container row col-12 align-center">
 
                 {allAppointments.map(appointment => (
                     
@@ -51,7 +51,7 @@ class Dashboard extends Component
                     
                 ))}
                 {futureAppointments ? (
-                    <h3 className="pl-5 pb-3 font-weight-bold text-center col-10">Your upcoming appointments</h3>) :
+                    <h3 className="pl-5 pb-3 font-weight-bold text-center col-12">Your upcoming appointments</h3>) :
                     (<span/>)
                 }
             
@@ -61,13 +61,15 @@ class Dashboard extends Component
                 {allAppointments.map(appointment => (
                     
                     (new Date(appointment.date).getTime()) >= (new Date()).getTime() ? (
-                        <PatientAppointmentCard key={appointment.appointmentId} appointment={appointment} review = {false}/>) :
+                        
+                            <PatientAppointmentCard key={appointment.appointmentId} appointment={appointment} review = {false}/>
+                            ) :
                         (<span/>)
                     
                 ))}
 
                 {pastAppointments ? (
-                    <h3 className="pl-5 pb-2 pt-3 font-weight-bold text-center col-10">Your Past appointments</h3>) :
+                    <h3 className="pl-5 pb-3 pt-4 font-weight-bold text-center col-12">Your past appointments</h3>) :
                     (<span/>)
                 }
 

@@ -28,6 +28,7 @@ class DoctorProfileEditor extends Component {
             latitude: "",
             longitude: "",
             address:"",
+            supportsCovidCare:false,
             errors: {},
             hasSuccess:false
         };
@@ -53,21 +54,22 @@ class DoctorProfileEditor extends Component {
             hospitalName,
             latitude,
             longitude,
+            supportsCovidCare,
         } = this.props.currentUser.currentUser;
         //Display the user's information
 
-        console.log(latitude, longitude)
 
         await Geocode.fromLatLng(latitude, longitude).then(
             (response) => {
               const address = response.results[0].formatted_address;
               this.state.address = address
-              console.log(address);
             },
             (error) => {
               console.error(error);
             }
           );
+
+          
 
         this.setState({
             email,
@@ -75,6 +77,7 @@ class DoctorProfileEditor extends Component {
             lastName,
             specialization,
             hospitalName,
+            supportsCovidCare,
         });
     }
 
@@ -87,6 +90,7 @@ class DoctorProfileEditor extends Component {
         
     }
     
+
     
 
     //When submitting, create the doctor
@@ -102,9 +106,10 @@ class DoctorProfileEditor extends Component {
             latitude: this.state.latitude,
             longitude: this.state.longitude,
             hospitalName: this.state.hospitalName,
+            supportsCovidCare: this.state.supportsCovidCare,
             errors: {},
         };
-
+        
         await Geocode.fromAddress(this.state.address).then(
             (response) => {
               newDoctor.latitude= response.results[0].geometry.location.lat;
@@ -141,6 +146,10 @@ class DoctorProfileEditor extends Component {
         this.setState({ [e.target.name]: e.target.value });
     }
 
+    setSupportsCovidCare(e) {
+        this.setState({[e.target.name]: e.target.checked});
+    }
+
     render() {
         
         const { errors } = this.state;
@@ -149,7 +158,7 @@ class DoctorProfileEditor extends Component {
         if(this.state.hasSuccess){
             successMessage = (
                 <span>
-                    <h5>
+                    <h5 className="pt-3">
                     Success! Account has been successfully updated
                     </h5>
                 </span>
@@ -369,6 +378,27 @@ class DoctorProfileEditor extends Component {
                                                             }
                                                         </div>
                                                     )}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="td-form-check">
+                                                <div className="form-group">
+                                                    <input
+                                                        className={classnames(
+                                                            "form-check-input"
+                                                        )}
+                                                        type="checkbox"
+                                                        checked={this.state.supportsCovidCare}
+                                                        onChange={this.setSupportsCovidCare.bind(this)}
+                                                        id="supportsCovidCareCheckbox"
+                                                        name="supportsCovidCare"
+                                                    ></input>
+                                                    <label
+                                                        className="form-check-label"
+                                                    >
+                                                        Do you offer COVID-19 care?
+                                                    </label>
                                                 </div>
                                             </td>
                                         </tr>

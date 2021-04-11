@@ -12,11 +12,12 @@ class DoctorAccount extends Component {
         super();        
     }
 
-    //When submitting, create the doctor
+    
 
     render() {
 
         const {currentUser} = this.props.currentUser
+        console.log(currentUser)
         return (
             <div className="container">
                 <div className="row">
@@ -27,6 +28,12 @@ class DoctorAccount extends Component {
                         <h1 className = "font-weight-bold">{currentUser.firstName} {currentUser.lastName}</h1>
                         <h3>{currentUser.specialization}</h3>
                         <h3>{currentUser.hospitalName}</h3>
+                        {currentUser.supportsCovidCare ? (
+                            <h3>Supports COVID-19 care</h3>
+                        ):(
+                            <h3>Does not support COVID-19 care</h3>
+                        )}
+                        
                     </div>
                     <div className = "col-3 text-left">
                     {this.props.security.user.userType == "PAT" ? (

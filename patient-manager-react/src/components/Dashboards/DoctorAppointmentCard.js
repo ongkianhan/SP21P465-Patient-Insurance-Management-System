@@ -26,7 +26,7 @@ class DoctorAppointmentCard extends Component {
 
         const { appointment } = this.props;
         return (
-            <div className="container row pl-5">
+            <div className="container">
                 <div className="card card-body bg-light">
                     <div className="row align-items-center">
                         <div className="col-8 text-left">
@@ -42,7 +42,7 @@ class DoctorAppointmentCard extends Component {
                         </div>
                         <div className="col-4">
                             <Link to={`/account/${appointment.patient.userId}`}>
-                                <button className="col my-1 button-secondary card-button">
+                                <button className="col my-1 btn btn-info card-button">
                                     View Patient
                                 </button>
                             </Link>

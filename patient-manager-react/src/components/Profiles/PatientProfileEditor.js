@@ -5,6 +5,13 @@ import { connect } from "react-redux";
 import classnames from "classnames";
 import { Link } from "react-router-dom";
 import { getCurrentUser } from "../../actions/userActions";
+import Geocode from "react-geocode";
+
+Geocode.setLanguage("en");
+Geocode.setLocationType("ROOFTOP");
+Geocode.enableDebug();
+
+Geocode.setApiKey("AIzaSyDx1alSX-eHys1ZzIMmIyFO07hPmvA_5A8");
 
 class PatientProfileEditor extends Component {
     constructor() {
@@ -16,12 +23,20 @@ class PatientProfileEditor extends Component {
             password: "",
             firstName: "",
             lastName: "",
+            latitude:"",
+            longitude:"",
+            smoking:false,
+            drinking:false,
             errors: {},
             hasSuccess:false
         };
 
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    checkBoxChange(e) {
+        this.setState({[e.target.name]: e.target.checked});
     }
 
     async componentDidMount()
@@ -34,16 +49,36 @@ class PatientProfileEditor extends Component {
         const {
             email,
             //password,
+            smoking,
+            drinking,
             firstName,
             lastName,
+            latitude,
+            longitude,
         } = this.props.currentUser.currentUser;
+
+        await Geocode.fromLatLng(latitude, longitude).then(
+            (response) => {
+              const address = response.results[0].formatted_address;
+              this.state.address = address
+            },
+            (error) => {
+              console.error(error);
+            }
+          );
         //Display the user's information
         this.setState({
+            smoking,
+            drinking,
             email,
+            latitude,
+            longitude,
             //password:"a",
             firstName,
             lastName,
         });
+
+        console.log(this.props.currentUser.currentUser)
     }
 
 
@@ -60,19 +95,54 @@ class PatientProfileEditor extends Component {
     async onSubmit(e) {
         e.preventDefault();
         //Create a new Patient account
-        const newPatient = {
-            userId: this.state.userId,
-            email: this.state.email,
-            //password: "a",
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            errors: {},
-        };
+        var newPatient;
+
+        if(this.state.address==""){
+            console.log("not filled")
+            newPatient = {
+                userId: this.state.userId,
+                email: this.state.email,
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                specialization: this.state.specialization,
+                smoking: this.state.smoking,
+                drinking: this.state.drinking,
+                latitude:0,
+                longitude:0,
+                errors: {},
+            };
+        }
+        else{
+            console.log("filled")
+            newPatient = {
+                userId: this.state.userId,
+                email: this.state.email,
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                specialization: this.state.specialization,
+                latitude: this.state.latitude,
+                longitude: this.state.longitude,
+                smoking: this.state.smoking,
+                drinking: this.state.drinking,
+                errors: {},
+            };
+            await Geocode.fromAddress(this.state.address).then(
+                (response) => {
+                newPatient.latitude= response.results[0].geometry.location.lat;
+                newPatient.longitude= response.results[0].geometry.location.lng;
+                
+                },
+                (error) => {
+                console.error(error);
+                }
+            );
+        }
     
         //Validate the user
         const frontEndErrors = validateUser(newPatient)
         if (Object.keys(frontEndErrors).length != 0) //if errors exist
         {
+            console.log(frontEndErrors)
             this.setState({ errors: frontEndErrors });
             return;
         }
@@ -162,7 +232,33 @@ class PatientProfileEditor extends Component {
                                                     )}
                                                 </div>
                                             </td>
-                                          
+                                            <td className="td-textbox-holder">
+                                                <div className="form-group">
+                                                    <input
+                                                        type="text"
+                                                        className={classnames(
+                                                            "form-control textbox",
+                                                            {/*
+                                                                "is-invalid":
+                                                                    errors.address,
+                                                            */}
+                                                        )}
+                                                        placeholder="Address (optional)"
+                                                        name="address"
+                                                        value={
+                                                            this.state.address
+                                                        }
+                                                        onChange={this.onChange}
+                                                    />
+                                                    {errors.address && (
+                                                        <div className="invalid-feedback">
+                                                            {
+                                                                errors.address
+                                                            }
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </td>
                                             {/*
                                             <td className="td-textbox-holder">
                                                 <div className="form-group">
@@ -240,6 +336,46 @@ class PatientProfileEditor extends Component {
                                                             {errors.lastName}
                                                         </div>
                                                     )}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="td-form-check">
+                                                <div className="form-group">
+                                                    <input
+                                                        className={classnames(
+                                                            "form-check-input"
+                                                        )}
+                                                        type="checkbox"
+                                                        onChange={this.checkBoxChange.bind(this)}
+                                                        checked={this.state.smoking}
+                                                        name="smoking"
+                                                        id="smoking"
+                                                    ></input>
+                                                    <label
+                                                        className="form-check-label"
+                                                    >
+                                                        Do you smoke?
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td className="td-form-check">
+                                                <div className="form-group">
+                                                    <input
+                                                        className={classnames(
+                                                            "form-check-input"
+                                                        )}
+                                                        type="checkbox"
+                                                        onChange={this.checkBoxChange.bind(this)}
+                                                        checked={this.state.drinking}
+                                                        name="drinking"
+                                                        id="drinking"
+                                                    ></input>
+                                                    <label
+                                                        className="form-check-label"
+                                                    >
+                                                        Do you drink alcohol?
+                                                    </label>
                                                 </div>
                                             </td>
                                         </tr>
