@@ -40,9 +40,7 @@ public abstract class User implements UserDetails
     @JsonIgnore
     private List<Conversation> conversations = new ArrayList<>();
 
-    @OneToOne(mappedBy = "owner", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, orphanRemoval = true)
-    @JsonIgnore
-    private UnreadInbox unreadInbox;
+    private int numberOfUnreadMessages = 0;
 
     private String userType; //DOC, INS, or PAT
 
@@ -103,12 +101,12 @@ public abstract class User implements UserDetails
         this.userType = userType;
     }
 
-    public UnreadInbox getUnreadInbox() {
-        return unreadInbox;
+    public int getNumberOfUnreadMessages() {
+        return numberOfUnreadMessages;
     }
 
-    public void setUnreadInbox(UnreadInbox unreadInbox) {
-        this.unreadInbox = unreadInbox;
+    public void setNumberOfUnreadMessages(int numberOfUnreadMessages) {
+        this.numberOfUnreadMessages = numberOfUnreadMessages;
     }
 
     //

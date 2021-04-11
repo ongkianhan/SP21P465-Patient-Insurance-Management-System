@@ -3,10 +3,8 @@ package com.p565sp21group1.patientmanagerspring.services;
 import com.p565sp21group1.patientmanagerspring.exceptions.UserNotFoundException;
 import com.p565sp21group1.patientmanagerspring.exceptions.EmailTakenException;
 import com.p565sp21group1.patientmanagerspring.models.Doctor;
-import com.p565sp21group1.patientmanagerspring.models.UnreadInbox;
 import com.p565sp21group1.patientmanagerspring.models.User;
 import com.p565sp21group1.patientmanagerspring.payload.DoctorSearchRequest;
-import com.p565sp21group1.patientmanagerspring.repositories.UnreadInboxRepository;
 import com.p565sp21group1.patientmanagerspring.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,9 +20,6 @@ public class UserService
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Autowired
-    private UnreadInboxRepository unreadInboxRepository;
 
     /**
      * Converts a URL parameter to a long
@@ -58,8 +53,6 @@ public class UserService
             {
                 //Encode the password
                 user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-                //Create an unread inbox
-                unreadInboxRepository.save(new UnreadInbox());
             }
 
             //Throw error if username taken

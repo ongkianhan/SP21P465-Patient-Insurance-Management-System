@@ -28,12 +28,13 @@ public class ConversationController
     private ErrorMapValidationService errorMapValidationService;
 
 
-    @GetMapping("/view/{conversationId}")
-    public Iterable<Message> getConversationById(@PathVariable String conversationId, Principal principal)
+    @GetMapping("/view/{conversationId}/{viewerId}")
+    public Iterable<Message> getConversationById(@PathVariable String conversationId, @PathVariable String viewerId, Principal principal)
     {
         //Get the messages from the database
         long conversationIdLong = userService.parseUserId(conversationId);
-        Iterable<Message> messageList = conversationService.getRecentMessages(conversationIdLong);
+        long viewerIdLong = userService.parseUserId(viewerId);
+        Iterable<Message> messageList = conversationService.getRecentMessages(conversationIdLong, viewerIdLong);
         //Add the name of the sender to each message
         for (Message message : messageList)
         {

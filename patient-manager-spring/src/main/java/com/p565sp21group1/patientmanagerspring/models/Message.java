@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="T_Message") //"Message" is a reserved table
@@ -22,12 +23,6 @@ public class Message
     @JsonIgnore
     private Conversation conversation;
 
-    //A message may belong to an UnreadInbox or only a conversation
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "unreadInboxId", updatable = false, nullable = true)
-    @JsonIgnore
-    private UnreadInbox unreadInbox;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", updatable = false, nullable = false)
     @JsonIgnore
@@ -35,6 +30,11 @@ public class Message
 
     @Transient
     private String senderName;
+
+    //The userIds of the users who still need to read this message
+    @ElementCollection
+    private List<Long> unreadByUserIds;
+
 
     public Message() {
     }
@@ -79,14 +79,20 @@ public class Message
         this.senderName = senderName;
     }
 
-    public UnreadInbox getUnreadInbox() {
-        return unreadInbox;
+    public List<Long> getUnreadByUserIds() {
+        return unreadByUserIds;
     }
 
-    public void setUnreadInbox(UnreadInbox unreadInbox) {
-        this.unreadInbox = unreadInbox;
+    public void setUnreadByUserIds(List<Long> unreadByUserIds) {
+        this.unreadByUserIds = unreadByUserIds;
     }
 
+
+
+    public void markAsRead(long userIdOfReader)
+    {
+        unreadByUserIds.remove(userIdOfReader);
+    }
 
     public void updateSenderName() {
         //When retrieving the message from the DB, include the sender's first/last

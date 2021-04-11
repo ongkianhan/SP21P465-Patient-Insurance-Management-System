@@ -4,7 +4,6 @@ import com.p565sp21group1.patientmanagerspring.exceptions.UserNotFoundException;
 import com.p565sp21group1.patientmanagerspring.models.*;
 import com.p565sp21group1.patientmanagerspring.repositories.ConversationRepository;
 import com.p565sp21group1.patientmanagerspring.repositories.MessageRepository;
-import com.p565sp21group1.patientmanagerspring.repositories.UnreadInboxRepository;
 import com.p565sp21group1.patientmanagerspring.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,9 +22,6 @@ public class ConversationService
 
     @Autowired
     MessageRepository messageRepository;
-
-    @Autowired
-    UnreadInboxRepository unreadInboxRepository;
 
 
     public Conversation createConversation(long senderId, String otherUserEmail, Conversation conversation)
@@ -69,20 +65,18 @@ public class ConversationService
             conv.updateNamesInvolved(userId);
         }
 
-        //Also, update each convo with the number of unread messages for that user
-        List<Message> allUnreads = unreadInboxRepository.getUnreadMessagesByUserId(userId);
-        for (Message unreadMessage : allUnreads)
+        //Also, update each conversation with the number of unread messages
+        //It's not the fastest solution, though.
+        for (Conversation conv : conversations)
         {
-            long parentConversationId = unreadMessage.getConversation().getConversationId();
-            //Find the target conversation in the user's conversation list
-            for (Conversation conv : conversations)
+            int numberUnread = 0;
+            for (Message message : conv.getMessages())
             {
-                if (conv.getConversationId() == parentConversationId)
-                {
-                    //Update the conversation with the number of unread messages for this user
-                    conv.setConversationId(1 + conv.getConversationId());
-                }
+                //If the message is unread by this user...
+                if (message.getUnreadByUserIds().contains(userId))
+                    numberUnread++;
             }
+            conv.setNumberUnread(numberUnread);
         }
 
         return conversations;
@@ -90,7 +84,21 @@ public class ConversationService
 
     public int getTotalNumberOfUnreadMessagesByUserId(long userId)
     {
-        return unreadInboxRepository.getTotalNumberOfUnreadMessagesByUserId(userId);
+        //Iterate through each conversation this user is involved in
+        int totalNumberUnread = 0;
+        Iterable<Conversation> conversations = conversationRepository.getConversationsByUserId(userId);
+        for (Conversation conv : conversations)
+        {
+            //Check all their messages to find unreads
+            for (Message message : conv.getMessages())
+            {
+                //If the message is unread by this user...
+                if (message.getUnreadByUserIds().contains(userId))
+                    totalNumberUnread++;
+            }
+            conv.setNumberUnread(totalNumberUnread);
+        }
+        return totalNumberUnread;
     }
 
 
@@ -104,26 +112,39 @@ public class ConversationService
         User sender = userRepository.findById(userId).get();
         message.setSender(sender);
 
-        //Also save the message to the unread inbox of every user in the conversation
+        //Also, create a list of user IDs representing which users still need to read the message
+        List<Long> unreadByUserIds = new ArrayList<>();
         for (User userInvolved : conversation.getUsersInvolved())
         {
-            //Add the message to the user's inbox
-            userInvolved.getUnreadInbox().addUnreadMessage(message);
-            unreadInboxRepository.save(userInvolved.getUnreadInbox());
+            //If userId is not the sender's ID
+            long recipientId = userInvolved.getUserId();
+            if (recipientId != userId)
+            {
+                unreadByUserIds.add(recipientId);
+            }
         }
+        message.setUnreadByUserIds(unreadByUserIds);
 
         return messageRepository.save(message);
     }
 
-    public Iterable<Message> getRecentMessages(long conversationId)
+    public Iterable<Message> getRecentMessages(long conversationId, long viewerId)
     {
         try
         {
-            return messageRepository.getRecentMessages(conversationId);
+            //Retrieve the messages form the database
+            List<Message> messages = messageRepository.getRecentMessages(conversationId);
+            //Mark the messages as read
+            for (Message message : messages)
+            {
+                message.markAsRead(viewerId);
+            }
+
+            return messages;
         }
         catch (Exception ex)
         {
-            System.out.println("Unknown conversation with id "+conversationId);
+            System.out.println("Unknown conversation with ID "+conversationId);
             return new ArrayList<Message>();
         }
     }
