@@ -6,7 +6,7 @@ public class InsurancePackageSearchRequest {
 
     private String keywords;
 
-    private double premiumMax, deductibleMax, copaymentMax, coInsuranceMax, maximumOutOfPocketMax;
+    private double premiumMax, deductibleMax, copaymentMax, coInsuranceMax, maximumOutOfPocketMax = Integer.MAX_VALUE;
 
     public InsurancePackageSearchRequest(String keywords, double premiumMax, double deductibleMax, double copaymentMax, double coInsuranceMax, double maximumOutOfPocketMax) {
         this.keywords = keywords;

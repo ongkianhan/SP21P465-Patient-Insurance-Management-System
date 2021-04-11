@@ -31,6 +31,12 @@ public class Patient extends User
     @Column(name = "longitude", nullable = true, unique = false)
     private double longitude;
 
+    @ManyToMany
+    public List<InsurancePackage> insurancePackagesList = new ArrayList<>();
+
+    @ManyToMany
+    public List<InsurancePackage> recommendations = new ArrayList<>();
+
     public Patient() {
         this.setUserType("PAT");
     }
@@ -95,17 +101,11 @@ public class Patient extends User
         this.insurancePackagesList = insurancePackages;
     }
 
-    @ManyToMany
-    public List<InsurancePackage> insurancePackagesList = new ArrayList<>();
-
     public List<InsurancePackage> addInsurancePackage(InsurancePackage thisInsurancePackage, List<InsurancePackage> insurancePackages)
     {
         this.insurancePackagesList.add(thisInsurancePackage);
         return insurancePackages;
     }
-
-    @ManyToMany
-    public List<InsurancePackage> recommendations = new ArrayList<>();
 
     public List<InsurancePackage> getRecommendations() {
         return recommendations;

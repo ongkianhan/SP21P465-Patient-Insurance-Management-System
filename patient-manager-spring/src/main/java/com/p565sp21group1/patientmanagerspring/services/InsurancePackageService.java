@@ -45,6 +45,4 @@ public class InsurancePackageService {
     {
         return patient.insurancePackagesList;
     }
-
-
 }
