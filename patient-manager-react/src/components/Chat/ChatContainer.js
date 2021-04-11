@@ -25,7 +25,7 @@ class ChatContainer extends Component {
 
     selectConversation = (id) => {
         //Pull the messages from the database
-        this.props.getConversationById(id);
+        this.props.getConversationById(id, this.props.security.user.userId);
         //Update MessageViewport
         this.setState({ conversationId: id });        
     }

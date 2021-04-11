@@ -47,12 +47,13 @@ class MessageViewport extends Component {
             message
         );
 
-        //Add message to user interface
+        //Add message to user interface; clear the chat bar
         this.props.conversation.conversation.push(message);
-        this.setState({ messages: this.props.conversation.conversation });
+        this.setState({ messages: this.props.conversation.conversation, messageEntry: "" });
     }
 
     render() {
+        //Show a blank span if the conversation does not exist (yet)
         if (this.props.conversationId < 0 || this.props.conversation == undefined || this.props.conversation.conversation.length == undefined) {
             return <span className="chat-viewport-container" />;
         }

@@ -89,4 +89,13 @@ public class ConversationController
         long userIdLong = userService.parseUserId(userId);
         return conversationService.getTotalNumberOfUnreadMessagesByUserId(userIdLong);
     }
+
+    @PostMapping("/add-user-to-conversation/{conversationId}/{otherUserEmail}")
+    public ResponseEntity<?> addUserToConversation(@PathVariable String conversationId, @PathVariable String otherUserEmail, Principal principal)
+    {
+        long conversationIdLong = userService.parseUserId(conversationId);
+        Conversation updatedConversation = conversationService.addUserToConversation(conversationIdLong, otherUserEmail);
+
+        return new ResponseEntity<Conversation>(updatedConversation, HttpStatus.CREATED);
+    }
 }

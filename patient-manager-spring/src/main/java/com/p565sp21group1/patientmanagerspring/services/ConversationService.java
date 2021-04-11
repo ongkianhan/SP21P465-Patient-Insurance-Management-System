@@ -138,8 +138,9 @@ public class ConversationService
             for (Message message : messages)
             {
                 message.markAsRead(viewerId);
+                //Save the change in read status
+                messageRepository.save(message);
             }
-
             return messages;
         }
         catch (Exception ex)
@@ -147,5 +148,26 @@ public class ConversationService
             System.out.println("Unknown conversation with ID "+conversationId);
             return new ArrayList<Message>();
         }
+    }
+
+    public Conversation addUserToConversation(long conversationIdLong, String otherUserEmail)
+    {
+        //Get the conversation and userToAdd to add from the database
+        Conversation conversation = conversationRepository.findById(conversationIdLong).get();
+        User userToAdd = userRepository.findByEmail(otherUserEmail);
+
+        if (conversation.getUsersInvolved().contains(userToAdd) == false)
+        {
+            //Add the user to the conversation if they are not already in it
+            conversation.addUserInvolved(userToAdd);
+            conversationRepository.save(conversation);
+        }
+        else
+        {
+            throw new UserNotFoundException("That user is already in this conversation");
+        }
+
+        //Return the conversation
+        return conversation;
     }
 }

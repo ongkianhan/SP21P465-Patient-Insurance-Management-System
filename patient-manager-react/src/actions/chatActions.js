@@ -30,8 +30,8 @@ export const getConversationsByUserId = (userId) => async dispatch => {
     });
 }
 
-export const getConversationById = (conversationId) => async dispatch => {
-    const res = await axios.get(`/api/conversations/view/${conversationId}`);
+export const getConversationById = (conversationId, viewerId) => async dispatch => {
+    const res = await axios.get(`/api/conversations/view/${conversationId}/${viewerId}`);
     dispatch ({
         type: GET_ONE_CONVERSATION,
         payload: res.data

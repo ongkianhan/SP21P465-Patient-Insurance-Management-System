@@ -8,17 +8,29 @@ export default class ConversationCard extends Component {
     {
         super();
         this.state = {
-            numberUnread: 1,
+            numberUnread: -1,
             content: this.props,
         }
     }
-    
-    render() {
 
+    /*componentWillReceiveProps() {
+        //Receive the number of unreads when the conversation is passed to this component
+        this.setState({numberUnread: this.props.conversation.numberUnread});
+    }*/
+    
+    render() 
+    {
         function selectConversation()
         {
             //Tell ChatContainer which conversation was clicked
             this.props.selectConversation(this.props.conversation.conversationId);
+            //Clear the number of unreads
+            this.setState({numberUnread: 0});
+        }
+
+        //Show a blank span if the number of unread messages has not yet been received
+        if (this.state.numberUnread < 0) {
+            this.setState({numberUnread: this.props.conversation.numberUnread});
         }
 
         return (
