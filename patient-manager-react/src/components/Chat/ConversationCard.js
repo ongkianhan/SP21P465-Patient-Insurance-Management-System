@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
 var numberUnread = 0;
-var content = "";
 
 export default class ConversationCard extends Component {
     constructor()
@@ -9,14 +8,46 @@ export default class ConversationCard extends Component {
         super();
         this.state = {
             numberUnread: -1,
-            content: this.props,
+            title: <span>Loading...</span>,
         }
     }
 
-    /*componentWillReceiveProps() {
-        //Receive the number of unreads when the conversation is passed to this component
-        this.setState({numberUnread: this.props.conversation.numberUnread});
-    }*/
+    componentDidMount()
+    {
+        //Get the names of the users involved in this conversation
+        this.generateTitle();
+    }
+
+    //List the first/last names of the users in this group chat, excluding the current user
+    generateTitle = () => {
+        const namesInvolved = this.props.conversation.namesInvolved;
+        if (namesInvolved == undefined) {return;}
+                
+        //Place commas between the names
+        let title = "";
+        for (var i=0; i < namesInvolved.length; i++)
+        {
+            if (i == namesInvolved.length - 2 && namesInvolved.length > 2)
+            {
+                title += namesInvolved[i] + ", and ";
+            }
+            else if (i < namesInvolved.length - 1 && namesInvolved.length > 2)
+            {
+                title += namesInvolved[i] + ", ";
+            }
+            else if (i == 0 && namesInvolved.length == 2)
+            {
+                title += namesInvolved[i] + " and ";
+            }
+            else
+            {
+                title += namesInvolved[i];
+            }
+        }
+        //Update the UI        
+        this.setState({ title: title });
+    }
+
     
     render() 
     {
@@ -34,7 +65,6 @@ export default class ConversationCard extends Component {
         }
 
         return (
-
             <table className="conv-card-container" onClick={selectConversation.bind(this)}>
                 <td className="conv-unread-indicator">
                     {this.state.numberUnread > 0 ? (
@@ -48,15 +78,7 @@ export default class ConversationCard extends Component {
                 </td>
                 <td className="conv-title">
                     {/*List the first/last names of the users in this group chat, excluding the current user*/}
-                    {this.props.conversation.namesInvolved.map(name =>
-                        /*Include a comma only if there are still more items remaining in the list*/
-                        this.props.conversation.namesInvolved.indexOf(name) < this.props.conversation.namesInvolved.length-1
-                        || this.props.conversation.namesInvolved.length == 1
-                    ? (
-                        <span key={name}>{name}</span>
-                    ) : (
-                        <span key={name}>{name},</span>
-                    ))}
+                    {this.state.title}
                 </td>
             </table>
         )

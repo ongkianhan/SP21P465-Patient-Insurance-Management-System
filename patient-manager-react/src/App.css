@@ -168,6 +168,15 @@ th {
     border-radius: 20px;
     color: #ffffff;
 }
+.button-minor {
+    padding: 6px 18px 6px 18px;
+    margin-top: 12px;
+    margin-bottom: 18px;
+    font-size: 14px;
+    background-color: #8888aa;
+    border-radius: 20px;
+    color: #ffffff;
+}
 
 .button-submit {
     width: 50%;

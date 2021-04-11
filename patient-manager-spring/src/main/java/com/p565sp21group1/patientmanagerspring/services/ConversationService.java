@@ -156,9 +156,14 @@ public class ConversationService
         Conversation conversation = conversationRepository.findById(conversationIdLong).get();
         User userToAdd = userRepository.findByEmail(otherUserEmail);
 
+        //Check if email was valid
+        if (userToAdd == null)
+            throw new UserNotFoundException("That user could not be found. Ensure their email address is correct.");
+
+        ////Add the user to the conversation if they are not already in it
         if (conversation.getUsersInvolved().contains(userToAdd) == false)
         {
-            //Add the user to the conversation if they are not already in it
+            //Add the user
             conversation.addUserInvolved(userToAdd);
             conversationRepository.save(conversation);
         }

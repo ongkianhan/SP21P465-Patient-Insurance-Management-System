@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ConversationCard from "./ConversationCard";
-import { getConversationsByUserId } from "../../actions/chatActions";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import NewConversationPopup from './NewConversationPopup';
@@ -14,7 +13,6 @@ class ConversationList extends Component {
         this.state = {
             popup: null
         }
-        this.updateConversationList = this.updateConversationList.bind(this);
     }
 
     async componentDidMount() 
@@ -24,19 +22,12 @@ class ConversationList extends Component {
         await this.props.getConversationsByUserId(userId);
     }
 
-    updateConversationList() 
-    {
-        //Retrieve this user's list of conversations
-        const userId = this.props.security.user.userId;
-        this.props.getConversationsByUserId(userId);
-    }
-
     async showNewConversationPopup() 
     {
         //Destroy the old conv popup if it exists
         await this.setState({popup: null})
         //Create a new conv popup and show it
-        this.setState({popup: <NewConversationPopup updateConversationList={this.updateConversationList} />})
+        this.setState({popup: <NewConversationPopup updateConversationList={this.props.updateConversationList} />})
     }
     
     render() {
@@ -61,15 +52,12 @@ class ConversationList extends Component {
 
 //Set up methods to retrieve conversations from the database
 ConversationList.propTypes = {
-    conversation: PropTypes.object.isRequired,
-    getConversationsByUserId: PropTypes.func.isRequired,
     security: PropTypes.object.isRequired,
 };
 
 //Add the actual doctor state/data to the list of conversations on the page
 const mapStateToProps = (state) => ({
-    conversation: state.conversation,
     security: state.security
 });
 
-export default connect(mapStateToProps, { getConversationsByUserId })(ConversationList);
+export default connect(mapStateToProps, null)(ConversationList);
