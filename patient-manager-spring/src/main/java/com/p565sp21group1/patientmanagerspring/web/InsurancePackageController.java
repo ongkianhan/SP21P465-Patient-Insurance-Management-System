@@ -1,5 +1,4 @@
-package com.p565sp21group1.patientmanagerspring.payload;
-
+package com.p565sp21group1.patientmanagerspring.web;
 
 import com.p565sp21group1.patientmanagerspring.models.InsurancePackage;
 import com.p565sp21group1.patientmanagerspring.models.Insurer;
@@ -22,22 +21,24 @@ public class InsurancePackageController {
         this.insurancePackageService = insurancePackageService;
     }
 
-
+    @GetMapping("api/v1/insurancePackageController/get_Insurer_InsurancePackageList")
     public List<InsurancePackage> getInsurancePackageList(Insurer insurer)
     {
         return insurancePackageService.getInsurancePackageList(insurer);
     }
 
-
+    @GetMapping("api/v1/insurancePackageController/get_Patient_InsurancePackageList")
     public List<InsurancePackage> getInsurancePackageList(Patient patient)
     {
         return insurancePackageService.getInsurancePackageList(patient);
     }
 
-
+    @PostMapping( "api/v1/insurancePackageController/addInsurancePackage")
     public void addInsurancePackage(@RequestBody InsurancePackage thisPackage)
     {
         insurancePackageService.addInsurancePackage(thisPackage);
     }
+
+
 
 }

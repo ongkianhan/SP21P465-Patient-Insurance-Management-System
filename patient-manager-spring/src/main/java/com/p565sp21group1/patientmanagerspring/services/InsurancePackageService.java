@@ -13,12 +13,8 @@ import java.util.*;
 @Service
 public class InsurancePackageService {
 
-    private final InsurancePackageRepo repo;
-
     @Autowired
-    public InsurancePackageService(InsurancePackageRepo repo) {
-        this.repo = repo;
-    }
+    private InsurancePackageRepo repo;
 
     public Iterable<InsurancePackage> listALlPackages()
     {

@@ -103,4 +103,15 @@ public class Patient extends User
         this.insurancePackagesList.add(thisInsurancePackage);
         return insurancePackages;
     }
+
+    @ManyToMany
+    public List<InsurancePackage> recommendations = new ArrayList<>();
+
+    public List<InsurancePackage> getRecommendations() {
+        return recommendations;
+    }
+
+    public void setRecommendations(List<InsurancePackage> recommendations) {
+        this.recommendations = recommendations;
+    }
 }

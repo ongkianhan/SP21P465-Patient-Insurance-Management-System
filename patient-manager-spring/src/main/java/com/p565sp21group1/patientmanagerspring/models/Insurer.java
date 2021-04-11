@@ -50,6 +50,19 @@ public class Insurer extends User
         return insurancePackages;
     }
 
+    public void addRecommendations(Patient patient, InsurancePackage thisPackage)
+    {
+        patient.recommendations.add(thisPackage);
+    }
 
+    public void removeRecommendations(Patient patient, InsurancePackage thisPackage)
+    {
+        patient.recommendations.remove(thisPackage);
+    }
+
+    public void setRecommendations(Patient patient, List<InsurancePackage> insurerRecommendations)
+    {
+        patient.setRecommendations(insurerRecommendations);
+    }
 
 }
