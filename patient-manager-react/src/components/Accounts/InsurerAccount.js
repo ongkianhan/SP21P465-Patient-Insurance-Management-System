@@ -16,8 +16,6 @@ class InsurerAccount extends Component {
     render() {
         
         const {currentUser} = this.props.currentUser
-
-        console.log(currentUser)
         return (
             <div className="container">
                 <div className="row">

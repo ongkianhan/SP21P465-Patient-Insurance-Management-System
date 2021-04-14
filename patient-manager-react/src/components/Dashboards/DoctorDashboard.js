@@ -30,7 +30,7 @@ class Dashboard extends Component
             noAppointmentsMessage = (
                 <div className="container pl-5" style = {{width:'100vh', height:'15vh'}}>
                     <div className="card card-body bg-light">
-                        <h4>It looks like no appointments could be found...</h4>
+                        <h4>No upcoming appointments</h4>
                     </div>
                 </div>
             )

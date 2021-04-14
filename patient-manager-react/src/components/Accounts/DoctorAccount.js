@@ -6,6 +6,7 @@ import classnames from "classnames";
 import { getCurrentUser } from "../../actions/userActions";
 import defaultProfileIcon from "../../static/defaultProfileIcon.png";
 import {Link} from "react-router-dom";
+import MapContainer from "../GoogleMaps/MapContainer";
 
 class DoctorAccount extends Component {
     constructor() {
@@ -16,8 +17,7 @@ class DoctorAccount extends Component {
 
     render() {
 
-        const {currentUser} = this.props.currentUser
-        console.log(currentUser)
+        const {currentUser} = this.props.currentUser;
         return (
             <div className="container">
                 <div className="row">
@@ -44,7 +44,7 @@ class DoctorAccount extends Component {
                         </Link>
                     ) : (<span/>)}
                         
-                        <Link to={""}>
+                        <Link to={{pathname: `/view-map/`, latitude: currentUser.latitude, longitude: currentUser.longitude }}>
                             <button className="col my-1 button-secondary button-card">
                                 Show Directions
                             </button>
@@ -57,6 +57,11 @@ class DoctorAccount extends Component {
                         </div>
                     </div>
                 </div>
+                
+                {/*Show Google Map and pass doctor's location*
+                <br/>
+                <p className="text-left bold">View the Location of This Doctor</p>
+                    <MapContainer lat={currentUser.latitude} lng={currentUser.longitude}/>*/}
             </div>
         );
     }

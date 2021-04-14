@@ -1,3 +1,4 @@
+/*Primary color for the app: #00aa95 */
 /*///////////////// PRE-WRITTEN CSS FROM REACT ///////////////////////*/
 
 .App {
@@ -119,6 +120,10 @@ th {
 
 .light-gray-bg {
     background-color: #c0c0c0 !important;
+}
+
+.bold {
+    font-weight: bold;
 }
 
 .button-generic {
@@ -334,18 +339,18 @@ th {
     color: black;
 }
 .td-appointment-open {
-    background-color: #7cc67c;
+    background-color: #efefef;
     border: 1px solid #bbbbbb;
     font-weight: bold;
     color: black;
 }
 .td-appointment-open:hover {
     cursor: pointer;
-    background-color: #6fb26f;
+    background-color: #fff;
 }
 .td-appointment-taken {
-    background-color: #eeeeee;
-    color: #888888;
+    background-color: #bbb;
+    color: #666;
 }
 
 /*///////////////// MODAL POPUP ELEMENTS ///////////////////////*/
@@ -391,7 +396,7 @@ th {
 }
 
 .modal-header {
-    padding: 2px 4px;
+    padding: 10%;
     color: white;
     text-align: left;
 }

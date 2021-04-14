@@ -24,6 +24,7 @@ import GeneralSignupForm from "./components/SignUp/GeneralSignupForm";
 import ChatContainer from "./components/Chat/ChatContainer"
 import ProfileContainer from "./components/Profiles/ProfileContainer"
 import AccountContainer from "./components/Accounts/AccountContainer"
+import MapPage from "./components/GoogleMaps/MapPage";
 
 
 class App extends Component 
@@ -48,6 +49,7 @@ class App extends Component
               <Route exact path="/find-doctors" component={DoctorSearch} />
               <Route exact path="/profile/:userId" component={ProfileContainer} />
               <Route exact path="/account/:userId" component={AccountContainer} />
+              <Route exact path="/view-map" component={MapPage} />
 
               {
                   //Private routes only accessible to users logged in
