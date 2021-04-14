@@ -16,8 +16,6 @@ class PatientAccount extends Component {
     render() {
         
         const {currentUser} = this.props.currentUser
-
-        console.log(currentUser)
         return (
             <div className="container">
                 <div className="row">
@@ -27,15 +25,15 @@ class PatientAccount extends Component {
                     <div className = "col-6 text-left">
                         <h1 className = "font-weight-bold">{currentUser.firstName} {currentUser.lastName}</h1>
                         <h3>{currentUser.email}</h3>
+                        {currentUser.drinking ? (
+                        <h3>Drinks alcohol</h3>
+                        ) : (<span/>)}
+                        {currentUser.smoking ? (
+                        <h3>Smokes</h3>
+                        ) : (<span/>)}
                     </div>
                     <div className = "col-3 text-left">
-                    {this.props.security.user.userType == "PAT" ? (
-                        <Link to={`/schedule-appointment/${currentUser.userId}`}>
-                            <button className="col my-1 button-primary button-card">
-                                Make Appointment
-                            </button>
-                        </Link>
-                    ) : (<span/>)}
+                    
                         
                         {/*<Link to={""}>
                             <button className="col my-1 button-secondary button-card">

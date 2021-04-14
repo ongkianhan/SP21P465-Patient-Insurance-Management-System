@@ -5,8 +5,19 @@ import { connect } from "react-redux";
 import classnames from "classnames";
 import { login, validateUser } from "../../actions/securityActions";
 import { Link } from "react-router-dom";
+import Geocode from "react-geocode";
+
+Geocode.setLanguage("en");
+Geocode.setLocationType("ROOFTOP");
+Geocode.enableDebug();
+
+Geocode.setApiKey("AIzaSyDx1alSX-eHys1ZzIMmIyFO07hPmvA_5A8");
+
+
 
 class DoctorSignupForm extends Component {
+
+
     constructor() {
         super();
 
@@ -17,11 +28,16 @@ class DoctorSignupForm extends Component {
             lastName: "",
             specialization: "",
             hospitalName: "",
+            address: "",
+            latitude:"",
+            longitude:"",
+            supportsCovidCare:false,
             errors: {},
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
+
 
     componentDidMount() {
         //Instantly bring the user to their dashboard
@@ -41,6 +57,7 @@ class DoctorSignupForm extends Component {
     async onSubmit(e) {
         e.preventDefault();
         //Create a new doctor account
+
         const newDoctor = {
             email: this.state.email,
             password: this.state.password,
@@ -48,8 +65,22 @@ class DoctorSignupForm extends Component {
             lastName: this.state.lastName,
             specialization: this.state.specialization,
             hospitalName: this.state.hospitalName,
+            latitude: this.state.latitude,
+            longitude: this.state.longitude,
+            supportsCovidCare: this.state.supportsCovidCare,
             errors: {},
         };
+
+        await Geocode.fromAddress(this.state.address).then(
+            (response) => {
+              newDoctor.latitude= response.results[0].geometry.location.lat;
+              newDoctor.longitude= response.results[0].geometry.location.lng;
+              
+            },
+            (error) => {
+              console.error(error);
+            }
+          );
     
         //Validate the user
         const frontEndErrors = validateUser(newDoctor)
@@ -73,6 +104,10 @@ class DoctorSignupForm extends Component {
             //Navigate to the dashboard
             this.props.history.push("/dashboard");
         }
+    }
+
+    setSupportsCovidCare(e) {
+        this.state.supportsCovidCare = e.target.checked;
     }
 
     onChange(e) {
@@ -270,6 +305,53 @@ class DoctorSignupForm extends Component {
                                                             }
                                                         </div>
                                                     )}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                        <td className="td-textbox-holder">
+                                                <div className="form-group">
+                                                    <input
+                                                        type="text"
+                                                        className={classnames(
+                                                            "form-control textbox",
+                                                            {
+                                                                "is-invalid":
+                                                                    errors.address,
+                                                            }
+                                                        )}
+                                                        placeholder="Address"
+                                                        name="address"
+                                                        value={
+                                                            this.state.address
+                                                        }
+                                                        onChange={this.onChange}
+                                                    />
+                                                    {errors.address && (
+                                                        <div className="invalid-feedback">
+                                                            {
+                                                                errors.address
+                                                            }
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </td>
+
+                                            <td className="td-form-check">
+                                                <div className="form-group">
+                                                    <input
+                                                        className={classnames(
+                                                            "form-check-input"
+                                                        )}
+                                                        type="checkbox"
+                                                        onChange={this.setSupportsCovidCare.bind(this)}
+                                                        id="supportsCovidCareCheckbox"
+                                                    ></input>
+                                                    <label
+                                                        className="form-check-label"
+                                                    >
+                                                        Do you offer COVID-19 care?
+                                                    </label>
                                                 </div>
                                             </td>
                                         </tr>

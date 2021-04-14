@@ -6,17 +6,18 @@ import classnames from "classnames";
 import { getCurrentUser } from "../../actions/userActions";
 import defaultProfileIcon from "../../static/defaultProfileIcon.png";
 import {Link} from "react-router-dom";
+import MapContainer from "../GoogleMaps/MapContainer";
 
 class DoctorAccount extends Component {
     constructor() {
         super();        
     }
 
-    //When submitting, create the doctor
+    
 
     render() {
 
-        const {currentUser} = this.props.currentUser
+        const {currentUser} = this.props.currentUser;
         return (
             <div className="container">
                 <div className="row">
@@ -27,6 +28,12 @@ class DoctorAccount extends Component {
                         <h1 className = "font-weight-bold">{currentUser.firstName} {currentUser.lastName}</h1>
                         <h3>{currentUser.specialization}</h3>
                         <h3>{currentUser.hospitalName}</h3>
+                        {currentUser.supportsCovidCare ? (
+                            <h3>Supports COVID-19 care</h3>
+                        ):(
+                            <h3>Does not support COVID-19 care</h3>
+                        )}
+                        
                     </div>
                     <div className = "col-3 text-left">
                     {this.props.security.user.userType == "PAT" ? (
@@ -37,7 +44,7 @@ class DoctorAccount extends Component {
                         </Link>
                     ) : (<span/>)}
                         
-                        <Link to={""}>
+                        <Link to={{pathname: `/view-map/`, latitude: currentUser.latitude, longitude: currentUser.longitude }}>
                             <button className="col my-1 button-secondary button-card">
                                 Show Directions
                             </button>
@@ -50,6 +57,11 @@ class DoctorAccount extends Component {
                         </div>
                     </div>
                 </div>
+                
+                {/*Show Google Map and pass doctor's location*
+                <br/>
+                <p className="text-left bold">View the Location of This Doctor</p>
+                    <MapContainer lat={currentUser.latitude} lng={currentUser.longitude}/>*/}
             </div>
         );
     }

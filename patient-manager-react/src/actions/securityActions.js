@@ -12,6 +12,7 @@ import jwtDecode from "jwt-decode";
 export const createNewUser = (newUser, userType, history) => async dispatch => {
     try
     {
+        console.log(newUser)
         await axios.post("/api/account/create-"+userType, newUser);
         dispatch({
             type: GET_ERRORS, 
@@ -68,6 +69,7 @@ export const logout = () => dispatch => {
 
 
 export const validateUser = (user) => {
+
     const errorOutput = {};
     //Check if the first name or last name contain a number
     if (/\d/.test(user.firstName))

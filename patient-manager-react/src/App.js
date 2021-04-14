@@ -11,7 +11,7 @@ import DashboardRoute from "./securityUtils/DashboardRoute";
 
 //Components
 import DoctorSearch from "./components/UserSearch/DoctorSearch.js";
-import AppointmentScheduler from "./components/AppointmentScheduler.js";
+import AppointmentScheduler from "./components/AppointmentScheduling/AppointmentScheduler";
 import DoctorSignupForm from "./components/SignUp/DoctorSignupForm";
 import PatientSignupForm from "./components/SignUp/PatientSignupForm";
 import InsurerSignupForm from "./components/SignUp/InsurerSignupForm";
@@ -24,6 +24,7 @@ import GeneralSignupForm from "./components/SignUp/GeneralSignupForm";
 import ChatContainer from "./components/Chat/ChatContainer"
 import ProfileContainer from "./components/Profiles/ProfileContainer"
 import AccountContainer from "./components/Accounts/AccountContainer"
+import MapPage from "./components/GoogleMaps/MapPage";
 
 
 class App extends Component 
@@ -35,7 +36,7 @@ class App extends Component
         <Router>
           <div className="App">
             <Header />
-            <span style={{marginLeft: "25vh", marginRight: "25vh"}}>
+            <span style={{marginLeft: "25vw", marginRight: "25vw"}}>
               {
                 //Public routes
               }
@@ -48,6 +49,7 @@ class App extends Component
               <Route exact path="/find-doctors" component={DoctorSearch} />
               <Route exact path="/profile/:userId" component={ProfileContainer} />
               <Route exact path="/account/:userId" component={AccountContainer} />
+              <Route exact path="/view-map" component={MapPage} />
 
               {
                   //Private routes only accessible to users logged in
@@ -57,8 +59,8 @@ class App extends Component
               <SecuredRoute exact path="/chat" component={ChatContainer} />
               <SecuredRoute exact path="/permission-denied" component={InvalidUserTypeLanding} />
             </span>
-            {/*<Footer />*/}
           </div>
+          <Footer />
         </Router>
       </Provider>
     );

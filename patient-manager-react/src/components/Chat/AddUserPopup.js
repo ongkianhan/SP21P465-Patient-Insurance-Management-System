@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import classnames from "classnames";
-import { createConversation } from '../../actions/chatActions';
+import {addUserToConversation} from "../../actions/chatActions";
 
-class NewConversationPopup extends Component {
+class AddUserPopup extends Component {
     constructor() {
         super();
 
@@ -26,18 +26,18 @@ class NewConversationPopup extends Component {
         }
     }
 
-    async submit() {
-        //Create the new conversation
+    async submit()
+    {
+        //Add the new user
         const senderId = this.props.security.user.userId;
-        var success = await this.props.createConversation(senderId, this.state.recipientEmail);
-
-        //Update the ConversationList user interface
-        this.props.updateConversationList(this.props.security.user.userId);
+        var success = await this.props.addUserToConversation(senderId, this.props.conversationId, this.state.recipientEmail);
 
         //Clear the text box and hide the modal if there are no errors
         if (success === true) {
             this.setState({recipientEmail: "", display: "none"});
         }
+        //Update the conversation list
+        this.props.updateConversationList(this.props.security.user.userId);
     }
     
     
@@ -56,7 +56,7 @@ class NewConversationPopup extends Component {
         return (
             <div className="modal-scrim" style={{display: display}}>
                 <div className="modal-content">
-                    <span className="modal-header-text">Start a Conversation</span>
+                    <span className="modal-header-text">Add Another Person to This Conversation</span>
                     
                     <span className="label-conv-popup">Enter the email of the user you want to talk to</span>
                     <input
@@ -87,7 +87,7 @@ class NewConversationPopup extends Component {
 
                     <td> {/*td centers the element*/}
                         <button onClick={this.submit.bind(this)} className="button-primary card-button button-popup-confirmation">
-                            Start Messaging
+                            Invite
                         </button>
                     </td>
 
@@ -100,8 +100,8 @@ class NewConversationPopup extends Component {
     }
 }
 
-NewConversationPopup.propTypes = {
-    createConversation: PropTypes.func.isRequired,
+AddUserPopup.propTypes = {  
+    addUserToConversation: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired,
 };
@@ -111,4 +111,4 @@ const mapStateToProps = (state) => ({
     security: state.security,
 });
 
-export default connect(mapStateToProps, { createConversation })(NewConversationPopup);
+export default connect(mapStateToProps, {addUserToConversation})(AddUserPopup);

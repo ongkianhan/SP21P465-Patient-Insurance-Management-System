@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types"
 import classnames from "classnames";
-import { getDoctor } from "../actions/userActions";
-import {createAppointment, getAppointmentsByDoctorId, validateAppointment} from "../actions/appointmentActions";
-import CustomPopup from './CustomPopup';
+import { getDoctor } from "../../actions/userActions";
+import {createAppointment, getAppointmentsByDoctorId, validateAppointment} from "../../actions/appointmentActions";
+import AppointmentConfirmedPopup from "./AppointmentConfirmedPopup";
+import MapContainer from "../GoogleMaps/MapContainer";
 
 var dateFormat = require("dateformat");
 //Inclusive start/stop times that doctors will work between
@@ -169,7 +170,7 @@ class AppointmentScheduler extends Component
                 tableContent.push(
                     <tr>
                         <td className="td-appointment td-appointment-taken">
-                            <span className="tooltip-text tooltip-text-left">Closed</span>
+                            <span className="tooltip-text tooltip-text-left">Unavailable</span>
                             {appointmentStartTime}{"-"}{appointmentEndTime}
                         </td>
                     </tr>
@@ -207,10 +208,9 @@ class AppointmentScheduler extends Component
                 <h1 className="display-5 text-left page-header">Schedule an Appointment</h1>
                     <form onSubmit={this.onSubmit}>
                         <div className="row align-items-start" style={{marginTop: "calc(4vmin)"}}>
-                            <div className="col-md-8">
-
+                            <div className="col-md-12">
                                 {/* Date/time picker*/}
-                                <p className="text-left page-header">Select a date for your appointment...</p>
+                                <p className="text-left page-header">Use the calendar to select a date for your appointment...</p>
                                 <input type="date"
                                 className={classnames("form-control textbox",
                                     {"is-invalid": errors.date})}
@@ -221,6 +221,10 @@ class AppointmentScheduler extends Component
                                 {errors.date && (
                                     <div className="invalid-feedback">{errors.date}</div>
                                 )} 
+                            </div>
+                        </div>
+                        <div className="row align-items-start" style={{marginTop: "calc(1vmin)"}}>
+                            <div className="col-md-8">
                             
                                 {/* Doctor information */}
                                 <div className="thin-container" style={{marginTop: "1.5em"}}>
@@ -240,15 +244,30 @@ class AppointmentScheduler extends Component
                                     />
                                 </div>
                             </div>
-                            <div className="col-md-4">
+                            <div className="col-md-4" style={{marginTop: "1.5em"}}>
+                                {/*Error message for when no time is selected*/}
+                                <span type="date"
+                                    className={classnames("",
+                                        {"is-invalid": errors.blankDate})} />
+                                {errors.blankDate != "" ? (
+                                    <p className="invalid-feedback">{errors.blankDate}</p>
+                                ) : (<span/>)}
+
+                                {/*Appointment table goes here*/}
                                 <table>
                                     {this.state.appointmentTable}
                                 </table>
                             </div>
                         </div>
                     </form>
+
+                    {/*Show Google Map and pass doctor's location*/}
+                    <br/>
+                    <p className="text-left bold">View the Location of This Doctor</p>
+                    <MapContainer lat={doctor.latitude} lng={doctor.longitude}/>
                     
-                    <CustomPopup ref={this.successPopup} redirect="/dashboard" headerText="Success" content="Appointment scheduled!"/>
+                    {/*Popup is hidden by default*/}
+                    <AppointmentConfirmedPopup ref={this.successPopup} redirect="/dashboard" headerText="Success" content="Appointment scheduled!"/>
                 </div>   
             </div>
         )
