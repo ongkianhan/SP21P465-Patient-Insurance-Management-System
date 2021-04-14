@@ -1,48 +1,56 @@
 package com.p565sp21group1.patientmanagerspring.services;
 
-import com.p565sp21group1.patientmanagerspring.models.InsurancePackage;
-import com.p565sp21group1.patientmanagerspring.models.Insurer;
-import com.p565sp21group1.patientmanagerspring.models.Patient;
+import com.p565sp21group1.patientmanagerspring.exceptions.UserNotFoundException;
+import com.p565sp21group1.patientmanagerspring.models.*;
+import com.p565sp21group1.patientmanagerspring.repositories.UserRepository;
 import org.springframework.stereotype.Service;
-import com.p565sp21group1.patientmanagerspring.repositories.InsurancePackageRepo;
+import com.p565sp21group1.patientmanagerspring.repositories.InsurancePackageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
+import java.security.Principal;
 import java.util.*;
 
 @Service
-public class InsurancePackageService {
+public class InsurancePackageService
+{
+    @Autowired
+    private InsurancePackageRepository insurancePackageRepository;
 
     @Autowired
-    private InsurancePackageRepo repo;
+    private UserRepository userRepository;
 
-    public Iterable<InsurancePackage> listALlPackages()
+
+    public List<InsurancePackage> getInsurancePackagesByInsurerId(long insurerId, String username)
     {
-        return repo.findAll();
+        return new ArrayList<InsurancePackage>(); //TODO
     }
 
-    public InsurancePackage getPackage(long id)
+    public List<InsurancePackage> getInsurancePackagesByPatientId(long patientId, String username)
     {
-        return repo.findById(id).get();
+        return new ArrayList<InsurancePackage>(); //TODO
     }
 
-    public InsurancePackage addInsurancePackage(InsurancePackage thisPackage)
+    public void createInsurancePackage(long insurerId, InsurancePackage insurancePackage, String username)
     {
-        return repo.save(thisPackage);
-    }
+        try
+        {
+            /*/Pair the appointment with the patient...
+            //Calling get() retrieves the actual User from the repos
+            Insurer insurer = (Insurer) userRepository.findByEmail(username);
+            insurer.addInsurancePackage(insurancePackage);
 
-    public void deletePackage (long id)
-    {
-        repo.deleteById(id);
-    }
+            //Pair the appointment with the doctor...
+            //Calling get() retrieves the actual User from the repos
+            Doctor doctor = (Doctor) userRepository.findById(doctorId).get();
+            appointment.setDoctor(doctor);
 
-    public List<InsurancePackage> getInsurancePackageList(Insurer insurer)
-    {
-        return insurer.insurancePackagesList;
-    }
-
-    public List<InsurancePackage> getInsurancePackageList(Patient patient)
-    {
-        return patient.insurancePackagesList;
+            return appointmentRepository.save(appointment);*/
+        }
+        catch (Exception ex)
+        {
+            throw new UserNotFoundException("The insurer could not be found.");
+        }
     }
 }

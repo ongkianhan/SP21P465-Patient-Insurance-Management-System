@@ -7,6 +7,7 @@ import com.p565sp21group1.patientmanagerspring.services.InsurancePackageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.*;
 
 
@@ -17,21 +18,24 @@ public class InsurancePackageController
     @Autowired
     private InsurancePackageService insurancePackageService;
 
-    @GetMapping("/get_Insurer_InsurancePackageList")
-    public List<InsurancePackage> getInsurancePackageList(Insurer insurer)
+    @GetMapping("/get-by-insurer/{insurerId}")
+    public List<InsurancePackage> getInsurancePackagesByInsurerId(@PathVariable String insurerId, Principal principal)
     {
-        return insurancePackageService.getInsurancePackageList(insurer);
+        long userIdLong = ControllerUtility.parseUserId(insurerId);
+        return insurancePackageService.getInsurancePackagesByInsurerId(userIdLong, principal.getName());
     }
 
-    @GetMapping("/get_Patient_InsurancePackageList")
-    public List<InsurancePackage> getInsurancePackageList(Patient patient)
+    @GetMapping("/get-by-patient/{patientId}")
+    public List<InsurancePackage> getInsurancePackagesByPatientId(@PathVariable String patientId, Principal principal)
     {
-        return insurancePackageService.getInsurancePackageList(patient);
+        long userIdLong = ControllerUtility.parseUserId(patientId);
+        return insurancePackageService.getInsurancePackagesByPatientId(userIdLong, principal.getName());
     }
 
-    @PostMapping("/addInsurancePackage")
-    public void addInsurancePackage(@RequestBody InsurancePackage thisPackage)
+    @PostMapping("/create-insurance-package/{insurerId}")
+    public void createInsurancePackage(@PathVariable String insurerId, @RequestBody InsurancePackage insurancePackage, Principal principal)
     {
-        insurancePackageService.addInsurancePackage(thisPackage);
+        long userIdLong = ControllerUtility.parseUserId(insurerId);
+        insurancePackageService.createInsurancePackage(userIdLong, insurancePackage, principal.getName());
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Repository
-public interface InsurancePackageRepo extends CrudRepository<InsurancePackage, Long>
+public interface InsurancePackageRepository extends CrudRepository<InsurancePackage, Long>
 {
     @Query("SELECT i FROM InsurancePackage i WHERE i.insurancePackageID = :packageID" )
     List<InsurancePackage> getInsurancePackageByID(long packageID);

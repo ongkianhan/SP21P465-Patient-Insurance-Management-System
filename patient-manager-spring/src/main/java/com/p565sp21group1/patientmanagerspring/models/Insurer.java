@@ -31,6 +31,10 @@ public class Insurer extends User
     @Column(name = "longitude", nullable = true, unique = false)
     private double longitude;
 
+    @ManyToMany
+    public List<InsurancePackage> insurancePackagesList = new ArrayList<>();
+
+
 
     public List<InsurancePackage> getInsurancePackageList() {
         return insurancePackagesList;
@@ -41,11 +45,10 @@ public class Insurer extends User
         this.insurancePackagesList = offerings;
     }
 
-    @ManyToMany
-    public List<InsurancePackage> insurancePackagesList = new ArrayList<>();
-
     public List<InsurancePackage> addInsurancePackage(InsurancePackage thisInsurancePackage, List<InsurancePackage> insurancePackages)
     {
+        if (insurancePackagesList == null)
+            this.insurancePackagesList = new ArrayList<>();
         this.insurancePackagesList.add(thisInsurancePackage);
         return insurancePackages;
     }
