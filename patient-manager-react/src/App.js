@@ -51,7 +51,7 @@ class App extends Component
               <Route exact path="/profile/:userId" component={ProfileContainer} />
               <Route exact path="/account/:userId" component={AccountContainer} />
               <Route exact path="/view-map" component={MapPage} />
-              <Route exact path="/form" component={Form} />
+              <Route exact path="/form/:userId" component={Form} />
 
               {
                   //Private routes only accessible to users logged in

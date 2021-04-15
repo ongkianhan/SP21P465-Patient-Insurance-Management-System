@@ -50,14 +50,12 @@ class Form extends Component{
             || this.state.congestion
             || this.state.nausea
             || this.state.diarrhea})
-
-
-
-        return this.state.covid
-        
+    
     }
 
     render() {
+        const {userId} = this.props.match.params;
+        console.log(userId)
         const { errors } = this.state;
         return(
             <div className="register">
@@ -68,18 +66,49 @@ class Form extends Component{
                             {/*<div className="text-left" style={{paddingTop:'2%'}}>
                                 <Link to='/choose-role' style={{color:'Green'}}><strong style = {{fontFamily:'Titillium Web'}}>&lt; Go back to role selection</strong></Link>
                             </div>*/}
-                            <h5 className="text-left page-header">Please answer a few questions regarding COVID-19 to schedule your appointment</h5>
-                            <p className="text-left">This will only take a moment of your time</p>
+                            
 
-                            <div className="thin-container">
-                                <p className="thin-container-title text-center font-weight-bold">Have you experienced any of the following symptoms in the past 48 hours?</p>
+                            
+                                
 
                                 <form onSubmit={this.onSubmit}>    
                                     {/*Column 1*/}
+                                    
+                                    {/*Submit button*/}
+                                    
+                                    {this.state.submitted ? 
+                                    (this.state.covid ? (
+                                        <div className="thin-container">
+                                            <h3 className="thin-container-title text-center">
+                                                You are showing symptoms of COVID-19. A bed will be allocated for you automatically. Please continue with the scheduling of your appointment.
+                                            </h3>
+                                            <Link to={`/schedule-appointment/${userId}`}>
+                                            <button className="col-4 my-1 button-primary button-card">
+                                                Continue
+                                            </button>
+                                            </Link>
+                                        </div>
+                                    ):(<div className="thin-container">
+                                            <h3 className="thin-container-title text-center pb-3">
+                                                You are showing no symptoms of COVID-19. Please continue with the scheduling of your appointment.
+                                            </h3>
+                                            <Link to={`/schedule-appointment/${userId}`}>
+                                                <button className="col-4 my-1 button-primary button-card">
+                                                    Continue
+                                                </button>
+                                            </Link>
+                                        </div>))
+                                    : 
+                                    (
+                                    <div>
+                                    <h5 className="text-left page-header">Please answer a few questions regarding COVID-19 to schedule your appointment</h5>
+                                    <p className="text-left">This will only take a moment of your time</p>
+                                    <div className="thin-container">
                                     <table className="text-left">
                                         <tr>
                                         
                                             <div className="form-group">
+                                            <p className="thin-container-title text-center font-weight-bold">Have you experienced any of the following symptoms in the past 48 hours?</p>
                                                 <input
                                                     className={classnames(
                                                         "form-check-input"
@@ -285,26 +314,23 @@ class Form extends Component{
                                                     </label>
                                                 </div>
                                         </tr>
-                                    </table>
-                                    {/*Submit button*/}
-                                    
-                                    {this.state.submitted ? 
-                                    (this.state.covid ? (<div>might have covid</div>):(<div>no covid</div>))
-                                    : 
-                                    (<div className="row justify-content-center">
+                                        <div className="row justify-content-center">
                                         <input
                                             type="submit"
                                             className="button-submit button-primary"
                                             value="Submit"
                                         />
-                                    </div>)}
+                                        </div>
+                                    </table>
+                                    </div>
+                                    </div>
+                                    )}
 
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
         )
     }
 }
