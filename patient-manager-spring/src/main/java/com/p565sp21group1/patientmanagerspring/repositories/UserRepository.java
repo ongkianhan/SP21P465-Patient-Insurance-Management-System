@@ -1,12 +1,15 @@
 package com.p565sp21group1.patientmanagerspring.repositories;
 
 import com.p565sp21group1.patientmanagerspring.models.Doctor;
+import com.p565sp21group1.patientmanagerspring.models.InsurancePackage;
 import com.p565sp21group1.patientmanagerspring.models.User;
 import com.p565sp21group1.patientmanagerspring.payload.DoctorSearchRequest;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Long>

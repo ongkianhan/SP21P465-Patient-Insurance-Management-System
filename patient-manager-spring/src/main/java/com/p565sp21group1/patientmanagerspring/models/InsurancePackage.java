@@ -18,6 +18,9 @@ public class InsurancePackage
 
     private String packageName;
 
+    @Column(name = "isRecommendation", nullable = false)
+    private boolean isRecommendation;
+
     //Below are the details for a standard insurance package
 
     public String packageDetails; // contains details and/or comments that the insurer feels is relevant
@@ -140,6 +143,20 @@ public class InsurancePackage
     public void addPatient(Patient patient) {
         if (patientsList == null)
             this.patientsList = new ArrayList<>();
-        this.patientsList.add(patient);
+        if (patientsList.contains(patient) == false)
+            this.patientsList.add(patient);
+    }
+
+    public void removePatient(Patient patient) {
+        if (patientsList != null)
+            this.patientsList.remove(patient);
+    }
+
+    public boolean isRecommendation() {
+        return isRecommendation;
+    }
+
+    public void setRecommendation(boolean recommendation) {
+        isRecommendation = recommendation;
     }
 }

@@ -45,12 +45,8 @@ public class Patient extends User
     private double longitude;
 
     @OneToMany(mappedBy="patientsList")
-    //@JsonIgnore
-    private List<InsurancePackage> insurancePackagesList = new ArrayList<>();
-
-    @OneToMany(mappedBy="patientsList")
     @JsonIgnore
-    public List<InsurancePackage> recommendations = new ArrayList<>();
+    private List<InsurancePackage> insurancePackagesList = new ArrayList<>();
 
 
     public Patient() {
@@ -155,15 +151,6 @@ public class Patient extends User
         this.longitude = longitude;
     }
 
-    public List<InsurancePackage> getInsurancePackages() {
-        return insurancePackagesList;
-    }
-
-    public void setInsurancePackageList(List<InsurancePackage> insurancePackages)
-    {
-        this.insurancePackagesList = insurancePackages;
-    }
-
     public List<InsurancePackage> addInsurancePackage(InsurancePackage insurancePackage)
     {
         if (insurancePackagesList == null)
@@ -172,11 +159,9 @@ public class Patient extends User
         return this.insurancePackagesList;
     }
 
-    public List<InsurancePackage> getRecommendations() {
-        return recommendations;
-    }
-
-    public void setRecommendations(List<InsurancePackage> recommendations) {
-        this.recommendations = recommendations;
+    public List<InsurancePackage> removeInsurancePackage(InsurancePackage insurancePackage)
+    {
+        this.insurancePackagesList.remove(insurancePackage);
+        return this.insurancePackagesList;
     }
 }

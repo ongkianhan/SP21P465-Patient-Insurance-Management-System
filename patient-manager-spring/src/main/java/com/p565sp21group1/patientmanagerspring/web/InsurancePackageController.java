@@ -49,7 +49,41 @@ public class InsurancePackageController
         //Parse the IDs from the URL
         long packageIdLong = ControllerUtility.parseUserId(packageId);
         //Add the insurance package to the target patient
-        InsurancePackage insurancePackage = insurancePackageService.addInsurancePackageToPatient(packageIdLong, principal.getName());
-        return new ResponseEntity<InsurancePackage>(insurancePackage, HttpStatus.CREATED);
+        InsurancePackage insurancePackage = insurancePackageService.saveInsurancePackageToPatient(packageIdLong, principal.getName(), false);
+        return new ResponseEntity<InsurancePackage>(insurancePackage, HttpStatus.OK);
     }
+
+    //Lets an insurer add a package to a patient's recommended list
+    @PostMapping("/recommend-insurance-package/package-{packageId}/patient-{patientEmail}/")
+    public ResponseEntity<?> recommendInsurancePackageToPatient(@PathVariable String packageId, @PathVariable String patientEmail, Principal principal)
+    {
+        //Parse the IDs from the URL
+        long packageIdLong = ControllerUtility.parseUserId(packageId);
+        //Add the insurance package to the target patient
+        InsurancePackage insurancePackage = insurancePackageService.saveInsurancePackageToPatient(packageIdLong, patientEmail, true);
+        return new ResponseEntity<InsurancePackage>(insurancePackage, HttpStatus.OK);
+    }
+
+    //Lets a patient remove an insurance package from their recommendations
+    @DeleteMapping("/decline-insurance-recommendation/package-{packageId}/")
+    public ResponseEntity<?> declineInsurancePackageRecommendation(@PathVariable String packageId, Principal principal)
+    {
+        //Parse the IDs from the URL
+        long packageIdLong = ControllerUtility.parseUserId(packageId);
+        //Remove the package from the patient's recommended list
+        List<InsurancePackage> updatedList = insurancePackageService.removeInsurancePackageFromPatient(packageIdLong, principal.getName());
+        return new ResponseEntity<String>("Recommendation successfully declined", HttpStatus.OK);
+    }
+
+    //Lets a patient accept an insurance package from their recommendations
+    @PatchMapping("/accept-insurance-recommendation/package-{packageId}/")
+    public ResponseEntity<?> acceptInsurancePackageRecommendation(@PathVariable String packageId, Principal principal)
+    {
+        //Parse the IDs from the URL
+        long packageIdLong = ControllerUtility.parseUserId(packageId);
+        //Update the InsurancePackage so that it is no longer a recommendation but still held
+        insurancePackageService.acceptInsurancePackageRecommendation(packageIdLong, principal.getName());
+        return new ResponseEntity<String>("Recommendation accepted by "+principal.getName()+"!", HttpStatus.OK);
+    }
+
 }

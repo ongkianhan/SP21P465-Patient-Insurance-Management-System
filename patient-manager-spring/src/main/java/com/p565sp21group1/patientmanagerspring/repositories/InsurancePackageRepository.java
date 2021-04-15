@@ -19,7 +19,7 @@ public interface InsurancePackageRepository extends CrudRepository<InsurancePack
     List<InsurancePackage> getInsurancePackagesByInsurerId(long insurerId);
 
     /**
-     * Select every package owned by the target patient
+     * Select every package held by the target patient
      */
     //Credit to https://stackoverflow.com/a/12110211 for the sub-query
     @Query("SELECT i from InsurancePackage i WHERE EXISTS " +
