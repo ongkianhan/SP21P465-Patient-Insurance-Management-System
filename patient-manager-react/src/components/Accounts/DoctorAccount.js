@@ -37,7 +37,8 @@ class DoctorAccount extends Component {
                     </div>
                     <div className = "col-3 text-left">
                     {this.props.security.user.userType == "PAT" ? (
-                        <Link to={`/schedule-appointment/${currentUser.userId}`}>
+                        /*<Link to={`/schedule-appointment/${currentUser.userId}`}>*/
+                        <Link to={`/form/${currentUser.userId}`}>
                             <button className="col my-1 button-primary button-card">
                                 Make Appointment
                             </button>
