@@ -4,15 +4,12 @@ import com.p565sp21group1.patientmanagerspring.exceptions.InsurancePackageAlread
 import com.p565sp21group1.patientmanagerspring.exceptions.UserNotFoundException;
 import com.p565sp21group1.patientmanagerspring.models.*;
 import com.p565sp21group1.patientmanagerspring.repositories.UserRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.p565sp21group1.patientmanagerspring.repositories.InsurancePackageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 
-
-import java.security.Principal;
 import java.util.*;
+
 
 @Service
 public class InsurancePackageService
@@ -23,6 +20,10 @@ public class InsurancePackageService
     @Autowired
     private UserRepository userRepository;
 
+    public Iterable<InsurancePackage> getAllInsurancePackages()
+    {
+        return insurancePackageRepository.findAll();
+    }
 
     public List<InsurancePackage> getInsurancePackagesByInsurerId(long insurerId, String username)
     {

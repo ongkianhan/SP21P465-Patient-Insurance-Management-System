@@ -1,9 +1,6 @@
 package com.p565sp21group1.patientmanagerspring.web;
 
-import com.p565sp21group1.patientmanagerspring.models.Appointment;
 import com.p565sp21group1.patientmanagerspring.models.InsurancePackage;
-import com.p565sp21group1.patientmanagerspring.models.Insurer;
-import com.p565sp21group1.patientmanagerspring.models.Patient;
 import com.p565sp21group1.patientmanagerspring.services.InsurancePackageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +18,15 @@ public class InsurancePackageController
     @Autowired
     private InsurancePackageService insurancePackageService;
 
+
+    //Get every package from the database
+    @GetMapping("/all-insurance-packages")
+    public Iterable<InsurancePackage> getAllInsurancePackages()
+    {
+        return insurancePackageService.getAllInsurancePackages();
+    }
+
+    //Get all packages that the insurer offers or has created
     @GetMapping("/get-by-insurer/{insurerId}")
     public List<InsurancePackage> getInsurancePackagesByInsurerId(@PathVariable String insurerId, Principal principal)
     {
@@ -28,6 +34,7 @@ public class InsurancePackageController
         return insurancePackageService.getInsurancePackagesByInsurerId(userIdLong, principal.getName());
     }
 
+    //Get every package held by the patient regardless of whether it is a recommendation
     @GetMapping("/get-by-patient/{patientId}")
     public List<InsurancePackage> getInsurancePackagesByPatientId(@PathVariable String patientId, Principal principal)
     {
@@ -35,6 +42,7 @@ public class InsurancePackageController
         return insurancePackageService.getInsurancePackagesByPatientId(userIdLong, principal.getName());
     }
 
+    //Lets an insurer create an insurance package
     @PostMapping("/create-insurance-package/")
     public ResponseEntity<?> createInsurancePackage(@RequestBody InsurancePackage insurancePackage, Principal principal)
     {

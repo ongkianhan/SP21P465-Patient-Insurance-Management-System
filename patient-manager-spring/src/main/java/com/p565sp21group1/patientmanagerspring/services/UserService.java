@@ -21,21 +21,6 @@ public class UserService
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    /**
-     * Converts a URL parameter to a long
-     */
-    public long parseUserId(String id)
-    {
-        try
-        {
-            return Long.parseLong(id);
-        }
-        catch (NumberFormatException ex)
-        {
-            throw new UserNotFoundException("Invalid ID");
-        }
-    }
-
 
     public User saveOrUpdateUser(User user)
     {
