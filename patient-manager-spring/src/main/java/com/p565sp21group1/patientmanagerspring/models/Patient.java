@@ -48,10 +48,6 @@ public class Patient extends User
     @JsonIgnore
     private List<InsurancePackage> insurancePackagesList = new ArrayList<>();
 
-    @OneToMany(mappedBy="patientsList")
-    @JsonIgnore
-    public List<InsurancePackage> recommendations = new ArrayList<>();
-
 
     public Patient() {
         this.setUserType("PAT");
@@ -155,15 +151,6 @@ public class Patient extends User
         this.longitude = longitude;
     }
 
-    public List<InsurancePackage> getInsurancePackages() {
-        return insurancePackagesList;
-    }
-
-    public void setInsurancePackageList(List<InsurancePackage> insurancePackages)
-    {
-        this.insurancePackagesList = insurancePackages;
-    }
-
     public List<InsurancePackage> addInsurancePackage(InsurancePackage insurancePackage)
     {
         if (insurancePackagesList == null)
@@ -172,25 +159,9 @@ public class Patient extends User
         return this.insurancePackagesList;
     }
 
-    public List<InsurancePackage> addInsurancePackageToRecommended(InsurancePackage insurancePackage)
+    public List<InsurancePackage> removeInsurancePackage(InsurancePackage insurancePackage)
     {
-        if (recommendations == null)
-            this.recommendations = new ArrayList<>();
-        this.recommendations.add(insurancePackage);
-        return this.recommendations;
-    }
-
-    public List<InsurancePackage> removeInsurancePackageFromRecommended(InsurancePackage insurancePackage)
-    {
-        this.recommendations.remove(insurancePackage);
+        this.insurancePackagesList.remove(insurancePackage);
         return this.insurancePackagesList;
-    }
-
-    public List<InsurancePackage> getRecommendations() {
-        return recommendations;
-    }
-
-    public void setRecommendations(List<InsurancePackage> recommendations) {
-        this.recommendations = recommendations;
     }
 }
