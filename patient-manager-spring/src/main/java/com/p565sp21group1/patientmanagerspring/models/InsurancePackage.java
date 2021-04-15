@@ -140,6 +140,12 @@ public class InsurancePackage
     public void addPatient(Patient patient) {
         if (patientsList == null)
             this.patientsList = new ArrayList<>();
-        this.patientsList.add(patient);
+        if (patientsList.contains(patient) == false)
+            this.patientsList.add(patient);
+    }
+
+    public void removePatient(Patient patient) {
+        if (patientsList != null)
+            this.patientsList.remove(patient);
     }
 }

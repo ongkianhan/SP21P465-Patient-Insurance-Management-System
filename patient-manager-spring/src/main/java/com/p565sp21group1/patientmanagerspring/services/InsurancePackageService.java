@@ -79,4 +79,73 @@ public class InsurancePackageService
         userRepository.save(patient);
         return insurancePackage;
     }
+
+    public InsurancePackage recommendInsurancePackageToPatient(long packageId, long patientId, String username)
+    {
+        //Find the package from the database
+        InsurancePackage insurancePackage = insurancePackageRepository.findById(packageId).get();
+
+        //Pair the package with the patient...
+        Patient patient = (Patient) userRepository.findById(patientId).get();
+        //Check if the patient already has this insurance package
+        List<InsurancePackage> heldList = insurancePackageRepository.getInsurancePackagesByPatientId(patientId);
+        for (int i=0; i < heldList.size(); i++)
+        {
+            long heldPackageId = heldList.get(i).getInsurancePackageId();
+            if (heldPackageId == packageId)
+            {
+                throw new InsurancePackageAlreadyHeldException("The patient " +
+                        patient.getFirstName()+" "+patient.getLastName()+" already has this package");
+            }
+        }
+        //Check if the patient already has this package in their recommendations
+        List<InsurancePackage> recommendedList = insurancePackageRepository.getRecommendedInsurancePackagesByPatientId(patientId);
+        for (int i=0; i < recommendedList.size(); i++)
+        {
+            long heldPackageId = recommendedList.get(i).getInsurancePackageId();
+            if (heldPackageId == packageId)
+            {
+                throw new InsurancePackageAlreadyHeldException("The patient " +
+                        patient.getFirstName()+" "+patient.getLastName()+" already has " +
+                        "already been recommended this package");
+            }
+        }
+        /*if (heldList.contains(insurancePackage))
+        {
+            throw new InsurancePackageAlreadyHeldException("The patient " +
+                    patient.getFirstName()+" "+patient.getLastName()+" already has " +
+                    "already been recommended this package");
+        }
+        if (recommendedList.contains(insurancePackage))
+        {
+            throw new InsurancePackageAlreadyHeldException("The patient " +
+                    patient.getFirstName()+" "+patient.getLastName()+" already has " +
+                    "already been recommended this package");
+        }*/
+        //Map package to the patient's recommendations successfully
+        patient.addInsurancePackageToRecommended(insurancePackage);
+        insurancePackage.addPatient(patient);
+
+        //Save the patient and return the package
+        insurancePackageRepository.save(insurancePackage);
+        userRepository.save(patient);
+        return insurancePackage;
+    }
+
+    public List<InsurancePackage> removeRecommendedInsurancePackageFromPatient(long packageId, String username)
+    {
+        //Find the package from the database
+        InsurancePackage insurancePackage = insurancePackageRepository.findById(packageId).get();
+
+        //Pair the package with the patient...
+        Patient patient = (Patient) userRepository.findByEmail(username);
+        //Remove the package from the patient
+        patient.removeInsurancePackageFromRecommended(insurancePackage);
+        insurancePackage.removePatient(patient);
+
+        //Save the patient and return the patient's new list
+        insurancePackageRepository.save(insurancePackage);
+        userRepository.save(patient);
+        return patient.getRecommendations();
+    }
 }

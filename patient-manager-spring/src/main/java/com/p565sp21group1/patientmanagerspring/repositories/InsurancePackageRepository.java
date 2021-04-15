@@ -26,6 +26,14 @@ public interface InsurancePackageRepository extends CrudRepository<InsurancePack
             "(SELECT u from InsurancePackage ie LEFT JOIN ie.patientsList u WHERE i = ie AND u.id = :patientId)")
     List<InsurancePackage> getInsurancePackagesByPatientId(long patientId);
 
+    /**
+     * Select every package in the target patient's recommendations
+     */
+    //Credit to https://stackoverflow.com/a/12110211 for the sub-query
+    @Query("SELECT i from InsurancePackage i WHERE EXISTS " +
+            "(SELECT u from InsurancePackage ie LEFT JOIN ie.recommendations u WHERE i = ie AND u.id = :patientId)")
+    List<InsurancePackage> getRecommendedInsurancePackagesByPatientId(long patientId);
+
     @Query("SELECT i FROM InsurancePackage i WHERE" +
             /*Check for key words*/
             " i.firmName LIKE CONCAT('%', :#{#filter.keywords}, '%') " +

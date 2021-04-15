@@ -45,7 +45,7 @@ public class Patient extends User
     private double longitude;
 
     @OneToMany(mappedBy="patientsList")
-    //@JsonIgnore
+    @JsonIgnore
     private List<InsurancePackage> insurancePackagesList = new ArrayList<>();
 
     @OneToMany(mappedBy="patientsList")
@@ -169,6 +169,20 @@ public class Patient extends User
         if (insurancePackagesList == null)
             this.insurancePackagesList = new ArrayList<>();
         this.insurancePackagesList.add(insurancePackage);
+        return this.insurancePackagesList;
+    }
+
+    public List<InsurancePackage> addInsurancePackageToRecommended(InsurancePackage insurancePackage)
+    {
+        if (recommendations == null)
+            this.recommendations = new ArrayList<>();
+        this.recommendations.add(insurancePackage);
+        return this.recommendations;
+    }
+
+    public List<InsurancePackage> removeInsurancePackageFromRecommended(InsurancePackage insurancePackage)
+    {
+        this.recommendations.remove(insurancePackage);
         return this.insurancePackagesList;
     }
 

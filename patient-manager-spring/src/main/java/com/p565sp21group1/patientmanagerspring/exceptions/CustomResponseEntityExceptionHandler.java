@@ -48,4 +48,12 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         PermissionDeniedExceptionResponse exceptionResponse = new PermissionDeniedExceptionResponse(ex.getMessage());
         return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
+
+    //Patient already has insurance package
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleInsurancePackageAlreadyHeldException(InsurancePackageAlreadyHeldException ex, WebRequest request)
+    {
+        InsurancePackageAlreadyHeldExceptionResponse exceptionResponse = new InsurancePackageAlreadyHeldExceptionResponse(ex.getMessage());
+        return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
 }
