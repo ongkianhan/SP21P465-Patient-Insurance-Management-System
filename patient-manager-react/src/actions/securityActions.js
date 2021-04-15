@@ -12,7 +12,6 @@ import jwtDecode from "jwt-decode";
 export const createNewUser = (newUser, userType, history) => async dispatch => {
     try
     {
-        console.log(newUser)
         await axios.post("/api/account/create-"+userType, newUser);
         dispatch({
             type: GET_ERRORS, 

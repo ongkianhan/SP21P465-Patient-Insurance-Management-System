@@ -1,6 +1,7 @@
 package com.p565sp21group1.patientmanagerspring.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
@@ -16,8 +17,14 @@ public class Patient extends User
     @JsonIgnore
     private List<Appointment> appointments = new ArrayList<>();
 
-    @Column(name = "age", nullable = false, unique = false)
+    @Column(name = "age", nullable = true, unique = false)
     private int age;
+
+    @Column(name = "height", nullable = true, unique = false)
+    private int height;
+
+    @Column(name = "weight", nullable = true, unique = false)
+    private int weight;
 
     @Column(name = "isSmoking", nullable = false, unique = false)
     private boolean isSmoking;
@@ -25,10 +32,10 @@ public class Patient extends User
     @Column(name = "isDrinking", nullable = false, unique = false)
     private boolean isDrinking;
 
-    @Column(name = "medicalHistory", nullable = false, unique = false)
+    @Column(name = "medicalHistory", nullable = true, unique = false)
     private String medicalHistory;
 
-    @Column(name = "allergies", nullable = false, unique = false)
+    @Column(name = "allergies", nullable = true, unique = false)
     private String allergies;
 
     @Column(name = "latitude", nullable = true, unique = false)
@@ -50,6 +57,16 @@ public class Patient extends User
         this.setUserType("PAT");
     }
 
+    //When creating a patient, add default values
+    @PrePersist
+    protected void onCreate()
+    {
+        if (this.medicalHistory == null || this.medicalHistory.equals(""))
+            this.medicalHistory = "";
+        if (this.allergies == null || this.allergies.equals(""))
+            this.allergies = "None";
+    }
+
     public List<Appointment> getAppointments() {
         return appointments;
     }
@@ -64,6 +81,46 @@ public class Patient extends User
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public String getMedicalHistory() {
+        return medicalHistory;
+    }
+
+    public void setMedicalHistory(String medicalHistory) {
+        this.medicalHistory = medicalHistory;
+    }
+
+    public String getAllergies() {
+        return allergies;
+    }
+
+    public void setAllergies(String allergies) {
+        this.allergies = allergies;
+    }
+
+    public List<InsurancePackage> getInsurancePackagesList() {
+        return insurancePackagesList;
+    }
+
+    public void setInsurancePackagesList(List<InsurancePackage> insurancePackagesList) {
+        this.insurancePackagesList = insurancePackagesList;
     }
 
     public boolean isSmoking() {
