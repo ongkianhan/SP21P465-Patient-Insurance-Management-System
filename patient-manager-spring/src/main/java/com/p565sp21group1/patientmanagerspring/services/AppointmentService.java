@@ -25,7 +25,6 @@ public class AppointmentService
         try
         {
             //Pair the appointment with the patient...
-            //Calling get() retrieves the actual User from the repos
             Patient patient = (Patient) userRepository.findByEmail(username);
             appointment.setPatient(patient);
 

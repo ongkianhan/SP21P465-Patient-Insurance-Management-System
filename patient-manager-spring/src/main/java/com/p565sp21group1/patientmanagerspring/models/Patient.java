@@ -25,17 +25,26 @@ public class Patient extends User
     @Column(name = "isDrinking", nullable = false, unique = false)
     private boolean isDrinking;
 
+    @Column(name = "medicalHistory", nullable = false, unique = false)
+    private String medicalHistory;
+
+    @Column(name = "allergies", nullable = false, unique = false)
+    private String allergies;
+
     @Column(name = "latitude", nullable = true, unique = false)
     private double latitude;
 
     @Column(name = "longitude", nullable = true, unique = false)
     private double longitude;
 
-    @ManyToMany
-    public List<InsurancePackage> insurancePackagesList = new ArrayList<>();
+    @OneToMany(mappedBy="patientsList")
+    //@JsonIgnore
+    private List<InsurancePackage> insurancePackagesList = new ArrayList<>();
 
-    @ManyToMany
+    @OneToMany(mappedBy="patientsList")
+    @JsonIgnore
     public List<InsurancePackage> recommendations = new ArrayList<>();
+
 
     public Patient() {
         this.setUserType("PAT");
@@ -89,9 +98,6 @@ public class Patient extends User
         this.longitude = longitude;
     }
 
-
-    // patient should only be able to see the insurance packages they have, not edit them
-
     public List<InsurancePackage> getInsurancePackages() {
         return insurancePackagesList;
     }
@@ -101,10 +107,12 @@ public class Patient extends User
         this.insurancePackagesList = insurancePackages;
     }
 
-    public List<InsurancePackage> addInsurancePackage(InsurancePackage thisInsurancePackage, List<InsurancePackage> insurancePackages)
+    public List<InsurancePackage> addInsurancePackage(InsurancePackage insurancePackage)
     {
-        this.insurancePackagesList.add(thisInsurancePackage);
-        return insurancePackages;
+        if (insurancePackagesList == null)
+            this.insurancePackagesList = new ArrayList<>();
+        this.insurancePackagesList.add(insurancePackage);
+        return this.insurancePackagesList;
     }
 
     public List<InsurancePackage> getRecommendations() {

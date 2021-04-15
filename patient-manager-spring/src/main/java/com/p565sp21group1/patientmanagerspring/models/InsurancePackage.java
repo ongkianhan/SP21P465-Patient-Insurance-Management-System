@@ -1,5 +1,7 @@
 package com.p565sp21group1.patientmanagerspring.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.*;
@@ -9,6 +11,7 @@ import java.util.*;
 public class InsurancePackage
 {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long insurancePackageId;
 
     private String firmName;
@@ -19,12 +22,26 @@ public class InsurancePackage
 
     public String packageDetails; // contains details and/or comments that the insurer feels is relevant
 
-    public double premium, deductible, copayment, coInsurance, maximumOutOfPocket;
+    public double premium,
+            deductible,
+            copayment,
+            coInsurance,
+            maximumOutOfPocket;
     // premium = monthly payment
     // deductible = deductible is how much you’ll pay for a covered procedure before your insurance starts to pay,
     // copayment = fixed amount that you pay for a specific service or prescription medication.
     // coinsurance = it’s a percentage of the cost that you pay for covered services.
     // maximum out of pocket = out-of-pocket limit, is the most you’d ever have to pay for covered health care services in a year.
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JoinColumn(name="insurerId")
+    @JsonIgnore
+    private Insurer insurer; //reference to the insurer who created this package
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JoinColumn(name="patientId")
+    @JsonIgnore
+    private List<Patient> patientsList; //reference to the patient holding this package
 
 
     public InsurancePackage() {
@@ -98,5 +115,31 @@ public class InsurancePackage
 
     public void setFirmName(String firmName) {
         this.firmName = firmName;
+    }
+
+    public void setInsurancePackageId(long insurancePackageId) {
+        this.insurancePackageId = insurancePackageId;
+    }
+
+    public Insurer getInsurer() {
+        return insurer;
+    }
+
+    public void setInsurer(Insurer insurer) {
+        this.insurer = insurer;
+    }
+
+    public List<Patient> getPatientsList() {
+        return patientsList;
+    }
+
+    public void setPatientsList(List<Patient> patientsList) {
+        this.patientsList = patientsList;
+    }
+
+    public void addPatient(Patient patient) {
+        if (patientsList == null)
+            this.patientsList = new ArrayList<>();
+        this.patientsList.add(patient);
     }
 }

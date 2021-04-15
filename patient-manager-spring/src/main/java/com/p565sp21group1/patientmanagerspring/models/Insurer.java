@@ -13,6 +13,10 @@ public class Insurer extends User
     @NotBlank(message = "Company name cannot be blank")
     private String firmName;
 
+    @ManyToMany
+    public List<InsurancePackage> insurancePackagesList = new ArrayList<>();
+
+
     public Insurer() {
         this.setUserType("INS");
     }
@@ -24,17 +28,6 @@ public class Insurer extends User
     public void setFirmName(String firmName) {
         this.firmName = firmName;
     }
-
-    @Column(name = "latitude", nullable = true, unique = false)     //location for insurer is required for maps
-    private double latitude;
-
-    @Column(name = "longitude", nullable = true, unique = false)
-    private double longitude;
-
-    @ManyToMany
-    public List<InsurancePackage> insurancePackagesList = new ArrayList<>();
-
-
 
     public List<InsurancePackage> getInsurancePackageList() {
         return insurancePackagesList;
@@ -53,7 +46,7 @@ public class Insurer extends User
         return insurancePackages;
     }
 
-    public void addRecommendations(Patient patient, InsurancePackage thisPackage)
+    /*public void addRecommendations(Patient patient, InsurancePackage thisPackage)
     {
         patient.recommendations.add(thisPackage);
     }
@@ -66,6 +59,13 @@ public class Insurer extends User
     public void setRecommendations(Patient patient, List<InsurancePackage> insurerRecommendations)
     {
         patient.setRecommendations(insurerRecommendations);
+    }*/
+
+    public List<InsurancePackage> getInsurancePackagesList() {
+        return insurancePackagesList;
     }
 
+    public void setInsurancePackagesList(List<InsurancePackage> insurancePackagesList) {
+        this.insurancePackagesList = insurancePackagesList;
+    }
 }

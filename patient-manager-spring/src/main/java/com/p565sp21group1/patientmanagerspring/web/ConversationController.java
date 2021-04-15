@@ -32,8 +32,8 @@ public class ConversationController
     public Iterable<Message> getConversationById(@PathVariable String conversationId, @PathVariable String viewerId, Principal principal)
     {
         //Get the messages from the database
-        long conversationIdLong = userService.parseUserId(conversationId);
-        long viewerIdLong = userService.parseUserId(viewerId);
+        long conversationIdLong = ControllerUtility.parseUserId(conversationId);
+        long viewerIdLong = ControllerUtility.parseUserId(viewerId);
         Iterable<Message> messageList = conversationService.getRecentMessages(conversationIdLong, viewerIdLong);
         //Add the name of the sender to each message
         for (Message message : messageList)
@@ -55,8 +55,8 @@ public class ConversationController
         if (errorMap != null) return errorMap;
 
         //Create the message on the database
-        long conversationIdLong = userService.parseUserId(conversationId);
-        long userIdLong = userService.parseUserId(userId);
+        long conversationIdLong = ControllerUtility.parseUserId(conversationId);
+        long userIdLong = ControllerUtility.parseUserId(userId);
         Message message1 = conversationService.addMessage(conversationIdLong, userIdLong, message);
 
         return new ResponseEntity<Message>(message1, HttpStatus.CREATED);
@@ -70,7 +70,7 @@ public class ConversationController
         ResponseEntity<?> errorMap = errorMapValidationService.mapErrors(result);
         if (errorMap != null) return errorMap;
 
-        long senderIdLong = userService.parseUserId(senderId);
+        long senderIdLong = ControllerUtility.parseUserId(senderId);
         Conversation newConversation = conversationService.createConversation(senderIdLong, otherUserEmail, conversation);
 
         return new ResponseEntity<Conversation>(newConversation, HttpStatus.CREATED);
@@ -79,21 +79,21 @@ public class ConversationController
     @GetMapping("/get-by-user/{userId}")
     public Iterable<Conversation> getConversationsByUserId(@PathVariable String userId, Principal principal)
     {
-        long userIdLong = userService.parseUserId(userId);
+        long userIdLong = ControllerUtility.parseUserId(userId);
         return conversationService.getConversationsByUserId(userIdLong);
     }
 
     @GetMapping("/get-number-unread/{userId}")
     public int getTotalNumberOfUnreadMessagesByUserId(@PathVariable String userId, Principal principal)
     {
-        long userIdLong = userService.parseUserId(userId);
+        long userIdLong = ControllerUtility.parseUserId(userId);
         return conversationService.getTotalNumberOfUnreadMessagesByUserId(userIdLong);
     }
 
     @PostMapping("/add-user-to-conversation/{conversationId}/{otherUserEmail}")
     public ResponseEntity<?> addUserToConversation(@PathVariable String conversationId, @PathVariable String otherUserEmail, Principal principal)
     {
-        long conversationIdLong = userService.parseUserId(conversationId);
+        long conversationIdLong = ControllerUtility.parseUserId(conversationId);
         Conversation updatedConversation = conversationService.addUserToConversation(conversationIdLong, otherUserEmail);
 
         return new ResponseEntity<Conversation>(updatedConversation, HttpStatus.CREATED);

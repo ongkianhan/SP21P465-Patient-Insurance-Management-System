@@ -114,7 +114,7 @@ public class UserController
     @GetMapping("/{userId}")
     public User getUserById(@PathVariable String userId)
     {
-        long userIdLong = userService.parseUserId(userId);
+        long userIdLong = ControllerUtility.parseUserId(userId);
         return userService.findUserById(userIdLong);
     }
 

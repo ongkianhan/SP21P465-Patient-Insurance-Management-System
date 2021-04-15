@@ -11,11 +11,20 @@ import java.util.List;
 @Repository
 public interface InsurancePackageRepository extends CrudRepository<InsurancePackage, Long>
 {
-    @Query("SELECT i FROM InsurancePackage i WHERE i.insurancePackageID = :packageID" )
-    List<InsurancePackage> getInsurancePackageByID(long packageID);
+    /**
+     * Select every package created by the target insurer
+     */
+    @Query("SELECT i FROM InsurancePackage i " +
+            "WHERE i.insurer.id = :insurerId ")
+    List<InsurancePackage> getInsurancePackagesByInsurerId(long insurerId);
 
-    @Query("SELECT i FROM InsurancePackage i")
-    List<InsurancePackage> getAllInsurancePackages();
+    /**
+     * Select every package owned by the target patient
+     */
+    //Credit to https://stackoverflow.com/a/12110211 for the sub-query
+    @Query("SELECT i from InsurancePackage i WHERE EXISTS " +
+            "(SELECT u from InsurancePackage ie LEFT JOIN ie.patientsList u WHERE i = ie AND u.id = :patientId)")
+    List<InsurancePackage> getInsurancePackagesByPatientId(long patientId);
 
     @Query("SELECT i FROM InsurancePackage i WHERE" +
             /*Check for key words*/
