@@ -73,7 +73,7 @@ class MapContainer extends Component
         //Render the Map, but exclude user's location from Map if it is not available
         else if (locYourLocation.lat == 0 && locYourLocation.lng == 0) {
             return (
-                <LoadScript googleMapsApiKey="AIzaSyBUTc1FRhdk7As-CVKW1lzoOn6vNUz0xUc">
+                <LoadScript googleMapsApiKey="AIzaSyDx1alSX-eHys1ZzIMmIyFO07hPmvA_5A8">
                     <GoogleMap
                         mapContainerStyle={mapStyles}
                         zoom={13}
@@ -88,7 +88,7 @@ class MapContainer extends Component
 
         //Render the full map
         return (
-            <LoadScript googleMapsApiKey="AIzaSyBUTc1FRhdk7As-CVKW1lzoOn6vNUz0xUc">
+            <LoadScript googleMapsApiKey="AIzaSyDx1alSX-eHys1ZzIMmIyFO07hPmvA_5A8">
                 <GoogleMap
                     mapContainerStyle={mapStyles}
                     zoom={13}
