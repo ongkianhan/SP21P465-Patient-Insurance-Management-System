@@ -4,6 +4,7 @@ import doctorReducer from "./doctorReducer";
 import patientReducer from "./patientReducer";
 import currentUserReducer from "./currentUserReducer";
 import appointmentReducer from "./appointmentReducer";
+import packageReducer from "./packageReducer";
 import securityReducer from "./securityReducer";
 import chatReducer from "./chatReducer";
 
@@ -16,6 +17,7 @@ export default combineReducers({
     patient: patientReducer,
     currentUser: currentUserReducer,
     appointment: appointmentReducer,
+    package: packageReducer,
     conversation: chatReducer,
     security: securityReducer
 });

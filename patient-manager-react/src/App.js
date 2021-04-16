@@ -27,6 +27,7 @@ import ProfileContainer from "./components/Profiles/ProfileContainer"
 import AccountContainer from "./components/Accounts/AccountContainer"
 import MapPage from "./components/GoogleMaps/MapPage";
 import Form from "./components/Questionnaire/Form"
+import InsurancePackageCreator from "./components/Insurance/InsurancePackageCreator";
 
 
 class App extends Component 
@@ -60,8 +61,10 @@ class App extends Component
               <DashboardRoute exact path="/dashboard" />
               <SecuredRoute exact path="/schedule-appointment/:userId" userTypeBlacklist={["DOC", "INS"]} component={AppointmentScheduler} />
               <SecuredRoute exact path="/chat" component={ChatContainer} />
+              <SecuredRoute exact path="/find-patients" userTypeBlacklist={["DOC", "PAT"]} component={PatientSearch} />
+              <SecuredRoute exact path="/create-insurance-package" userTypeBlacklist={["DOC", "PAT"]} component={InsurancePackageCreator} />
+              
               <SecuredRoute exact path="/permission-denied" component={InvalidUserTypeLanding} />
-              <SecuredRoute exact path="/find-patients" component={PatientSearch} />
             </span>
           </div>
           <Footer />

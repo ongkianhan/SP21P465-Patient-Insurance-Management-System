@@ -6,6 +6,7 @@ export const getDoctorsByFilter = (filter) => async dispatch => {
     try {
     const res = await axios.post("/api/account/search-doctors", filter);
     dispatch ({
+        //Retrieve all packages created by the target insurer
         type: GET_MANY_DOCTORS,
         payload: res.data
     });

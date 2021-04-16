@@ -50,6 +50,13 @@ public class InsurancePackage
     public InsurancePackage() {
     }
 
+    //When creating an InsurancePackage, add default values
+    @PrePersist
+    protected void onCreate()
+    {
+        if (this.packageDetails == null || this.packageDetails.equals(""))
+            this.packageDetails = "N/A";
+    }
 
     public void setPackageName(String packageName)
     {

@@ -14,6 +14,10 @@ export const SET_CURRENT_USER = "SET_CURRENT_USER";
 export const GET_ONE_APPOINTMENT = "GET_ONE_APPOINTMENT";
 export const GET_MANY_APPOINTMENTS = "GET_MANY_APPOINTMENTS";
 
+//Insurance packages
+export const GET_ONE_PACKAGE = "GET_ONE_PACKAGE";
+export const GET_MANY_PACKAGES = "GET_MANY_PACKAGES";
+
 //Profile viewing
 export const GET_CURRENT_USER = "GET_CURRENT_USER";
 

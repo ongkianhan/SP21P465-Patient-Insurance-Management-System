@@ -425,28 +425,30 @@ class PatientSignupForm extends Component {
                                         </tr>
                                     </table>
 
-                                    <div className="form-group">
-                                        <input
-                                            type="text"
-                                            className={classnames(
-                                                "form-control textbox",
-                                                {
-                                                    "is-invalid":
-                                                        errors.medicalHistory,
-                                                }
+                                    <table>
+                                        <div className="form-group">
+                                            <input
+                                                type="text"
+                                                className={classnames(
+                                                    "form-control textbox",
+                                                    {
+                                                        "is-invalid":
+                                                            errors.medicalHistory,
+                                                    }
+                                                )}
+                                                placeholder="List any chronic diseases or other medical history details"
+                                                name="medicalHistory"
+                                                rows="2"
+                                                value={this.state.medicalHistory}
+                                                onChange={this.onChange}
+                                            />
+                                            {errors.medicalHistory && (
+                                                <div className="invalid-feedback">
+                                                    {errors.medicalHistory}
+                                                </div>
                                             )}
-                                            placeholder="List any chronic diseases or other medical history details"
-                                            name="medicalHistory"
-                                            rows="2"
-                                            value={this.state.medicalHistory}
-                                            onChange={this.onChange}
-                                        />
-                                        {errors.medicalHistory && (
-                                            <div className="invalid-feedback">
-                                                {errors.medicalHistory}
-                                            </div>
-                                        )}
-                                    </div>
+                                        </div>
+                                    </table>
 
                                     {/*Submit button*/}
                                     <div className="row justify-content-center">
