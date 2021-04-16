@@ -203,7 +203,7 @@ class InsurancePackageCreator extends Component {
                                                                     errors.maximumOutOfPocket,
                                                             }
                                                         )}
-                                                        placeholder="Maximum out-of-pocket"
+                                                        placeholder="Maximum out-of-pocket (optional)"
                                                         name="maximumOutOfPocket"
                                                         value={
                                                             this.state.maximumOutOfPocket
@@ -234,7 +234,7 @@ class InsurancePackageCreator extends Component {
                                                                     errors.copayment,
                                                             }
                                                         )}
-                                                        placeholder="Co-payment"
+                                                        placeholder="Co-payment (optional)"
                                                         name="copayment"
                                                         value={
                                                             this.state.copayment
@@ -259,7 +259,7 @@ class InsurancePackageCreator extends Component {
                                                                     errors.coInsurance,
                                                             }
                                                         )}
-                                                        placeholder="Co-insurance"
+                                                        placeholder="Co-insurance (optional)"
                                                         name="coInsurance"
                                                         value={
                                                             this.state.coInsurance
@@ -292,7 +292,7 @@ class InsurancePackageCreator extends Component {
                                                                 errors.packageDetails,
                                                         }
                                                     )}
-                                                    placeholder="Other details"
+                                                    placeholder="Other details (optional)"
                                                     name="packageDetails"
                                                     value={this.state.packageDetails}
                                                     onChange={this.onChange}

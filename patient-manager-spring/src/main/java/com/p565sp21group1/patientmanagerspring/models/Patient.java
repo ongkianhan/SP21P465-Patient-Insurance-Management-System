@@ -54,13 +54,22 @@ public class Patient extends User
     }
 
     //When creating a patient, add default values
+    private void addDefaultValues()
+    {
+        if (this.medicalHistory == null || this.medicalHistory.equals(""))
+            this.medicalHistory = "Not provided";
+        if (this.allergies == null || this.allergies.equals(""))
+            this.allergies = "None";
+    }
     @PrePersist
     protected void onCreate()
     {
-        if (this.medicalHistory == null || this.medicalHistory.equals(""))
-            this.medicalHistory = "";
-        if (this.allergies == null || this.allergies.equals(""))
-            this.allergies = "None";
+        this.addDefaultValues();
+    }
+    @PreUpdate
+    protected void onUpdate()
+    {
+        this.addDefaultValues();
     }
 
     public List<Appointment> getAppointments() {

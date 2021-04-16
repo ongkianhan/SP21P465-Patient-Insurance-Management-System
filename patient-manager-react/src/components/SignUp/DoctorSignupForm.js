@@ -6,6 +6,7 @@ import classnames from "classnames";
 import { login, validateUser } from "../../actions/securityActions";
 import { Link } from "react-router-dom";
 import Geocode from "react-geocode";
+import { validateDoctor } from "../../validation/doctorValidator";
 
 Geocode.setLanguage("en");
 Geocode.setLocationType("ROOFTOP");
@@ -83,7 +84,8 @@ class DoctorSignupForm extends Component {
           );
     
         //Validate the user
-        const frontEndErrors = validateUser(newDoctor)
+        var frontEndErrors = validateUser(newDoctor);
+        validateDoctor(newDoctor, frontEndErrors);
         if (Object.keys(frontEndErrors).length != 0) //if errors exist
         {
             this.setState({ errors: frontEndErrors });
@@ -151,7 +153,7 @@ class DoctorSignupForm extends Component {
                                     <table>
                                         {/*Row 1*/}
                                         <tr>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-left-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -174,7 +176,7 @@ class DoctorSignupForm extends Component {
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-right-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -202,7 +204,7 @@ class DoctorSignupForm extends Component {
                                         </tr>
                                         {/*Row 2*/}
                                         <tr>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-left-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -227,7 +229,7 @@ class DoctorSignupForm extends Component {
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-right-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -255,7 +257,7 @@ class DoctorSignupForm extends Component {
                                         </tr>
                                         {/*Row 3*/}
                                         <tr>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-left-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -280,7 +282,7 @@ class DoctorSignupForm extends Component {
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-right-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -309,7 +311,7 @@ class DoctorSignupForm extends Component {
                                             </td>
                                         </tr>
                                         <tr>
-                                        <td className="td-textbox-holder">
+                                        <td className="td-textbox-left-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -337,7 +339,7 @@ class DoctorSignupForm extends Component {
                                                 </div>
                                             </td>
 
-                                            <td className="td-form-check">
+                                            <td className="td-form-check td-textbox-right-side">
                                                 <div className="form-group">
                                                     <input
                                                         className={classnames(
@@ -385,6 +387,7 @@ DoctorSignupForm.propTypes = {
     createNewUser: PropTypes.func.isRequired,
     login: PropTypes.func.isRequired,
     validateUser: PropTypes.func.isRequired,
+    validateDoctor: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired,
 };
@@ -394,4 +397,4 @@ const mapStateToProps = (state) => ({
     security: state.security,
 });
 
-export default connect(mapStateToProps, { createNewUser, login, validateUser })(DoctorSignupForm);
+export default connect(mapStateToProps, { createNewUser, login, validateUser, validateDoctor })(DoctorSignupForm);

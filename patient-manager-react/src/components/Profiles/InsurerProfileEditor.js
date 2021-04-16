@@ -146,7 +146,7 @@ class InsurerProfileEditor extends Component {
                                     <table>
                                         {/*Row 1*/}
                                         <tr>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-left-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -169,7 +169,7 @@ class InsurerProfileEditor extends Component {
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-right-side">
                                             <div className="form-group">
                                                 <input
                                                     type="text"
@@ -188,36 +188,10 @@ class InsurerProfileEditor extends Component {
                                                 )}
                                             </div>
                                             </td>
-                                            {/*
-                                            <td className="td-textbox-holder">
-                                                <div className="form-group">
-                                                    <input
-                                                        type="text"
-                                                        className={classnames(
-                                                            "form-control textbox",
-                                                            {
-                                                                "is-invalid":
-                                                                    errors.password,
-                                                            }
-                                                        )}
-                                                        placeholder="Password"
-                                                        name="password"
-                                                        value={
-                                                            this.state.password
-                                                        }
-                                                        onChange={this.onChange}
-                                                    />
-                                                    {errors.password && (
-                                                        <div className="invalid-feedback">
-                                                            {errors.password}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </td> */}
                                         </tr>
                                         {/*Row 2*/}
                                         <tr>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-left-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -242,7 +216,7 @@ class InsurerProfileEditor extends Component {
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-right-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"

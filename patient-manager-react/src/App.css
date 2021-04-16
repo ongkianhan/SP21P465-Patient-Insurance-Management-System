@@ -110,9 +110,13 @@ th {
     width: 100%;
 }
 
-.td-textbox-holder {
-    padding-right: calc(12px + 1vmin);
+.td-textbox-left-side {
+    padding-right: calc(10px + 0.4vmin);
 }
+.td-textbox-right-side {
+    padding-left: calc(10px + 0.4vmin);
+}
+
 
 .primary-bg {
     background-color: #00aa95 !important;

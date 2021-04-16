@@ -6,6 +6,7 @@ import classnames from "classnames";
 import { login, validateUser } from "../../actions/securityActions";
 import { Link } from "react-router-dom";
 import Geocode from "react-geocode";
+import { validatePatient } from "../../validation/patientValidator";
 
 Geocode.setLanguage("en");
 Geocode.setLocationType("ROOFTOP");
@@ -101,7 +102,8 @@ class PatientSignupForm extends Component {
         }
 
         //Validate the user
-        const frontEndErrors = validateUser(newPatient);
+        var frontEndErrors = validateUser(newPatient);
+        validatePatient(newPatient, frontEndErrors);
         if (Object.keys(frontEndErrors).length != 0) {
             //if errors exist
             this.setState({ errors: frontEndErrors });
@@ -168,7 +170,7 @@ class PatientSignupForm extends Component {
                                     <table>
                                         {/*Row 1*/}
                                         <tr>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-left-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -191,7 +193,7 @@ class PatientSignupForm extends Component {
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-right-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -219,7 +221,7 @@ class PatientSignupForm extends Component {
                                         </tr>
                                         {/*Row 2*/}
                                         <tr>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-left-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -244,7 +246,7 @@ class PatientSignupForm extends Component {
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-right-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -278,7 +280,7 @@ class PatientSignupForm extends Component {
                                     <table>
                                         {/* Row 3 */}
                                         <tr>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-left-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -291,7 +293,7 @@ class PatientSignupForm extends Component {
                                                             */
                                                             }
                                                         )}
-                                                        placeholder="Address (optional)"
+                                                        placeholder="Address"
                                                         name="address"
                                                         value={
                                                             this.state.address
@@ -305,7 +307,7 @@ class PatientSignupForm extends Component {
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-right-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -323,7 +325,7 @@ class PatientSignupForm extends Component {
                                                     />
                                                     {errors.age && (
                                                         <div className="invalid-feedback">
-                                                            {errors.lastNageame}
+                                                            {errors.age}
                                                         </div>
                                                     )}
                                                 </div>
@@ -332,7 +334,7 @@ class PatientSignupForm extends Component {
 
                                         {/* Row 4 */}
                                         <tr>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-left-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -343,7 +345,7 @@ class PatientSignupForm extends Component {
                                                                     errors.height,
                                                             }
                                                         )}
-                                                        placeholder="Height (ft)"
+                                                        placeholder="Height (in)"
                                                         name="height"
                                                         value={
                                                             this.state.height
@@ -357,7 +359,7 @@ class PatientSignupForm extends Component {
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-right-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -481,6 +483,7 @@ PatientSignupForm.propTypes = {
     createNewUser: PropTypes.func.isRequired,
     login: PropTypes.func.isRequired,
     validateUser: PropTypes.func.isRequired,
+    validatePatient: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired,
 };
@@ -490,6 +493,6 @@ const mapStateToProps = (state) => ({
     security: state.security,
 });
 
-export default connect(mapStateToProps, { createNewUser, login, validateUser })(
+export default connect(mapStateToProps, { createNewUser, login, validateUser, validateUser })(
     PatientSignupForm
 );
