@@ -111,6 +111,10 @@ public class UserController
         return userService.getAllSpecializations();
     }
 
+    //Get all patients from the database
+    @GetMapping("/all-patients")
+    public Iterable<Patient> getAllPatients(){return userService.getAllPatients();}
+
     @GetMapping("/{userId}")
     public User getUserById(@PathVariable String userId)
     {

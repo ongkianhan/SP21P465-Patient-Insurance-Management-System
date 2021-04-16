@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import {Link} from "react-router-dom";
-import {PropTypes} from "prop-types";
 import defaultProfileIcon from "../../static/defaultProfileIcon.png";
-import { connect } from "react-redux";
 
-
-class DoctorCard extends Component 
+class PatientCard extends Component 
 {
     render() 
     {
-        const {doctor} = this.props;
+        const {patient} = this.props;
         return (
             <div className="card-container">
             <div className="card card-body bg-light mb-3">
@@ -18,12 +15,11 @@ class DoctorCard extends Component
                         <img className="col mh-25" src={defaultProfileIcon} />
                     </div>
                     <div className="col-6 text-left">
-                        <h3>{doctor.firstName}{" "}{doctor.lastName}</h3>
-                        <h4>{doctor.specialization}</h4>
-                        <h4>{doctor.hospitalName}</h4>
+                        <h3>{patient.firstName}{" "}{patient.lastName}</h3>
+                        <h4>Age {patient.age}</h4>
                     </div>
                     <div className="col-3 justify-content-end">
-                        <Link to={`/account/${doctor.userId}`}>
+                        <Link to={`/account/${patient.userId}`}>
                             <button className="col my-1 button-secondary card-button">
                                 View Profile
                             </button>
@@ -36,4 +32,4 @@ class DoctorCard extends Component
     }
 }
 
-export default DoctorCard;
+export default PatientCard;

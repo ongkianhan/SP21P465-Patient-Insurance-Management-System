@@ -220,6 +220,12 @@ class InsurerSignupForm extends Component
                             </div>
                         </div>
                     </div>
+                    <br/>
+                    <br/>
+                    <p><b>Your Privacy</b></p>
+                    <p>Your email will be publicly available on your profile so that others can chat with you.</p>
+                    <br/>
+                    <br/>
                 </div>
             </div>
         );

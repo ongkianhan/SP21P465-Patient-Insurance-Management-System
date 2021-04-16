@@ -11,6 +11,7 @@ import DashboardRoute from "./securityUtils/DashboardRoute";
 
 //Components
 import DoctorSearch from "./components/UserSearch/DoctorSearch.js";
+import PatientSearch from "./components/UserSearch/PatientSearch.js";
 import AppointmentScheduler from "./components/AppointmentScheduling/AppointmentScheduler";
 import DoctorSignupForm from "./components/SignUp/DoctorSignupForm";
 import PatientSignupForm from "./components/SignUp/PatientSignupForm";
@@ -60,6 +61,7 @@ class App extends Component
               <SecuredRoute exact path="/schedule-appointment/:userId" userTypeBlacklist={["DOC", "INS"]} component={AppointmentScheduler} />
               <SecuredRoute exact path="/chat" component={ChatContainer} />
               <SecuredRoute exact path="/permission-denied" component={InvalidUserTypeLanding} />
+              <SecuredRoute exact path="/find-patients" component={PatientSearch} />
             </span>
           </div>
           <Footer />

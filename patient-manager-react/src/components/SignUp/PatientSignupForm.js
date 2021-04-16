@@ -460,6 +460,15 @@ class PatientSignupForm extends Component {
                             </div>
                         </div>
                     </div>
+                    <br/>
+                    <br/>
+                    <p><b>Your Privacy</b></p>
+                    <p>Your email will be publicly available on your profile so that others can chat with you.</p>
+                    <p>Your address will be used to show your location on Google Maps relative to hospitals.</p>
+                    <p>Your medical details will be available to doctors and insurance providers to help them assess your condition. 
+                    Without these details, doctors will be unable to determine your needs in advance. </p>
+                    <br/>
+                    <br/>
                 </div>
             </div>
         );

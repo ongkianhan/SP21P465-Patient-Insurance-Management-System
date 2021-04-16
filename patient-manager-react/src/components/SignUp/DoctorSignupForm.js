@@ -368,6 +368,13 @@ class DoctorSignupForm extends Component {
                             </div>
                         </div>
                     </div>
+                    <br/>
+                    <br/>
+                    <p><b>Your Privacy</b></p>
+                    <p>Your email will be publicly available on your profile so that others can chat with you.</p>
+                    <p>Your hospital address will be publicly available to help patients find your hospital.</p>
+                    <br/>
+                    <br/>
                 </div>
             </div>
         );

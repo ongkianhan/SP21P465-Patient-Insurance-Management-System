@@ -16,11 +16,26 @@ class Header extends Component {
 
         const userIsAuthenticated = (
             <span>
-                <li className="nav-item">
-                    <Link to="/find-doctors" className="nav-link">
-                        Find Doctors
-                    </Link>
-                </li>
+                {
+                    /* Only patients should see the doctor finder */
+                    this.props.security.user.userType == "PAT" ? (
+                        <li className="nav-item">
+                            <Link to="/find-doctors" className="nav-link">
+                                Find Doctors
+                            </Link>
+                        </li>
+                    ) : /* Only insurers should see the patient finder */
+                    this.props.security.user.userType == "INS" ? (
+                        <li className="nav-item">
+                            <Link to="/find-patients" className="nav-link">
+                                Find Patients
+                            </Link>
+                        </li>
+                    ) : (
+                        <span />
+                    )
+                }
+
                 <li className="nav-item">
                     <Link to="/dashboard" className="nav-link">
                         Dashboard
@@ -36,7 +51,7 @@ class Header extends Component {
                         Profile
                     </Link>
                 </li>
-                
+
                 <li className="nav-item">
                     <Link className="nav-link" onClick={this.logout.bind(this)}>
                         Logout

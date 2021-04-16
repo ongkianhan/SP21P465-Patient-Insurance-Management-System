@@ -2,6 +2,7 @@ package com.p565sp21group1.patientmanagerspring.repositories;
 
 import com.p565sp21group1.patientmanagerspring.models.Doctor;
 import com.p565sp21group1.patientmanagerspring.models.InsurancePackage;
+import com.p565sp21group1.patientmanagerspring.models.Patient;
 import com.p565sp21group1.patientmanagerspring.models.User;
 import com.p565sp21group1.patientmanagerspring.payload.DoctorSearchRequest;
 import org.springframework.data.jpa.repository.Query;
@@ -40,4 +41,7 @@ public interface UserRepository extends CrudRepository<User, Long>
                 "OR :#{#filter.specialization} = d.specialization" +
             ")")
     Iterable<Doctor> getDoctorsByFilter(DoctorSearchRequest filter);
+
+    @Query("SELECT p FROM Patient p")
+    Iterable<Patient> getAllPatients();
 }

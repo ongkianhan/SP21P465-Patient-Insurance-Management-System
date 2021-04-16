@@ -8,19 +8,21 @@ import classnames from "classnames";
 import SpecializationDropdown from "./SpecializationDropdown";
 
 var noDoctorsMessage = null;
-
-//Filter options
-var keywords = "";
-var specialization = "";
-var supportsCovidCare = false;
-const NO_SPECIALIZATION_OPTION = "No preference";
 const NO_DOCTORS_MESSAGE = (
     <div className="alert alert-info text-center" style={{width: "100%"}}>
         It looks like no doctors could be found...
     </div>
 );
 
-class DoctorSearch extends Component {
+
+//Filter options
+var keywords = "";
+var specialization = "";
+var supportsCovidCare = false;
+const NO_SPECIALIZATION_OPTION = "No preference";
+
+class DoctorSearch extends Component 
+{
     constructor()
     {
         super();
