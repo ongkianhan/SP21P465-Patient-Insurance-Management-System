@@ -100,6 +100,8 @@ class PatientProfileEditor extends Component {
             height,
             weight,
         });
+
+        console.log(this.state.smoking)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -434,6 +436,7 @@ class PatientProfileEditor extends Component {
                                                         onChange={this.checkBoxChange.bind(
                                                             this
                                                         )}
+                                                        checked={this.state.smoking}
                                                         name="smoking"
                                                         id="smoking"
                                                     ></input>
@@ -452,6 +455,7 @@ class PatientProfileEditor extends Component {
                                                         onChange={this.checkBoxChange.bind(
                                                             this
                                                         )}
+                                                        checked={this.state.drinking}
                                                         name="drinking"
                                                         id="drinking"
                                                     ></input>
