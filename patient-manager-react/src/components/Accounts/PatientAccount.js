@@ -7,7 +7,7 @@ import { getCurrentUser } from "../../actions/userActions";
 import defaultProfileIcon from "../../static/defaultProfileIcon.png";
 import { Link } from "react-router-dom";
 import { DOC, PAT, INS } from "../../actions/userRoles";
-import { getInsurancePackagesByInsurerId } from  "../../actions/packageActions";
+import { getInsurancePackagesByInsurerId, recommendInsurancePackageToPatient } from  "../../actions/insurancePackageActions";
 import InsurancePackageDrawerCard from "../Insurance/InsurancePackageDrawerCard";
 
 
@@ -17,7 +17,10 @@ class PatientAccount extends Component
         super();
         this.state = {
             drawerDisplayStyle: "none",
+            recommendationResultMessage: <span/>
         }
+        this.makeInsuranceRecommendation = this.makeInsuranceRecommendation.bind(this);
+        this.setRecommendationResultMessage = this.setRecommendationResultMessage.bind(this);
     }
 
     async componentDidMount()
@@ -46,6 +49,27 @@ class PatientAccount extends Component
             this.hide();
         }
     }
+
+    setRecommendationResultMessage(messageText)
+    {
+        this.setState({recommendationResultMessage:
+            <span>{messageText}</span>
+        })
+    }
+
+
+    /**
+     * As an insurer, recommend an insurance package to a patient
+     */
+    async makeInsuranceRecommendation(packageId)
+    {
+        //Send the recommendation
+        var resultMessage = 
+            await this.props.recommendInsurancePackageToPatient(packageId, this.props.currentUser.currentUser.email);
+        //Display a success message or error
+        this.setRecommendationResultMessage(resultMessage);
+    }
+
 
     render() {
         const { currentUser } = this.props.currentUser;
@@ -95,6 +119,7 @@ class PatientAccount extends Component
                 </div>
                 <div className="row">
                     <div className="col-9 text-left">
+                        <br/>
                         <h5>
                             Medical History: {currentUser.medicalHistory}
                         </h5>
@@ -114,13 +139,18 @@ class PatientAccount extends Component
                 {/* If the user is a insurance provider, show the insurer's insurance packages */}
                 {this.props.security.user.userType == INS ? (
                     <div className="insurance-package-drawer" style={{display: this.state.drawerDisplayStyle}}>
-                        <button onClick={this.hide.bind(this)} className="col my-1 button-minor card-button light-gray-bg" style={{color: "black", maxHeight: "5vh"}}>
+                        <button onClick={this.hide.bind(this)} className="col my-1 button-minor card-button light-gray-bg" style={{color: "black", height: "calc(5vh+16px)"}}>
                             Hide Drawer
                         </button>
+
+                        {this.state.recommendationResultMessage}
+
+                        {/* Insurance packages go here */}
                         <div style={{overflowY: "auto", maxHeight: "86vh"}}>
-                        {allPackages.map(insurancePackage => 
-                            <InsurancePackageDrawerCard key={insurancePackage.insurancePackageId} insurancePackage={insurancePackage} />
-                        )}
+                            {allPackages.map(insurancePackage => 
+                                <InsurancePackageDrawerCard makeInsuranceRecommendation={this.makeInsuranceRecommendation}
+                                key={insurancePackage.insurancePackageId} insurancePackage={insurancePackage} />
+                            )}
                         </div>
                     </div>
                 ) : (
@@ -134,6 +164,7 @@ class PatientAccount extends Component
 PatientAccount.propTypes = {
     insurancePackage: PropTypes.object.isRequired,
     getInsurancePackagesByInsurerId: PropTypes.func.isRequired,
+    recommendInsurancePackageToPatient: PropTypes.func.isRequired,
     getCurrentUser: PropTypes.func.isRequired,
     security: PropTypes.object.isRequired,
     validateUser: PropTypes.func.isRequired,
@@ -148,6 +179,6 @@ const mapStateToProps = (state) => ({
     errors: state.errors,
 });
 
-export default connect(mapStateToProps, { getCurrentUser, validateUser, getInsurancePackagesByInsurerId })(
+export default connect(mapStateToProps, { getCurrentUser, validateUser, getInsurancePackagesByInsurerId, recommendInsurancePackageToPatient })(
     PatientAccount
 );

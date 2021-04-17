@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
-import { createInsurancePackage } from "../../actions/packageActions";
+import { createInsurancePackage } from "../../actions/insurancePackageActions";
 import { Link } from "react-router-dom";
 import { validateInsurancePackage, putDefaultValuesInInsurancePackage } from "../../validation/packageValidator";
 

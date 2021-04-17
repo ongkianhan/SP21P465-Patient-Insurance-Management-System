@@ -5,6 +5,11 @@ import { connect } from "react-redux";
 
 class InsurancePackageDrawerCard extends Component 
 {
+    onClickRecommendButton() {
+        //Pass package ID to parent component
+        this.props.makeInsuranceRecommendation(this.props.insurancePackage.insurancePackageId);
+    }
+
     render() {
         const insurancePackage = this.props.insurancePackage;
         return (
@@ -44,11 +49,9 @@ class InsurancePackageDrawerCard extends Component
 
                     <div className="row align-items-center">
                         <div className="col">
-                            <Link to={`/account/${insurancePackage.userId}`}>
-                                <button className="col my-1 button-secondary card-button">
-                                    Recommend Insurance
-                                </button>
-                            </Link>
+                            <button className="col my-1 button-secondary card-button" onClick={this.onClickRecommendButton.bind(this)}>
+                                Recommend Insurance
+                            </button>
                         </div>
                     </div>
                 </div>
