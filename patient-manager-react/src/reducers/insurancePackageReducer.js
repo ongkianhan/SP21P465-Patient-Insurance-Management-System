@@ -7,7 +7,7 @@ import {GET_MANY_PACKAGES, GET_ONE_PACKAGE} from "../actions/types";
 
 const initialState = {
     allPackages: [],
-    package: {}
+    insurancePackage: {}
 }
 
 
@@ -23,7 +23,7 @@ export default function(state = initialState, action)
         case GET_ONE_PACKAGE:
             return {
                 ...state,
-                package: action.payload
+                insurancePackage: action.payload
             }
         default:
             return state;
