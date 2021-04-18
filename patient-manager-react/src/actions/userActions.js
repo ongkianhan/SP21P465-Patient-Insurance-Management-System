@@ -67,3 +67,18 @@ export const getAllSpecializations = () => async dispatch => {
         payload: res.data
     });
 }
+
+
+export const giveUserOnlineStatus = (userId) => async dispatch => 
+{
+    //Make the target user online
+    if (userId != undefined)
+        await axios.post(`/api/account/give-user-online-status/${userId}`);
+    console.log("online!");
+};
+export const giveUserOfflineStatus = (userId) => async dispatch => 
+{
+    //Make the target user offline
+    if (userId != undefined)
+        await axios.post(`/api/account/give-user-offline-status/${userId}`);
+};

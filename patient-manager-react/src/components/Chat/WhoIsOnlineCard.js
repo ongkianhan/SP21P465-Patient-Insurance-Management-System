@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
+import onlineIcon from "../../static/onlineIcon.png";
+import offlineIcon from "../../static/offlineIcon.png";
 
 var numberUnread = 0;
 
-export default class ConversationCard extends Component {
+export default class WhoIsOnlineCard extends Component {
     constructor()
     {
         super();
@@ -65,17 +67,15 @@ export default class ConversationCard extends Component {
         }
 
         return (
-            <div className="row conv-card-container" onClick={selectConversation.bind(this)}>
-                <div className="col-2 conv-unread-indicator">
+            <div className="row online-card-container" onClick={selectConversation.bind(this)}>
+                <div className="col-2 online-status-icon-container">
                     {this.state.numberUnread > 0 ? (
-                        <span className="conv-has-unread conv-number-unread">
-                            {this.state.numberUnread}
-                        </span>
+                        <img src={onlineIcon} className="online-status-icon"/>
                     ) : (
-                        <span className="conv-is-read conv-number-unread" />
+                        <img src={offlineIcon} className="online-status-icon"/>
                     )}
                 </div>                
-                <div className="col-10 conv-title">
+                <div className="col-10 online-title">
                     {/*List the first/last names of the users in this group chat, excluding the current user*/}
                     {this.state.title}
                 </div>

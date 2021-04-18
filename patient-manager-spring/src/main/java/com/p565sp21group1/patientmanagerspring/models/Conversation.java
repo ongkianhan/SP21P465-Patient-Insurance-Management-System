@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Entity
 @Table(name="Conversation")
@@ -31,8 +28,25 @@ public class Conversation
     @Transient
     private int numberUnread = 0;
 
+    private Date lastUpdatedAt;
+
+    @Transient
+    private List<String> usersOnline = new ArrayList<>();
+
+
 
     public Conversation() {
+    }
+
+    @PrePersist
+    public void onCreate()
+    {
+        lastUpdatedAt = new Date();
+    }
+    @PreUpdate
+    public void onUpdate()
+    {
+        lastUpdatedAt = new Date();
     }
 
     public Long getConversationId() {
@@ -82,6 +96,21 @@ public class Conversation
         this.numberUnread = numberUnread;
     }
 
+    public Date getLastUpdatedAt() {
+        return lastUpdatedAt;
+    }
+
+    public void setLastUpdatedAt(Date lastUpdatedAt) {
+        this.lastUpdatedAt = lastUpdatedAt;
+    }
+
+    public List<String> getUsersOnline() {
+        return usersOnline;
+    }
+
+    public void setUsersOnline(List<String> usersOnline) {
+        this.usersOnline = usersOnline;
+    }
 
     public void updateNamesInvolved(long userIdToExclude) {
         //Add a list of the first+last names of each user involved
@@ -91,6 +120,18 @@ public class Conversation
         {
             if (user.getUserId() != userIdToExclude) //do not include the user accessing the object
                 this.namesInvolved.add(user.getFirstName() + " " + user.getLastName());
+        }
+    }
+
+    public void updateUsersOnline(long userIdToExclude) {
+        //Form a list of users with the online status.
+        //Put their first/last names into a list.
+        this.usersOnline = new ArrayList<String>();
+        for (User user : usersInvolved)
+        {
+            //Do not include the user accessing the object
+            if (user.isOnline() /*&& user.getUserId() != userIdToExclude*/)
+                this.usersOnline.add(user.getFirstName() + " " + user.getLastName());
         }
     }
 }

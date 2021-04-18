@@ -44,6 +44,8 @@ public abstract class User implements UserDetails
 
     private String userType; //DOC, INS, or PAT
 
+    private boolean isOnline;
+
 
     public Long getUserId() {
         return userId;
@@ -107,6 +109,14 @@ public abstract class User implements UserDetails
 
     public void setNumberOfUnreadMessages(int numberOfUnreadMessages) {
         this.numberOfUnreadMessages = numberOfUnreadMessages;
+    }
+
+    public boolean isOnline() {
+        return isOnline;
+    }
+
+    public void setOnline(boolean online) {
+        isOnline = online;
     }
 
     //

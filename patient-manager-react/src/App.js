@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { PropTypes } from "prop-types";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
@@ -28,6 +30,9 @@ import AccountContainer from "./components/Accounts/AccountContainer"
 import MapPage from "./components/GoogleMaps/MapPage";
 import Form from "./components/Questionnaire/Form"
 import InsurancePackageCreator from "./components/Insurance/InsurancePackageCreator";
+
+//Methods
+import {giveUserOnlineStatus, giveUserOfflineStatus} from "./actions/userActions";
 
 
 class App extends Component 

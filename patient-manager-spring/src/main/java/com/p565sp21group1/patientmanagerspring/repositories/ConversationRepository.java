@@ -14,6 +14,7 @@ public interface ConversationRepository extends CrudRepository<Conversation, Lon
 {
     //Credit to https://stackoverflow.com/a/12110211 for the sub-query
     @Query("SELECT c from Conversation c WHERE EXISTS " +
-            "(SELECT u from Conversation ce LEFT JOIN ce.usersInvolved u WHERE c = ce AND u.id = :userId)")
+            "(SELECT u from Conversation ce LEFT JOIN ce.usersInvolved u WHERE c = ce AND u.id = :userId) " +
+            "ORDER BY c.lastUpdatedAt DESC")
     List<Conversation> getConversationsByUserId(long userId);
 }

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -34,6 +33,7 @@ public class Message
     //The userIds of the users who still need to read this message
     @ElementCollection
     private List<Long> unreadByUserIds;
+
 
 
     public Message() {
@@ -86,7 +86,6 @@ public class Message
     public void setUnreadByUserIds(List<Long> unreadByUserIds) {
         this.unreadByUserIds = unreadByUserIds;
     }
-
 
 
     public void markAsRead(long userIdOfReader)

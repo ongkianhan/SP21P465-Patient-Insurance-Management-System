@@ -5,28 +5,49 @@ import classnames from "classnames";
 import {getConversationById, getConversationsByUserId} from "../../actions/chatActions";
 import { getCurrentUser } from "../../actions/userActions";
 import ConversationList from './ConversationList';
+import WhoIsOnlineList from './WhoIsOnlineList';
 import MessageViewport from './MessageViewport';
 import AddUserPopup from "./AddUserPopup";
+import {giveUserOnlineStatus, giveUserOfflineStatus} from "../../actions/userActions";
 
 var conversationList;
 
 class ChatContainer extends Component {
+
+    invervalId;
+
     constructor()
     {
         super();
         this.state = {
             conversationId: -1,
-            popup: null
+            popup: null,
         }
         this.updateConversationList = this.updateConversationList.bind(this);
     }
 
     async componentDidMount()
     {
+        //Make this user online
+        this.props.giveUserOnlineStatus(this.props.security.user.userId);
+
         //Make a request to get all the user's info from the database
         //so that the current user's name can align their own messages to the right in MessageViewport
         await this.props.getCurrentUser(this.props.security.user.userId, this.props.history);
+        
+        //Continuously update the conversations
+        //this.intervalId = setInterval(this.updateConversationList.bind(this), 8000);
     }
+
+    componentWillUnmount() 
+    {
+        //Stop updating the conversations
+        clearInterval(this.intervalId);
+        
+        //Make this user offline
+        this.props.giveUserOfflineStatus(this.props.security.user.userId);
+    }
+
 
     selectConversation = (id) => {
         //Pull the messages from the database
@@ -35,11 +56,11 @@ class ChatContainer extends Component {
         this.setState({ conversationId: id });
     }
 
-    updateConversationList() 
+    async updateConversationList() 
     {
         //Retrieve this user's list of conversations
         const userId = this.props.security.user.userId;
-        this.props.getConversationsByUserId(userId);
+        await this.props.getConversationsByUserId(userId);
     }
 
     async showInviteNewUserPopup() {
@@ -60,9 +81,15 @@ class ChatContainer extends Component {
                     </div>
                     <div className="col-6">
                         <div className="row justify-content-end">
-                            <button onClick={this.showInviteNewUserPopup.bind(this)} className="card-button button-minor">
-                                Invite another person
-                            </button>
+                            {/* Display the invite new user button if a conversation is selected */
+                                this.state.conversationId > 0 ? (
+                                <button onClick={this.showInviteNewUserPopup.bind(this)} className="card-button button-minor">
+                                    Invite another person
+                                </button>
+                            ) : (
+                                <span/>
+                            )}
+                            
                         </div>
                     </div>
                 </div>    
@@ -71,10 +98,11 @@ class ChatContainer extends Component {
 
                 <div className="row chat-table-container">
 
-                    <ConversationList conversation={this.props.conversation} getConversationsByUserId={this.props.getConversationsByUserId} updateConversationList={this.updateConversationList} selectConversation={this.selectConversation} />
+                    <ConversationList key={this.props.conversation.namesInvolved} conversation={this.props.conversation} getConversationsByUserId={this.props.getConversationsByUserId} updateConversationList={this.updateConversationList} selectConversation={this.selectConversation} />
 
                     <MessageViewport conversationId={this.state.conversationId} currentUser={this.props.currentUser} />
-
+                    
+                    <WhoIsOnlineList key={this.props.conversation.namesInvolved} conversation={this.props.conversation} getConversationsByUserId={this.props.getConversationsByUserId} updateConversationList={this.updateConversationList} selectConversation={this.selectConversation} />
                 </div>
 
                 {this.state.popup}
@@ -90,6 +118,8 @@ ChatContainer.propTypes = {
     getConversationsByUserId: PropTypes.func.isRequired,
     getCurrentUser: PropTypes.func.isRequired,
     currentUser: PropTypes.object.isRequired,
+    giveUserOnlineStatus: PropTypes.object.isRequired,
+    giveUserOfflineStatus: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired,
 } 
 
@@ -99,4 +129,4 @@ const mapStateToProps = state => ({
     security: state.security,
 })
 
-export default connect(mapStateToProps, {getConversationById, getConversationsByUserId, getCurrentUser}) (ChatContainer);
+export default connect(mapStateToProps, {getConversationById, getConversationsByUserId, getCurrentUser, giveUserOnlineStatus, giveUserOfflineStatus}) (ChatContainer);

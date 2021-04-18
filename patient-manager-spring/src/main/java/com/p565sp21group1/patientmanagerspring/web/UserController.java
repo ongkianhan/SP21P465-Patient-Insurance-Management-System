@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.security.Principal;
+
 import static com.p565sp21group1.patientmanagerspring.security.SecurityConstants.TOKEN_PREFIX;
 
 @RestController
@@ -153,5 +155,25 @@ public class UserController
         {
             throw new InvalidLoginException("Invalid credentials");
         }
+    }
+
+    @PostMapping("/give-user-online-status/{userId}")
+    public ResponseEntity<?> giveUserOnlineStatus(@PathVariable String userId)
+    {
+        //Parse the IDs from the URL
+        long userIdLong = ControllerUtility.parseUserId(userId);
+        //Adjust the user's online status boolean
+        userService.updateUserOnlineStatus(userIdLong, true);
+        return new ResponseEntity<String>("User ID "+userId+" is now online", HttpStatus.OK);
+    }
+
+    @PostMapping("/give-user-offline-status/{userId}")
+    public ResponseEntity<?> giveUserOfflineStatus(@PathVariable String userId)
+    {
+        //Parse the IDs from the URL
+        long userIdLong = ControllerUtility.parseUserId(userId);
+        //Adjust the user's online status boolean
+        userService.updateUserOnlineStatus(userIdLong, false);
+        return new ResponseEntity<String>("User ID "+userId+" is now offline", HttpStatus.OK);
     }
 }

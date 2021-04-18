@@ -86,4 +86,12 @@ public class UserService
     {
         return userRepository.getAllPatients();
     }
+
+    public void updateUserOnlineStatus(long userId, boolean isOnline)
+    {
+        //Make the user online or offline, then save that to the database
+        User user = userRepository.findById(userId).get();
+        user.setOnline(isOnline);
+        userRepository.save(user);
+    }
 }

@@ -197,7 +197,7 @@ th {
     font-weight: bold;
 }
 
-/*///////////////// SINGLE-USE ELEMENTS ///////////////////////*/
+/*///////////////// LANDING & NAV BAR ELEMENTS ///////////////////////*/
 
 .button-landing-page {
     width: 50% !important;
@@ -220,7 +220,6 @@ th {
     height: 100%;
 }
 
-/*///////////////// NAVBAR ELEMENTS ///////////////////////*/
 /* Styles are based on https://codepen.io/skwbr/pen/QjaBLV */
 .nav-horizontal {
     background-color: #00aa95;
@@ -473,8 +472,22 @@ th {
     padding-right: 0px !important;
     overflow-y:auto; /*Scrollable*/
 }
+.chat-online-container {
+    margin: 0;
+    min-height: 30vh;
+    max-height: 60vh;
+    min-width: 20%;
+    max-width: 20%;
+    background-color: #dadada;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+.chat-online-sub-container {
+    max-height: 40vh;
+    overflow-y:auto; /*Scrollable*/
+}
 .chat-viewport-container {
-    height: 60vh;
+    max-height: 60vh;
     margin: 0px;
     background-color: #f2f2f2;
 }
@@ -552,6 +565,7 @@ th {
     border: 1px solid #bbaaaaaa;
     background-color: #dedede;
     cursor: pointer;
+    max-width: 106%
 }
 .conv-unread-indicator {
     height: 1em;
@@ -581,7 +595,7 @@ th {
     background-color: white;
 }
 .conv-title {
-    font-size: 16px;
+    font-size: 18px;
     font-family: "Montserrat";
     font-weight: bold;
     padding: 0.25em;
@@ -595,7 +609,7 @@ th {
     cursor: pointer;
 }
 
-/*///////////////// CONVERSATION POUP ELEMENTS ///////////////////////*/
+/*///////////////// CONVERSATION POPUP ELEMENTS ///////////////////////*/
 .button-popup-confirmation {
     padding: 6px 18px 6px 18px;
     margin-top: 12px;
@@ -618,6 +632,24 @@ th {
     font-weight: thin;
     padding-right: 30px;
     cursor: pointer;
+}
+
+/*///////////////// ONLINE/OFFLINE ELEMENTS ///////////////////////*/
+.online-card-container {
+    max-width: 100%;
+    background-color: #f2f2f2;
+}
+.online-status-icon-container {
+}
+.online-title {
+    text-align: left;
+    overflow-x: hidden;
+}
+.online-status-icon {
+    min-height: 16px;
+    min-width: 16px;
+    max-height: 4%;
+    max-width: 4%;
 }
 
 /*///////////////// DOCTOR/PACKAGE SEARCH ELEMENTS ///////////////////////*/

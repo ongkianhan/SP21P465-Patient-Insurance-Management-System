@@ -36,7 +36,7 @@ class ConversationList extends Component {
             <div className="col-3 chat-conversation-container">
                 {/* Conversations */}
                 {allConversations.map(conversation => (
-                    <ConversationCard key={conversation.conversationId} conversation={conversation} selectConversation={this.props.selectConversation} />
+                    <ConversationCard key={conversation.namesInvolved} conversation={conversation} selectConversation={this.props.selectConversation} />
                 ))}
 
                 {/*New Conversation Button*/}
@@ -55,7 +55,6 @@ ConversationList.propTypes = {
     security: PropTypes.object.isRequired,
 };
 
-//Add the actual doctor state/data to the list of conversations on the page
 const mapStateToProps = (state) => ({
     security: state.security
 });
