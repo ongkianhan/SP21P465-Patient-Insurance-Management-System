@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import { getAppointmentsByPatientId } from "../../actions/appointmentActions";
 import PatientAppointmentCard from "./PatientAppointmentCard";
+import { getInsurancePackagesByPatientId } from "../../actions/insurancePackageActions";
+import InsurancePackageDashboardCardForPatient from "./InsurancePackageDashboardCardForPatient";
 
 var noAppointmentsMessage
 var futureAppointments = false
@@ -13,6 +15,7 @@ class Dashboard extends Component
     async componentDidMount()
     {
         await this.props.getAppointmentsByPatientId(this.props.security.user.userId)
+        await this.props.getInsurancePackagesByPatientId(this.props.security.user.userId)
     }
 
     constructor()
@@ -21,6 +24,7 @@ class Dashboard extends Component
     }
 
     render() {
+        const { allPackages } = this.props.insurancePackage;
 
         if (this.props.appointment.allAppointments.length===0)
         {
@@ -41,46 +45,57 @@ class Dashboard extends Component
         
 
         return (
-            <div className="container row col-12 align-center">
+            <div className="container-fluid">
+                <div className="row">
+                <div className="col-6 align-center">
 
-                {allAppointments.map(appointment => (
-                    
-                    (new Date(appointment.date).getTime()) >= (new Date()).getTime() ? (
-                        futureAppointments = true) :
-                        (pastAppointments = true)
-                    
-                ))}
-                {futureAppointments ? (
-                    <h3 className="pl-5 pb-3 font-weight-bold text-center col-12">Your upcoming appointments</h3>) :
-                    (<span/>)
-                }
-            
-                
-                {noAppointmentsMessage}
-
-                {allAppointments.map(appointment => (
-                    
-                    (new Date(appointment.date).getTime()) >= (new Date()).getTime() ? (
+                    {allAppointments.map(appointment => (
                         
-                            <PatientAppointmentCard key={appointment.appointmentId} appointment={appointment} review = {false}/>
-                            ) :
+                        (new Date(appointment.date).getTime()) >= (new Date()).getTime() ? (
+                            futureAppointments = true) :
+                            (pastAppointments = true)
+                        
+                    ))}
+                    {futureAppointments ? (
+                        <h3 className="pl-5 pb-3 font-weight-bold text-center col-12">Your upcoming appointments</h3>) :
                         (<span/>)
+                    }
+                
                     
-                ))}
+                    {noAppointmentsMessage}
 
-                {pastAppointments ? (
-                    <h3 className="pl-5 pb-3 pt-4 font-weight-bold text-center col-12">Your past appointments</h3>) :
-                    (<span/>)
-                }
+                    {allAppointments.map(appointment => (
+                        
+                        (new Date(appointment.date).getTime()) >= (new Date()).getTime() ? (
+                            
+                                <PatientAppointmentCard key={appointment.appointmentId} appointment={appointment} review = {false}/>
+                                ) :
+                            (<span/>)
+                        
+                    ))}
 
-
-                {allAppointments.map(appointment => (
-                    
-                    (new Date(appointment.date).getTime()) <= (new Date()).getTime() ? (
-                        <PatientAppointmentCard key={appointment.appointmentId} appointment={appointment} review={true}/>) :
+                    {pastAppointments ? (
+                        <h3 className="pl-5 pb-3 pt-4 font-weight-bold text-center col-12">Your past appointments</h3>) :
                         (<span/>)
-                    
-                ))}
+                    }
+
+
+                    {allAppointments.map(appointment => (
+                        
+                        (new Date(appointment.date).getTime()) <= (new Date()).getTime() ? (
+                            <PatientAppointmentCard key={appointment.appointmentId} appointment={appointment} review={true}/>) :
+                            (<span/>)
+                        
+                    ))}
+                    </div>
+                    <div classname="col-12 align-center">
+                        <h3 className="pl-5 pb-3 font-weight-bold text-center col-12">Your Recommended Insurance Packages</h3>
+                        {allPackages.map(insurancePackage => 
+                                <InsurancePackageDashboardCardForPatient makeInsuranceRecommendation={this.makeInsuranceRecommendation}
+                                key={insurancePackage.insurancePackageId} insurancePackage={insurancePackage} />
+                            )}
+                    </div>
+                </div>
                 
             </div>
         )
@@ -91,11 +106,13 @@ Dashboard.propTypes = {
     getAppointmentsByPatientId: PropTypes.func.isRequired,
     appointment: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired,
+    insurancePackage: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
+    insurancePackage: state.insurancePackage,
     appointment: state.appointment,
     security: state.security,
 });
 
-export default connect(mapStateToProps, {getAppointmentsByPatientId})(Dashboard);
+export default connect(mapStateToProps, {getAppointmentsByPatientId, getInsurancePackagesByPatientId})(Dashboard);

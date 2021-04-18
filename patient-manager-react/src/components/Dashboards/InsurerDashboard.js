@@ -23,7 +23,6 @@ class Dashboard extends Component
     render() {
 
         const { allPackages } = this.props.insurancePackage;
-        console.log(allPackages)
         return (
             <div>
                 <h1>Welcome to the Insurer Dashboard</h1>
