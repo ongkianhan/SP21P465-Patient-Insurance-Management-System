@@ -25,6 +25,10 @@ export const createConversation = (senderId, recipientEmail) => async dispatch =
 };
 
 export const getConversationsByUserId = (userId) => async dispatch => {
+    //Validate the ID
+    if (userId < 0 || userId == undefined) {
+        return;
+    }
     //Get every conversation this user is involved in
     const res = await axios.get(`/api/conversations/get-by-user/${userId}`);
     dispatch ({
@@ -34,6 +38,10 @@ export const getConversationsByUserId = (userId) => async dispatch => {
 }
 
 export const getConversationById = (conversationId, viewerId) => async dispatch => {
+    //Validate the ID
+    if (conversationId < 0 || conversationId == undefined) {
+        return;
+    }
     //Retrieve the target conversation and clear its unread messages using the viewerId (i.e. userId)
     const res = await axios.get(`/api/conversations/view/${conversationId}/${viewerId}`);
     dispatch ({

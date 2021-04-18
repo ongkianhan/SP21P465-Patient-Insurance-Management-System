@@ -64,7 +64,7 @@ public class ConversationService
             //Add the first/last names of each user in the conversation to the object
             conv.updateNamesInvolved(userId);
             //Get the names of who is online
-            conv.updateUsersOnline(userId);
+            conv.updateUsersOnline();
         }
 
         //Also, update each conversation with the number of unread messages

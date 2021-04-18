@@ -114,7 +114,7 @@ class InsurancePackageCreator extends Component {
                                     <table>
                                         {/*Row 1*/}
                                         <tr>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-left-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -139,7 +139,7 @@ class InsurancePackageCreator extends Component {
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-right-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -167,7 +167,7 @@ class InsurancePackageCreator extends Component {
                                         </tr>
                                         {/*Row 2*/}
                                         <tr>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-left-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -192,7 +192,7 @@ class InsurancePackageCreator extends Component {
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-right-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -223,7 +223,7 @@ class InsurancePackageCreator extends Component {
 
                                         {/*Row 3*/}
                                         <tr>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-left-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -248,7 +248,7 @@ class InsurancePackageCreator extends Component {
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-right-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -279,7 +279,6 @@ class InsurancePackageCreator extends Component {
                                     {/*Row 4*/}
                                     <table>
                                         <td
-                                            className="td-textbox-holder"
                                             style={{ width: "100%" }}
                                         >
                                             <div className="form-group">

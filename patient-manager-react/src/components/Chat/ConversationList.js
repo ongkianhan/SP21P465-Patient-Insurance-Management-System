@@ -36,7 +36,13 @@ class ConversationList extends Component {
             <div className="col-3 chat-conversation-container">
                 {/* Conversations */}
                 {allConversations.map(conversation => (
-                    <ConversationCard key={conversation.namesInvolved} conversation={conversation} selectConversation={this.props.selectConversation} />
+                    conversation.conversationId != this.props.selectedConversationId ?
+                    (
+                        <ConversationCard key={conversation.namesInvolved} conversation={conversation} selectConversation={this.props.selectConversation} />
+                    ) : (
+                        /* Show a different background color for the conv. card if it is selected */
+                        <ConversationCard isSelected={true} key={conversation.namesInvolved} conversation={conversation} selectConversation={this.props.selectConversation} />
+                    )
                 ))}
 
                 {/*New Conversation Button*/}

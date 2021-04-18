@@ -39,6 +39,19 @@ public class Message
     public Message() {
     }
 
+    @PrePersist
+    public void onCreate()
+    {
+        //When posting a message, update the lastUpdatedAt
+        //date of the parent conversation
+        conversation.refreshLastUpdatedAt();
+    }
+    @PreUpdate
+    public void onUpdate()
+    {
+        conversation.refreshLastUpdatedAt();
+    }
+
     public Long getMessageId() {
         return messageId;
     }

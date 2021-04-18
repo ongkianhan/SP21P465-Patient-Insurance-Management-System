@@ -2,7 +2,10 @@ import React, { Component } from 'react'
 
 var numberUnread = 0;
 
-export default class ConversationCard extends Component {
+export default class ConversationCard extends Component 
+{    
+    backgroundColor;
+
     constructor()
     {
         super();
@@ -64,8 +67,14 @@ export default class ConversationCard extends Component {
             this.setState({numberUnread: this.props.conversation.numberUnread});
         }
 
+        //Use a different background color if the card is selected
+        if (this.props.isSelected) {
+            this.backgroundColor = "#efefef";
+        }
+        else this.backgroundColor = "#dedede";
+
         return (
-            <div className="row conv-card-container" onClick={selectConversation.bind(this)}>
+            <div className="row conv-card-container" style={{backgroundColor: this.backgroundColor}} onClick={selectConversation.bind(this)}>
                 <div className="col-2 conv-unread-indicator">
                     {this.state.numberUnread > 0 ? (
                         <span className="conv-has-unread conv-number-unread">
