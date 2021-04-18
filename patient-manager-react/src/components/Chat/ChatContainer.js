@@ -22,8 +22,10 @@ class ChatContainer extends Component {
         this.state = {
             conversationId: -1,
             popup: null,
+            shownComponent: <span/>
         }
         this.updateConversationList = this.updateConversationList.bind(this);
+        this.hideWhoIsOnlineList = this.hideWhoIsOnlineList.bind(this);
     }
 
     async componentDidMount()
@@ -36,7 +38,7 @@ class ChatContainer extends Component {
         await this.props.getCurrentUser(this.props.security.user.userId, this.props.history);
         
         //Continuously update the conversations
-        //this.intervalId = setInterval(this.updateConversationList.bind(this), 8000);
+        this.intervalId = setInterval(this.updateConversationList.bind(this), 10000);
     }
 
     componentWillUnmount() 
@@ -54,6 +56,8 @@ class ChatContainer extends Component {
         this.props.getConversationById(id, this.props.security.user.userId);
         //Update MessageViewport
         this.setState({ conversationId: id });
+        this.setState({ shownComponent: 
+            <MessageViewport conversationId={id} currentUser={this.props.currentUser} /> });
     }
 
     async updateConversationList() 
@@ -70,6 +74,17 @@ class ChatContainer extends Component {
         this.setState({popup: <AddUserPopup conversationId={this.state.conversationId} updateConversationList={this.updateConversationList} />})
     }
 
+    showWhoIsOnlineList = () => {
+        //Update MessageViewport
+        this.setState({ shownComponent: 
+            <WhoIsOnlineList key={this.props.conversation.namesInvolved} conversationId={this.state.conversationId} conversation={this.props.conversation} hideWhoIsOnlineList={this.hideWhoIsOnlineList}  /> });
+    }
+
+    hideWhoIsOnlineList = () => {
+        //Replace the online list with MessageViewport
+        this.selectConversation(this.state.conversationId);
+    }
+
 
     render() {
         return (
@@ -83,9 +98,15 @@ class ChatContainer extends Component {
                         <div className="row justify-content-end">
                             {/* Display the invite new user button if a conversation is selected */
                                 this.state.conversationId > 0 ? (
-                                <button onClick={this.showInviteNewUserPopup.bind(this)} className="card-button button-minor">
-                                    Invite another person
-                                </button>
+                                <span>
+                                    <button onClick={this.showInviteNewUserPopup.bind(this)} className="card-button button-minor">
+                                        Invite another person
+                                    </button>
+                                    &nbsp;&nbsp;
+                                    <button onClick={this.showWhoIsOnlineList.bind(this)} className="card-button button-minor">
+                                        See Who's Online
+                                    </button>
+                                </span>
                             ) : (
                                 <span/>
                             )}
@@ -98,11 +119,9 @@ class ChatContainer extends Component {
 
                 <div className="row chat-table-container">
 
-                    <ConversationList key={this.props.conversation.namesInvolved} conversation={this.props.conversation} getConversationsByUserId={this.props.getConversationsByUserId} updateConversationList={this.updateConversationList} selectConversation={this.selectConversation} />
+                    <ConversationList key={this.props.conversation.namesInvolved}  selectedConversationId={this.state.conversationId} conversation={this.props.conversation} getConversationsByUserId={this.props.getConversationsByUserId} updateConversationList={this.updateConversationList} selectConversation={this.selectConversation} />
 
-                    <MessageViewport conversationId={this.state.conversationId} currentUser={this.props.currentUser} />
-                    
-                    <WhoIsOnlineList key={this.props.conversation.namesInvolved} conversation={this.props.conversation} getConversationsByUserId={this.props.getConversationsByUserId} updateConversationList={this.updateConversationList} selectConversation={this.selectConversation} />
+                    {this.state.shownComponent}
                 </div>
 
                 {this.state.popup}

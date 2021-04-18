@@ -41,10 +41,15 @@ public class Conversation
     @PrePersist
     public void onCreate()
     {
-        lastUpdatedAt = new Date();
+        refreshLastUpdatedAt();
     }
     @PreUpdate
     public void onUpdate()
+    {
+        refreshLastUpdatedAt();
+    }
+
+    public void refreshLastUpdatedAt()
     {
         lastUpdatedAt = new Date();
     }
@@ -123,14 +128,14 @@ public class Conversation
         }
     }
 
-    public void updateUsersOnline(long userIdToExclude) {
+    public void updateUsersOnline() {
         //Form a list of users with the online status.
         //Put their first/last names into a list.
         this.usersOnline = new ArrayList<String>();
         for (User user : usersInvolved)
         {
             //Do not include the user accessing the object
-            if (user.isOnline() /*&& user.getUserId() != userIdToExclude*/)
+            if (user.isOnline())
                 this.usersOnline.add(user.getFirstName() + " " + user.getLastName());
         }
     }

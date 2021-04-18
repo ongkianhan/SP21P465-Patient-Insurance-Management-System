@@ -650,6 +650,13 @@ th {
     min-width: 16px;
     max-height: 4%;
     max-width: 4%;
+
+}
+.online-list-close-button:hover,
+.online-list-close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 /*///////////////// DOCTOR/PACKAGE SEARCH ELEMENTS ///////////////////////*/
