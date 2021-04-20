@@ -74,19 +74,22 @@ export default class ConversationCard extends Component
         else this.backgroundColor = "#dedede";
 
         return (
-            <div className="row conv-card-container" style={{backgroundColor: this.backgroundColor}} onClick={selectConversation.bind(this)}>
-                <div className="col-2 conv-unread-indicator">
-                    {this.state.numberUnread > 0 ? (
-                        <span className="conv-has-unread conv-number-unread">
-                            {this.state.numberUnread}
-                        </span>
-                    ) : (
-                        <span className="conv-is-read conv-number-unread" />
-                    )}
-                </div>                
-                <div className="col-10 conv-title">
+            <div className="conv-card-container" style={{backgroundColor: this.backgroundColor}} onClick={selectConversation.bind(this)}>            
+                <div className="conv-title">
                     {/*List the first/last names of the users in this group chat, excluding the current user*/}
                     {this.state.title}
+                    
+                    {/*Show the number of unread messages if it is > 0*/}
+                    {this.state.numberUnread > 0 ? (
+                        <span>
+                            {"    "}
+                            <button id="unreadIndicator" >
+                                {this.state.numberUnread}{" "}unread
+                            </button>
+                        </span>
+                    ) : (
+                        <span/>
+                    )}
                 </div>
             </div>
         )

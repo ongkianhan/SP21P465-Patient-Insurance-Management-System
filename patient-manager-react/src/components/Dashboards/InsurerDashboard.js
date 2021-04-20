@@ -25,9 +25,7 @@ class Dashboard extends Component
         const { allPackages } = this.props.insurancePackage;
         return (
             <div>
-                <h1>Welcome to the Insurer Dashboard</h1>
-                <p>{/*this.props.security.user.userType*/}</p>
-                
+                <h1>Dashboard</h1>
                     <Link to="/create-insurance-package">
                         <button className="btn btn-primary mb-3">
                             Create Insurance
@@ -35,6 +33,7 @@ class Dashboard extends Component
                     </Link>
                 
                 <div>
+                <h2>Your Insurance Packages</h2>
                 {allPackages.map(insurancePackage => 
                                 <InsurancePackageDashboardCard makeInsuranceRecommendation={this.makeInsuranceRecommendation}
                                 key={insurancePackage.insurancePackageId} insurancePackage={insurancePackage} />

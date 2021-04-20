@@ -14,7 +14,9 @@ class WhoIsOnlineList extends Component {
         const { allConversations } = this.props.conversation;
         return (
             <div className="col-9 chat-online-container">
-                Users Online
+                <span style={{color: "#444444"}}>
+                    Users Online
+                </span>
                 <div className="chat-online-sub-container">
                     {/* Online & Offline users */}
                     {allConversations.map((conversation) =>
@@ -50,10 +52,10 @@ class WhoIsOnlineList extends Component {
                     style={{
                         color: "black",
                         textAlign: "center",
-                        fontSize: "30px",
+                        fontSize: "18px"
                     }}
                 >
-                    &times;
+                    Close{"   "}x
                 </span>
             </div>
         );

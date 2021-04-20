@@ -1,31 +1,33 @@
 {
   "files": {
-    "main.css": "/static/css/main.8676eff2.chunk.css",
-    "main.js": "/static/js/main.114b897a.chunk.js",
-    "main.js.map": "/static/js/main.114b897a.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.cd14efa5.js",
-    "runtime-main.js.map": "/static/js/runtime-main.cd14efa5.js.map",
+    "main.css": "/static/css/main.a0d4a762.chunk.css",
+    "main.js": "/static/js/main.f18fe3ae.chunk.js",
+    "main.js.map": "/static/js/main.f18fe3ae.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.562f015a.js",
+    "runtime-main.js.map": "/static/js/runtime-main.562f015a.js.map",
     "static/css/2.150d169a.chunk.css": "/static/css/2.150d169a.chunk.css",
-    "static/js/2.6c36c832.chunk.js": "/static/js/2.6c36c832.chunk.js",
-    "static/js/2.6c36c832.chunk.js.map": "/static/js/2.6c36c832.chunk.js.map",
-    "static/js/3.58e7cd28.chunk.js": "/static/js/3.58e7cd28.chunk.js",
-    "static/js/3.58e7cd28.chunk.js.map": "/static/js/3.58e7cd28.chunk.js.map",
+    "static/js/2.7a78c46a.chunk.js": "/static/js/2.7a78c46a.chunk.js",
+    "static/js/2.7a78c46a.chunk.js.map": "/static/js/2.7a78c46a.chunk.js.map",
+    "static/js/3.f7ca3a51.chunk.js": "/static/js/3.f7ca3a51.chunk.js",
+    "static/js/3.f7ca3a51.chunk.js.map": "/static/js/3.f7ca3a51.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.150d169a.chunk.css.map": "/static/css/2.150d169a.chunk.css.map",
-    "static/css/main.8676eff2.chunk.css.map": "/static/css/main.8676eff2.chunk.css.map",
-    "static/js/2.6c36c832.chunk.js.LICENSE.txt": "/static/js/2.6c36c832.chunk.js.LICENSE.txt",
+    "static/css/main.a0d4a762.chunk.css.map": "/static/css/main.a0d4a762.chunk.css.map",
+    "static/js/2.7a78c46a.chunk.js.LICENSE.txt": "/static/js/2.7a78c46a.chunk.js.LICENSE.txt",
     "static/media/defaultProfileIcon.f0d7bc03.png": "/static/media/defaultProfileIcon.f0d7bc03.png",
     "static/media/doctorSelectionIcon.86d5bca8.png": "/static/media/doctorSelectionIcon.86d5bca8.png",
+    "static/media/hospitalMapMarker.e91f0a4b.png": "/static/media/hospitalMapMarker.e91f0a4b.png",
+    "static/media/houseMapMarker.af2eaed7.png": "/static/media/houseMapMarker.af2eaed7.png",
     "static/media/insurerSelectionIcon.6ef5ff00.png": "/static/media/insurerSelectionIcon.6ef5ff00.png",
     "static/media/patientSelectionIcon.91aa5637.png": "/static/media/patientSelectionIcon.91aa5637.png",
     "static/media/vitaLogoColor.5767547f.png": "/static/media/vitaLogoColor.5767547f.png",
     "static/media/vitaLogoWhite.47bd42ff.png": "/static/media/vitaLogoWhite.47bd42ff.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.cd14efa5.js",
+    "static/js/runtime-main.562f015a.js",
     "static/css/2.150d169a.chunk.css",
-    "static/js/2.6c36c832.chunk.js",
-    "static/css/main.8676eff2.chunk.css",
-    "static/js/main.114b897a.chunk.js"
+    "static/js/2.7a78c46a.chunk.js",
+    "static/css/main.a0d4a762.chunk.css",
+    "static/js/main.f18fe3ae.chunk.js"
   ]
 }

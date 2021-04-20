@@ -16,11 +16,11 @@ class InsurancePackageDashboardCardForPatient extends Component
     }
 
     acceptRecommendation(e){
-        
+        this.props.acceptInsurancePackageRecommendation(this.props.insurancePackage.insurancePackageId);
     }
 
     declineRecommendation(e){
-
+        this.props.declineInsurancePackageRecommendation(this.props.insurancePackage.insurancePackageId);
     }
 
     render() {

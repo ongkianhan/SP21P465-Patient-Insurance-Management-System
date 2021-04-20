@@ -35,6 +35,7 @@ class DoctorCard extends Component
                                 View Profile
                             </button>
                         </Link>
+                        &#10004; &#10003; TODO: Add offers COVID-19 Care
                     </div>
                 </div>
             </div>

@@ -38,7 +38,7 @@ class ChatContainer extends Component {
         await this.props.getCurrentUser(this.props.security.user.userId, this.props.history);
         
         //Continuously update the conversations
-        this.intervalId = setInterval(this.updateConversationList.bind(this), 10000);
+        //this.intervalId = setInterval(this.updateConversationList.bind(this), 10000);
     }
 
     componentWillUnmount() 
