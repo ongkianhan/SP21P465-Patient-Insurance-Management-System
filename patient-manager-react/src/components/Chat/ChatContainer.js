@@ -30,7 +30,7 @@ class ChatContainer extends Component {
 
     async componentDidMount()
     {
-        //Make this user online
+        //Give this user the online status
         this.props.giveUserOnlineStatus(this.props.security.user.userId);
 
         //Make a request to get all the user's info from the database
@@ -39,15 +39,26 @@ class ChatContainer extends Component {
         
         //Continuously update the conversations
         //this.intervalId = setInterval(this.updateConversationList.bind(this), 10000);
+
+        //Add an event listener for closing the tab.
+        //This will make the user have the offline status.
+        window.addEventListener('beforeunload', (event) => {
+            //Delay closing of the tab
+            event.preventDefault();
+          
+            //End automatic updates to the conversations
+            clearInterval(this.intervalId);
+            //Make the current user offline
+            this.props.giveUserOfflineStatus(this.props.security.user.userId);
+            return undefined;
+        });
     }
 
     componentWillUnmount() 
     {
-        //Stop updating the conversations
+        //End automatic updates to the conversations
+        //when leaving the page
         clearInterval(this.intervalId);
-        
-        //Make this user offline
-        this.props.giveUserOfflineStatus(this.props.security.user.userId);
     }
 
 
