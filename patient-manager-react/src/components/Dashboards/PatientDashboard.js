@@ -5,6 +5,7 @@ import { getAppointmentsByPatientId } from "../../actions/appointmentActions";
 import PatientAppointmentCard from "./PatientAppointmentCard";
 import { getInsurancePackagesByPatientId, acceptInsurancePackageRecommendation, declineInsurancePackageRecommendation } from "../../actions/insurancePackageActions";
 import InsurancePackageDashboardCardForPatient from "./InsurancePackageDashboardCardForPatient";
+import InsuranceRecommendationDashboardCardForPatient from "./InsuranceRecommendationDashboardCardForPatient";
 
 var noAppointmentsMessage;
 var futureAppointments = false;
@@ -12,10 +13,12 @@ var pastAppointments = false;
 var recommendedPackagesMessage = false;
 var heldPackagesMessage = true;
 
-class Dashboard extends Component 
+class PatientDashboard extends Component 
 {
     constructor() {
         super();
+        this.acceptRecommendation = this.acceptRecommendation.bind(this);
+        this.declineRecommendation = this.declineRecommendation.bind(this);
     }
 
     async componentDidMount() {
@@ -27,10 +30,19 @@ class Dashboard extends Component
         );
     }
 
+    acceptRecommendation(insurancePackageId) {
+        this.props.acceptInsurancePackageRecommendation(insurancePackageId);
+    }
+
+    declineRecommendation(insurancePackageId) {
+        this.props.declineInsurancePackageRecommendation(insurancePackageId);
+    }
+
     render() {
         const { allPackages } = this.props.insurancePackage;
 
-        if (this.props.appointment.allAppointments.length === 0) {
+        if (this.props.appointment.allAppointments.length === 0) 
+        {
             noAppointmentsMessage = (
                 <div
                     className="container pl-5"
@@ -41,7 +53,9 @@ class Dashboard extends Component
                     </div>
                 </div>
             );
-        } else {
+        } 
+        else
+        {
             noAppointmentsMessage = <span />;
         }
 
@@ -92,13 +106,12 @@ class Dashboard extends Component
                             Recommended Insurance Packages
                         </h3>
                         {allPackages.map((insurancePackage) => (
-                            insurancePackage.recommendation == false ? (
-                            <InsurancePackageDashboardCardForPatient
-                                makeInsuranceRecommendation={
-                                    this.makeInsuranceRecommendation
-                                }
-                                key={insurancePackage.insurancePackageId}
+                            insurancePackage.recommendation == true ? (
+                            <InsuranceRecommendationDashboardCardForPatient
+                                key={insurancePackage.recommendation}
                                 insurancePackage={insurancePackage}
+                                acceptRecommendation={this.acceptRecommendation}
+                                declineRecommendation={this.declineRecommendation}
                             />) : ( <span/> )
                         ))}
 
@@ -107,15 +120,10 @@ class Dashboard extends Component
                             Your Insurance Packages
                         </h3>
                         {allPackages.map((insurancePackage) => (
-                            insurancePackage.recommendation == true ? (
+                            insurancePackage.recommendation == false ? (
                             <InsurancePackageDashboardCardForPatient
-                                makeInsuranceRecommendation={
-                                    this.makeInsuranceRecommendation
-                                }
                                 key={insurancePackage.insurancePackageId}
                                 insurancePackage={insurancePackage}
-                                acceptInsurancePackageRecommendation={acceptInsurancePackageRecommendation}
-                                declineInsurancePackageRecommendation={declineInsurancePackageRecommendation}
                             />) : ( <span/> )
                         ))}
 
@@ -151,7 +159,7 @@ class Dashboard extends Component
     }
 }
 
-Dashboard.propTypes = {
+PatientDashboard.propTypes = {
     getAppointmentsByPatientId: PropTypes.func.isRequired,
     appointment: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired,
@@ -171,4 +179,4 @@ export default connect(mapStateToProps, {
     getInsurancePackagesByPatientId,
     acceptInsurancePackageRecommendation,
     declineInsurancePackageRecommendation,
-})(Dashboard);
+})(PatientDashboard);

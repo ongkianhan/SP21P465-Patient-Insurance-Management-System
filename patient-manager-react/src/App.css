@@ -126,6 +126,10 @@ th {
     background-color: #c0c0c0 !important;
 }
 
+.blue-font {
+    color: #003388;
+}
+
 .bold {
     font-weight: bold;
 }

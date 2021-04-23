@@ -93,9 +93,10 @@ export const recommendInsurancePackageToPatient = (packageId, patientEmail, hist
 //As an patient, decline an insurance package recommendation
 export const declineInsurancePackageRecommendation = (packageId, history) => async dispatch => 
 {
+    console.log("Juju has declined your trade offer")
     try 
     {
-        await axios.post(`/api/insurance/decline-insurance-recommendation/package-${packageId}/`);
+        await axios.delete(`/api/insurance/decline-insurance-recommendation/package-${packageId}/`);
         dispatch(
         {
             type: GET_ERRORS,
@@ -116,9 +117,10 @@ export const declineInsurancePackageRecommendation = (packageId, history) => asy
 //As an patient, accept an insurance package recommendation
 export const acceptInsurancePackageRecommendation = (packageId, history) => async dispatch => 
 {
+    console.log("Accept this gift of healing!")
     try 
     {
-        await axios.post(`/api/insurance/accept-insurance-recommendation/package-${packageId}/`);
+        await axios.patch(`/api/insurance/accept-insurance-recommendation/package-${packageId}/`);
         dispatch(
         {
             type: GET_ERRORS,
