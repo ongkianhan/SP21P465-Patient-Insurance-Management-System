@@ -42,21 +42,26 @@ class Dashboard extends Component
        
         const {allAppointments} = this.props.appointment
         return (
-            <div className="container row col-12 align-center">
-                <h3 className="pl-5 pb-3 font-weight-bold text-center col-12">Your upcoming appointments</h3>
-                {/*this.props.security.user.userType*/}
-                
-                {noAppointmentsMessage}
+            <div className="container-fluid row">
+                <div className="col-9 align-center">
+                    <h3 className="pl-5 pb-3 font-weight-bold text-center col-12">Your upcoming appointments</h3>
+                    {/*this.props.security.user.userType*/}
+                    
+                    {noAppointmentsMessage}
 
-                {allAppointments.map(appointment => (
-                    <DoctorAppointmentCard key={appointment.appointmentId} appointment={appointment}/>
-                ))}
-                
-                {/*allAppointments.map(appointment => (<DoctorAppointmentCard key={appointment.id} appointment={appointment}/>))*/}
-
-
-                <div>
-                    <CovidArticles/>
+                    {allAppointments.map(appointment => (
+                        <DoctorAppointmentCard key={appointment.appointmentId} appointment={appointment}/>
+                    ))}
+                    
+                    {/*allAppointments.map(appointment => (<DoctorAppointmentCard key={appointment.id} appointment={appointment}/>))*/}
+                </div>
+                <div class="row col-3 text-left pr-5 container-fluid">
+                <h5 class="row">Recent CDC Articles</h5>
+                <div class ="row"><CovidArticles index={0}/></div>
+                <div class ="row"><CovidArticles index={1}/></div>
+                <div class ="row"><CovidArticles index={2}/></div>
+                <div class ="row"><CovidArticles index={3}/></div>
+                <div class ="row"><CovidArticles index={4}/></div>
                 </div>
             </div>
         )
