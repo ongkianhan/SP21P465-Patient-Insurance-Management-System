@@ -2,6 +2,7 @@ package com.p565sp21group1.patientmanagerspring.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.p565sp21group1.patientmanagerspring.exceptions.UserNotFoundException;
 
 import javax.persistence.*;
 import java.util.*;
@@ -70,11 +71,28 @@ public class Conversation
         this.usersInvolved = usersInvolved;
     }
 
-    public void addUserInvolved(User newUser) {
+    public void addUserInvolved(User newUser)
+    {
         if (usersInvolved == null) {
             usersInvolved = new ArrayList<>();
         }
+
+        //Add the new user as normal
         usersInvolved.add(newUser);
+    }
+
+    public void throwExceptionIfContainsTwoPatients()
+    {
+        int numberOfPatients = 0;
+        for (User u : usersInvolved)
+        {
+            if (u.getUserType().equals("PAT"))
+            {
+                numberOfPatients++;
+                if (numberOfPatients > 1)
+                    throw new UserNotFoundException("Patients may not chat with each other.");
+            }
+        }
     }
 
     public List<Message> getMessages() {

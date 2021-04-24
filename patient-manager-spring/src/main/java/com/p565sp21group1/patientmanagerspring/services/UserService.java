@@ -3,6 +3,7 @@ package com.p565sp21group1.patientmanagerspring.services;
 import com.p565sp21group1.patientmanagerspring.exceptions.UserNotFoundException;
 import com.p565sp21group1.patientmanagerspring.exceptions.EmailTakenException;
 import com.p565sp21group1.patientmanagerspring.models.Doctor;
+import com.p565sp21group1.patientmanagerspring.models.InsurancePackage;
 import com.p565sp21group1.patientmanagerspring.models.Patient;
 import com.p565sp21group1.patientmanagerspring.models.User;
 import com.p565sp21group1.patientmanagerspring.payload.DoctorSearchRequest;

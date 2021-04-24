@@ -20,6 +20,7 @@ public class InsurancePackageService
     @Autowired
     private UserRepository userRepository;
 
+
     public Iterable<InsurancePackage> getAllInsurancePackages()
     {
         return insurancePackageRepository.findAll();
@@ -45,13 +46,13 @@ public class InsurancePackageService
 
             //Set the firm name to the insurer's firm
             insurancePackage.setFirmName(insurer.getFirmName());
-
-            return insurancePackageRepository.save(insurancePackage);
         }
         catch (Exception ex)
         {
-            throw new UserNotFoundException("The insurer could not be found.");
+            //Do nothing--there will be no insurer for the default package
         }
+
+        return insurancePackageRepository.save(insurancePackage);
     }
 
     //This method is called when a patient or insurer adds an InsurancePackage to the target patient's list

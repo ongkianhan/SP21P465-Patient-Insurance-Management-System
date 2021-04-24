@@ -36,7 +36,7 @@ public class InsurancePackage
     // coinsurance = it’s a percentage of the cost that you pay for covered services.
     // maximum out of pocket = out-of-pocket limit, is the most you’d ever have to pay for covered health care services in a year.
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinColumn(name="insurerId")
     @JsonIgnore
     private Insurer insurer; //reference to the insurer who created this package
@@ -165,5 +165,26 @@ public class InsurancePackage
 
     public void setRecommendation(boolean recommendation) {
         isRecommendation = recommendation;
+    }
+
+    /**
+     * Creates and returns the default package given to patients upon account creation.
+     * This method does not persist the package on its own.
+     */
+    public static InsurancePackage createNewDefaultPackage()
+    {
+        InsurancePackage newPackage = new InsurancePackage();
+        newPackage.setInsurancePackageId(Integer.MAX_VALUE);
+        newPackage.firmName = "Vita Insurance";
+        newPackage.packageName = "Default Insurance Package";
+        newPackage.isRecommendation = false;
+        newPackage.packageDetails = "This is the default package given to you for creating an account with Vita. It provides coverage for one person.";
+        newPackage.premium = 475.0;
+        newPackage.deductible = 4600.0;
+        newPackage.copayment = 0;
+        newPackage.coInsurance = 0.18;
+        newPackage.maximumOutOfPocket = 8100;
+
+        return newPackage;
     }
 }

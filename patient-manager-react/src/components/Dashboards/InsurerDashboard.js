@@ -23,7 +23,6 @@ class Dashboard extends Component {
         const { allPackages } = this.props.insurancePackage;
         return (
             <div>
-                <h1>Dashboard</h1>
                 <Link to="/create-insurance-package">
                     <button className="btn btn-primary mb-3">
                         Create Insurance

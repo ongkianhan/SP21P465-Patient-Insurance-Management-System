@@ -1,6 +1,10 @@
 package com.p565sp21group1.patientmanagerspring.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.p565sp21group1.patientmanagerspring.repositories.UserRepository;
+import com.p565sp21group1.patientmanagerspring.services.InsurancePackageService;
+import com.p565sp21group1.patientmanagerspring.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;

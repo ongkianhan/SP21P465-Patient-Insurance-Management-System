@@ -51,6 +51,9 @@ public class ConversationService
             throw new UserNotFoundException("You cannot start a conversation with yourself!");
         }
 
+        //Check if two patients exist and throw an exception if so
+        conversation.throwExceptionIfContainsTwoPatients();
+
         return conversationRepository.save(conversation);
     }
 
@@ -167,6 +170,10 @@ public class ConversationService
         {
             //Add the user
             conversation.addUserInvolved(userToAdd);
+
+            //Check if two patients exist and throw an exception if so
+            conversation.throwExceptionIfContainsTwoPatients();
+
             conversationRepository.save(conversation);
         }
         else
