@@ -56,7 +56,7 @@ class PatientAppointmentCard extends Component {
                                     View Doctor
                                 </button>
                             </Link>
-                            {this.props.review ? (
+                            {/*this.props.review ? (
                                 <Link to="">
                                     <button className="col my-1 btn btn-secondary card-button">
                                         Write Review
@@ -64,7 +64,7 @@ class PatientAppointmentCard extends Component {
                                 </Link>
                             ) : (
                                 <span />
-                            )}
+                            )*/}
                         </div>
                     </div>
                 </div>

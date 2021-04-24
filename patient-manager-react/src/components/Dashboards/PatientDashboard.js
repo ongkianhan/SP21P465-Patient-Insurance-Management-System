@@ -33,32 +33,18 @@ class PatientDashboard extends Component
 
     acceptRecommendation(insurancePackageId) {
         this.props.acceptInsurancePackageRecommendation(insurancePackageId);
-        this.props.getAppointmentsByPatientId(
-            this.props.security.user.userId
-        );
-        this.props.getInsurancePackagesByPatientId(
-            this.props.security.user.userId
-        );
+        this.componentDidMount();
+        
     }
 
     declineRecommendation(insurancePackageId) {
         this.props.declineInsurancePackageRecommendation(insurancePackageId);
-        this.props.getAppointmentsByPatientId(
-            this.props.security.user.userId
-        );
-        this.props.getInsurancePackagesByPatientId(
-            this.props.security.user.userId
-        );
+        this.componentDidMount();
     }
 
     render() {
-        const { allPackages } = this.props.insurancePackage;
-        this.props.getAppointmentsByPatientId(
-            this.props.security.user.userId
-        );
-        this.props.getInsurancePackagesByPatientId(
-            this.props.security.user.userId
-        );
+        var { allPackages } = this.props.insurancePackage;
+        recommendedPackagesMessage = false;
 
         if (this.props.appointment.allAppointments.length === 0) 
         {
@@ -82,8 +68,8 @@ class PatientDashboard extends Component
 
         return (
             <div className="container-fluid align-center">
-                <div className="row align-center">
-                    <div className="col-6 align-center">
+                <div className="row">
+                    <div className="col-9 align-center">
 
                         {/* Determine what headers should be placed */}
                         {allAppointments.map((appointment) =>
@@ -119,13 +105,13 @@ class PatientDashboard extends Component
                                 <span />
                             )
                         )}
-                    </div>
-                    <div classname="col-6 align-center">
+                    
                         
                         {/* Recommended insurance cards */}
-                        <h3 className="pl-5 pb-3 font-weight-bold text-center">
+                        {recommendedPackagesMessage ? (<h3 className="pl-5 pt-3 pb-3 font-weight-bold text-center">
                             Recommended Insurance Packages
-                        </h3>
+                        </h3>) : (<span/>)
+                        }
                         {allPackages.map((insurancePackage) => (
                             insurancePackage.recommendation == true ? (
                             <InsuranceRecommendationDashboardCardForPatient
@@ -137,7 +123,7 @@ class PatientDashboard extends Component
                         ))}
 
                         {/* Held insurance cards */}
-                        <h3 className="pl-5 pb-3 font-weight-bold text-center">
+                        <h3 className="pl-5 pt-3 pb-3 font-weight-bold text-center">
                             Your Insurance Packages
                         </h3>
                         {allPackages.map((insurancePackage) => (
@@ -150,7 +136,7 @@ class PatientDashboard extends Component
 
                         {/* Past appointments cards */}
                         {pastAppointments ? (
-                            <h3 className="pl-5 pb-3 pt-4 font-weight-bold text-center ">
+                            <h3 className="pl-5 pb-3 pt-3 font-weight-bold text-center ">
                                 Your past appointments
                             </h3>
                         ) : (
@@ -167,11 +153,19 @@ class PatientDashboard extends Component
                                 <span />
                             )
                         )}
+                        
                     </div>
+                    <div class="col-3 text-left pr-5 container-fluid">
+                        <h5 class="row">Recent CDC Articles</h5>
+                        <div class ="row"><CovidArticles index={0}/></div>
+                        <div class ="row"><CovidArticles index={1}/></div>
+                        <div class ="row"><CovidArticles index={2}/></div>
+                        <div class ="row"><CovidArticles index={3}/></div>
+                        <div class ="row"><CovidArticles index={4}/></div>
+                    </div>
+                    
                 </div>
-                <div>
-                    <CovidArticles/>
-                </div>
+                
             </div>
         );
     }

@@ -55,9 +55,14 @@ class Dashboard extends Component
                 {/*allAppointments.map(appointment => (<DoctorAppointmentCard key={appointment.id} appointment={appointment}/>))*/}
 
 
-                <div>
-                    <CovidArticles/>
-                </div>
+                <div class="col-3 text-left pr-5 container-fluid">
+                        <h5 class="row">Recent CDC Articles</h5>
+                        <div class ="row"><CovidArticles index={0}/></div>
+                        <div class ="row"><CovidArticles index={1}/></div>
+                        <div class ="row"><CovidArticles index={2}/></div>
+                        <div class ="row"><CovidArticles index={3}/></div>
+                        <div class ="row"><CovidArticles index={4}/></div>
+                    </div>
             </div>
         )
     }
