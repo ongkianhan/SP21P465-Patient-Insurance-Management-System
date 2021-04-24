@@ -51,12 +51,12 @@ class DoctorAccount extends Component {
                             </button>
                         </Link>
                     </div>
-                    <div className="row pt-3 pl-5">
+                    {/*<div className="row pt-3 pl-5">
                         <div className = "col- text-left">
                             <h1>Reviews</h1>
                             <h3>0 Stars | 0 Reviews</h3>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 
                 {/*Show Google Map and pass doctor's location*
