@@ -6,6 +6,7 @@ import PatientAppointmentCard from "./PatientAppointmentCard";
 import { getInsurancePackagesByPatientId, acceptInsurancePackageRecommendation, declineInsurancePackageRecommendation } from "../../actions/insurancePackageActions";
 import InsurancePackageDashboardCardForPatient from "./InsurancePackageDashboardCardForPatient";
 import InsuranceRecommendationDashboardCardForPatient from "./InsuranceRecommendationDashboardCardForPatient";
+import CovidArticles from "./CovidArticles"
 
 var noAppointmentsMessage;
 var futureAppointments = false;
@@ -62,7 +63,7 @@ class PatientDashboard extends Component
         const { allAppointments } = this.props.appointment;
 
         return (
-            <div className="container-fluid">
+            <div className="container-fluid align-center">
                 <div className="row align-center">
                     <div className="col-6 align-center">
 
@@ -100,9 +101,11 @@ class PatientDashboard extends Component
                                 <span />
                             )
                         )}
+                    </div>
+                    <div classname="col-6 align-center">
                         
                         {/* Recommended insurance cards */}
-                        <h3 className="pl-5 pb-3 font-weight-bold text-center col-12">
+                        <h3 className="pl-5 pb-3 font-weight-bold text-center">
                             Recommended Insurance Packages
                         </h3>
                         {allPackages.map((insurancePackage) => (
@@ -116,7 +119,7 @@ class PatientDashboard extends Component
                         ))}
 
                         {/* Held insurance cards */}
-                        <h3 className="pl-5 pb-3 font-weight-bold text-center col-12">
+                        <h3 className="pl-5 pb-3 font-weight-bold text-center">
                             Your Insurance Packages
                         </h3>
                         {allPackages.map((insurancePackage) => (
@@ -129,7 +132,7 @@ class PatientDashboard extends Component
 
                         {/* Past appointments cards */}
                         {pastAppointments ? (
-                            <h3 className="pl-5 pb-3 pt-4 font-weight-bold text-center col-12">
+                            <h3 className="pl-5 pb-3 pt-4 font-weight-bold text-center ">
                                 Your past appointments
                             </h3>
                         ) : (
@@ -147,12 +150,9 @@ class PatientDashboard extends Component
                             )
                         )}
                     </div>
-                    <div classname="col-12 align-center">
-                        
-                    </div>
-                    <div classname="col-12 align-center">
-                        
-                    </div>
+                </div>
+                <div>
+                    <CovidArticles/>
                 </div>
             </div>
         );

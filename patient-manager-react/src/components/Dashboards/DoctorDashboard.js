@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import { getAppointmentsByDoctorId } from "../../actions/appointmentActions";
 import DoctorAppointmentCard from "./DoctorAppointmentCard";
+import CovidArticles from "./CovidArticles"
 
 var noAppointmentsMessage
 
@@ -54,7 +55,9 @@ class Dashboard extends Component
                 {/*allAppointments.map(appointment => (<DoctorAppointmentCard key={appointment.id} appointment={appointment}/>))*/}
 
 
-                
+                <div>
+                    <CovidArticles/>
+                </div>
             </div>
         )
     }

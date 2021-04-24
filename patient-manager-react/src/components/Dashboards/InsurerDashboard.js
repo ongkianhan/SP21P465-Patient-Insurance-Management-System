@@ -4,6 +4,7 @@ import { PropTypes } from "prop-types";
 import { getInsurancePackagesByInsurerId } from "../../actions/insurancePackageActions";
 import { Link } from "react-router-dom";
 import InsurancePackageDashboardCard from "../Insurance/InsurancePackageDashboardCard";
+import CovidArticles from "./CovidArticles"
 
 class Dashboard extends Component {
     constructor() {
@@ -40,6 +41,9 @@ class Dashboard extends Component {
                             insurancePackage={insurancePackage}
                         />
                     ))}
+                </div>
+                <div>
+                    <CovidArticles/>
                 </div>
             </div>
         );

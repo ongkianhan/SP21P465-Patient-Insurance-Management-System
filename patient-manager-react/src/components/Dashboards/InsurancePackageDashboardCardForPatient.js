@@ -22,7 +22,6 @@ class InsurancePackageDashboardCardForPatient extends Component
                                 </b>
                                 {" "}premium
                             </h6>
-
                             <h6>
                                 <b>
                                     ${insurancePackage.deductible}
