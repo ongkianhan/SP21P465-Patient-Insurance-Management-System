@@ -33,14 +33,32 @@ class PatientDashboard extends Component
 
     acceptRecommendation(insurancePackageId) {
         this.props.acceptInsurancePackageRecommendation(insurancePackageId);
+        this.props.getAppointmentsByPatientId(
+            this.props.security.user.userId
+        );
+        this.props.getInsurancePackagesByPatientId(
+            this.props.security.user.userId
+        );
     }
 
     declineRecommendation(insurancePackageId) {
         this.props.declineInsurancePackageRecommendation(insurancePackageId);
+        this.props.getAppointmentsByPatientId(
+            this.props.security.user.userId
+        );
+        this.props.getInsurancePackagesByPatientId(
+            this.props.security.user.userId
+        );
     }
 
     render() {
         const { allPackages } = this.props.insurancePackage;
+        this.props.getAppointmentsByPatientId(
+            this.props.security.user.userId
+        );
+        this.props.getInsurancePackagesByPatientId(
+            this.props.security.user.userId
+        );
 
         if (this.props.appointment.allAppointments.length === 0) 
         {
