@@ -299,7 +299,7 @@ and 116 HCP, 75 (90.4%) and 61 (52.6%), respectively,
 received 2 vaccine doses. Twenty-six residents and 20 HCP
 received positive test results for SARS-CoV-2, the virus that
 causes COVID-19, including 18 residents and four HCP
-who had received their second vaccine dose >14 days before
+who had received their second vaccine dose 14 days before
 the outbreak began. An R.1 lineage variant was detected with
 whole genome sequencing (WGS). Although the R.1 variant
 has multiple spike protein mutations, vaccinated residents and
@@ -386,14 +386,10 @@ of the outbreak. This resident was hospitalized and died.
             </p>
 
             </div>
-
         };
         return(
             <div>{articles[random]}</div>
         )
-
-        
-
     }
 }
 
