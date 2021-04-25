@@ -59,26 +59,6 @@ class App extends Component
               <Route exact path="/account/:userId" component={AccountContainer} />
               <Route exact path="/view-map" component={MapPage} />
               <Route exact path="/form/:userId" component={Form} />
-              <Route exact path='/covid-article0' component={() => { 
-                window.location.href = 'https://www.cdc.gov/mmwr/volumes/70/wr/mm7017e3.htm?s_cid=mm7017e3_x'; 
-                return null;
-              }}/>
-              <Route exact path='/covid-article1' component={() => { 
-                window.location.href = 'https://www.cdc.gov/mmwr/volumes/70/wr/mm7016a3.htm?s_cid=mm7016a3_x'; 
-                return null;
-              }}/>
-              <Route exact path='/covid-article2' component={() => { 
-                window.location.href = 'https://www.cdc.gov/mmwr/volumes/70/wr/mm7016a2.htm?s_cid=mm7016a2_x'; 
-                return null;
-              }}/>
-              <Route exact path='/covid-article3' component={() => { 
-                window.location.href = 'https://www.cdc.gov/mmwr/volumes/70/wr/mm7016e1.htm?s_cid=mm7016e1_x'; 
-                return null;
-              }}/>
-              <Route exact path='/covid-article4' component={() => { 
-                window.location.href = 'https://www.cdc.gov/mmwr/volumes/70/wr/mm7017e2.htm?s_cid=mm7017e2_x'; 
-                return null;
-              }}/>
 
               {
                   //Private routes only accessible to users logged in
