@@ -33,6 +33,7 @@ class DoctorAccount extends Component {
                         ):(
                             <h3>Does not support COVID-19 care</h3>
                         )}
+                        <h3>Contact: {currentUser.email}</h3>
                         
                     </div>
                     <div className = "col-3 text-left">

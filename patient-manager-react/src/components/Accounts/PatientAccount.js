@@ -87,7 +87,7 @@ class PatientAccount extends Component {
                         <h1 className="font-weight-bold">
                             {currentUser.firstName} {currentUser.lastName}
                         </h1>
-                        <h5>Chat name: {currentUser.email}</h5>
+                        <h5>Contact: {currentUser.email}</h5>
                         <h5>Age: {currentUser.age}</h5>
                         <h5>Height: {currentUser.height}</h5>
                         <h5>Weight: {currentUser.weight} lbs</h5>

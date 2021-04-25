@@ -24,7 +24,7 @@ class InsurerAccount extends Component {
                     </div>
                     <div className = "col-6 text-left">
                         <h1 className = "font-weight-bold">{currentUser.firstName} {currentUser.lastName}</h1>
-                        <h3>{currentUser.email}</h3>
+                        <h3>Contact: {currentUser.email}</h3>
                         <h3>{currentUser.company}</h3>
                     </div>
                     <div className = "col-3 text-left">

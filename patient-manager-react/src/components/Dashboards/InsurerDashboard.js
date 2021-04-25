@@ -22,36 +22,28 @@ class Dashboard extends Component {
     render() {
         const { allPackages } = this.props.insurancePackage;
         return (
-<<<<<<< HEAD
-            <div>
-                <Link to="/create-insurance-package">
-                    <button className="btn btn-primary mb-3">
-                        Create Insurance
-                    </button>
-                </Link>
-=======
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-9">
+                        <h2>Your Insurance Packages</h2>
+                        
+                        {/* Create Insurance button */}
                         <Link to="/create-insurance-package">
                             <button className="btn btn-primary mb-3">
                                 Create Insurance
                             </button>
                         </Link>
->>>>>>> dd58a821146258b0b375210f75bbf3bebccf07e5
 
-                        <div>
-                            <h2>Your Insurance Packages</h2>
-                            {allPackages.map((insurancePackage) => (
-                                <InsurancePackageDashboardCard
-                                    makeInsuranceRecommendation={
-                                        this.makeInsuranceRecommendation
-                                    }
-                                    key={insurancePackage.insurancePackageId}
-                                    insurancePackage={insurancePackage}
-                                />
-                            ))}
-                        </div>
+                        {/* Insurance package cards are placed here */}
+                        {allPackages.map((insurancePackage) => (
+                            <InsurancePackageDashboardCard
+                                makeInsuranceRecommendation={
+                                    this.makeInsuranceRecommendation
+                                }
+                                key={insurancePackage.insurancePackageId}
+                                insurancePackage={insurancePackage}
+                            />
+                        ))}
                     </div>
                     <div class="col-3 text-left pr-5 container-fluid">
                             <h5 class="row">Recent CDC Articles</h5>
