@@ -1,11 +1,9 @@
 package com.p565sp21group1.patientmanagerspring.web;
 
-import com.p565sp21group1.patientmanagerspring.exceptions.PermissionDeniedException;
 import com.p565sp21group1.patientmanagerspring.models.Appointment;
 import com.p565sp21group1.patientmanagerspring.models.Doctor;
 import com.p565sp21group1.patientmanagerspring.services.AppointmentService;
 import com.p565sp21group1.patientmanagerspring.services.ErrorMapValidationService;
-import com.p565sp21group1.patientmanagerspring.services.PermissionService;
 import com.p565sp21group1.patientmanagerspring.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,9 +44,8 @@ public class AppointmentController
         ResponseEntity<?> errorMap = errorMapValidationService.mapErrors(result);
         if (errorMap != null) return errorMap;
 
-        long doctorIdLong = userService.parseUserId(doctorId);
+        long doctorIdLong = ControllerUtility.parseUserId(doctorId);
 
-        System.out.println("Sending to service!");
         Appointment newAppointment = appointmentService.addAppointment(doctorIdLong, appointment, principal.getName());
         return new ResponseEntity<Appointment>(newAppointment, HttpStatus.CREATED);
     }
@@ -56,14 +53,14 @@ public class AppointmentController
     @GetMapping("/get-by-patient/{patientId}")
     public Iterable<Appointment> getAppointmentsByPatientId(@PathVariable String patientId, Principal principal)
     {
-        long patientIdLong = userService.parseUserId(patientId);
+        long patientIdLong = ControllerUtility.parseUserId(patientId);
         return appointmentService.getAppointmentsByPatientId(patientIdLong, principal.getName());
     }
 
     @GetMapping("/get-by-doctor/{doctorId}")
     public Iterable<Appointment> getAppointmentsByDoctorId(@PathVariable String doctorId)
     {
-        long doctorIdLong = userService.parseUserId(doctorId);
+        long doctorIdLong = ControllerUtility.parseUserId(doctorId);
         return appointmentService.getAppointmentsByDoctorId(doctorIdLong);
     }
 }

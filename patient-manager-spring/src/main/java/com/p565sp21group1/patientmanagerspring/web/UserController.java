@@ -2,14 +2,13 @@ package com.p565sp21group1.patientmanagerspring.web;
 
 import com.p565sp21group1.patientmanagerspring.exceptions.InvalidLoginException;
 import com.p565sp21group1.patientmanagerspring.exceptions.UserNotFoundException;
-import com.p565sp21group1.patientmanagerspring.models.Doctor;
-import com.p565sp21group1.patientmanagerspring.models.Insurer;
-import com.p565sp21group1.patientmanagerspring.models.Patient;
-import com.p565sp21group1.patientmanagerspring.models.User;
+import com.p565sp21group1.patientmanagerspring.models.*;
+import com.p565sp21group1.patientmanagerspring.payload.DoctorSearchRequest;
 import com.p565sp21group1.patientmanagerspring.payload.JwtLoginSuccessResponse;
 import com.p565sp21group1.patientmanagerspring.payload.LoginRequest;
 import com.p565sp21group1.patientmanagerspring.security.JwtTokenProvider;
 import com.p565sp21group1.patientmanagerspring.services.ErrorMapValidationService;
+import com.p565sp21group1.patientmanagerspring.services.InsurancePackageService;
 import com.p565sp21group1.patientmanagerspring.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +22,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.security.Principal;
+
 import static com.p565sp21group1.patientmanagerspring.security.SecurityConstants.TOKEN_PREFIX;
 
 @RestController
@@ -31,6 +32,9 @@ public class UserController
 {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private InsurancePackageService insurancePackageService; //for use in adding the default package to new patients
 
     @Autowired
     private ErrorMapValidationService errorMapValidationService;
@@ -73,7 +77,17 @@ public class UserController
         ResponseEntity<?> errorMap = errorMapValidationService.mapErrors(result);
         if (errorMap != null) return errorMap;
 
+        //Create and save the patient
         Patient newPatient = (Patient) userService.saveOrUpdateUser(patient);
+
+        //Create a default insurance package especially for this new patient
+        InsurancePackage defaultPackage = InsurancePackage.createNewDefaultPackage();
+        //Save the default package
+        defaultPackage = insurancePackageService.createInsurancePackage(defaultPackage, null);
+        //Add the default package to this new user
+        insurancePackageService.saveInsurancePackageToPatient(defaultPackage.getInsurancePackageId(),
+                newPatient.getEmail(), false);
+
         return new ResponseEntity<Patient>(newPatient, HttpStatus.CREATED);
     }
 
@@ -97,10 +111,27 @@ public class UserController
     @GetMapping("/all-doctors")
     public Iterable<Doctor> getAllDoctors(){return userService.getAllDoctors();}
 
+    @PostMapping("/search-doctors")
+    public ResponseEntity<?> getDoctorsByFilter(@Valid @RequestBody DoctorSearchRequest filter)
+    {
+        Iterable<Doctor> filteredDoctors = userService.getDoctorsByFilter(filter);
+        return ResponseEntity.ok(filteredDoctors);
+    }
+
+    @GetMapping("/doctor-specializations")
+    public Iterable<String> getAllSpecializations()
+    {
+        return userService.getAllSpecializations();
+    }
+
+    //Get all patients from the database
+    @GetMapping("/all-patients")
+    public Iterable<Patient> getAllPatients(){return userService.getAllPatients();}
+
     @GetMapping("/{userId}")
     public User getUserById(@PathVariable String userId)
     {
-        long userIdLong = userService.parseUserId(userId);
+        long userIdLong = ControllerUtility.parseUserId(userId);
         return userService.findUserById(userIdLong);
     }
 
@@ -135,5 +166,25 @@ public class UserController
         {
             throw new InvalidLoginException("Invalid credentials");
         }
+    }
+
+    @PostMapping("/give-user-online-status/{userId}")
+    public ResponseEntity<?> giveUserOnlineStatus(@PathVariable String userId)
+    {
+        //Parse the IDs from the URL
+        long userIdLong = ControllerUtility.parseUserId(userId);
+        //Adjust the user's online status boolean
+        userService.updateUserOnlineStatus(userIdLong, true);
+        return new ResponseEntity<String>("User ID "+userId+" is now online", HttpStatus.OK);
+    }
+
+    @PostMapping("/give-user-offline-status/{userId}")
+    public ResponseEntity<?> giveUserOfflineStatus(@PathVariable String userId)
+    {
+        //Parse the IDs from the URL
+        long userIdLong = ControllerUtility.parseUserId(userId);
+        //Adjust the user's online status boolean
+        userService.updateUserOnlineStatus(userIdLong, false);
+        return new ResponseEntity<String>("User ID "+userId+" is now offline", HttpStatus.OK);
     }
 }

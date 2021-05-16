@@ -1,7 +1,10 @@
+/*Primary color for the app: #00aa95 */
 /*///////////////// PRE-WRITTEN CSS FROM REACT ///////////////////////*/
 
 .App {
     text-align: center;
+    min-height: 100vh;
+    margin-bottom: 0px;
 }
 
 .App-logo {
@@ -66,12 +69,14 @@ td,
 th {
     border-collapse: collapse;
     box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
 }
 
 /*///////////////// REPEATABLE ELEMENTS ///////////////////////*/
 
 .page-header {
-    margin-top: 18px;
+    margin-top: 12px;
     margin-bottom: 18px;
 }
 .paragraph {
@@ -105,16 +110,28 @@ th {
     width: 100%;
 }
 
-.td-textbox-holder {
-    padding-right: calc(12px + 1vmin);
+.td-textbox-left-side {
+    padding-right: calc(10px + 0.4vmin);
 }
+.td-textbox-right-side {
+    padding-left: calc(10px + 0.4vmin);
+}
+
 
 .primary-bg {
     background-color: #00aa95 !important;
 }
 
-.list-container {
-    background-color: #aaaaaa !important;
+.light-gray-bg {
+    background-color: #c0c0c0 !important;
+}
+
+.blue-font {
+    color: #003388;
+}
+
+.bold {
+    font-weight: bold;
 }
 
 .button-generic {
@@ -164,6 +181,15 @@ th {
     border-radius: 20px;
     color: #ffffff;
 }
+.button-minor {
+    padding: 6px 18px 6px 18px;
+    margin-top: 12px;
+    margin-bottom: 18px;
+    font-size: 14px;
+    background-color: #8888aa;
+    border-radius: 20px;
+    color: #ffffff;
+}
 
 .button-submit {
     width: 50%;
@@ -175,7 +201,7 @@ th {
     font-weight: bold;
 }
 
-/*///////////////// SINGLE-USE ELEMENTS ///////////////////////*/
+/*///////////////// LANDING & NAV BAR ELEMENTS ///////////////////////*/
 
 .button-landing-page {
     width: 50% !important;
@@ -198,20 +224,18 @@ th {
     height: 100%;
 }
 
-/*///////////////// NAVBAR ELEMENTS ///////////////////////*/
 /* Styles are based on https://codepen.io/skwbr/pen/QjaBLV */
 .nav-horizontal {
     background-color: #00aa95;
     overflow: hidden;
-    height: 3em;
+    min-height: 8vh;
+    max-height: 3em;
     width: 100%;
 }
 
 .nav-container {
     background-color: #00aa95;
     overflow: hidden;
-    height: 3em;
-    width: 100%;
     height: 5em;
     width: 100%;
     overflow-x: auto;
@@ -256,52 +280,19 @@ th {
 }
 
 /*///////////////// FOOTER ELEMENTS ///////////////////////*/
-.footer-horizontal {
-    background-color: #00aa95;
-    overflow: hidden;
-    height: 2em;
-    width: 100%;
-    margin-bottom: 0px !important;
-    padding-bottom: 0px !important;
-}
-
 .footer-container {
-    background-color: #00aa95;
-    overflow: hidden;
-    height: 3em;
-    width: 100%;
+    background-color: #222222;
     height: 2em;
     width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    margin-bottom: 0px !important;
+    position: relative;
+    bottom:0;
+    margin-bottom: 0px;
+    padding-left: 10vw;
 }
-.footer-item {
-    display: inline-table !important;
-    margin: 0 auto !important;
-    max-width: 100% !important;
-    overflow: hidden !important;
-    height: auto !important;
-    width: 100% !important;
-    display: block !important;
-    padding: 0 0.5em !important;
-    text-decoration: none !important;
-    color: #ffffff !important;
-    height: 2em !important;
-    line-height: 3 !important;
-    font-size: 12px !important;
-}
-.footer-item:hover {
-    text-decoration: none !important;
-}
-.footer-list {
-    background-color: #00aa95;
-    overflow: hidden;
+.footer-text {
+    color: #ffffff;
     height: 2em;
-    width: 100%;
-    display: inline-table;
-    margin: 0 auto;
-    max-width: 100%;
+    font-size: 12px;
 }
 
 /*///////////////// GeneralSignupForm ELEMENTS ///////////////////////*/
@@ -355,18 +346,18 @@ th {
     color: black;
 }
 .td-appointment-open {
-    background-color: #7cc67c;
+    background-color: #efefef;
     border: 1px solid #bbbbbb;
     font-weight: bold;
     color: black;
 }
 .td-appointment-open:hover {
     cursor: pointer;
-    background-color: #6fb26f;
+    background-color: #fff;
 }
 .td-appointment-taken {
-    background-color: #eeeeee;
-    color: #888888;
+    background-color: #bbb;
+    color: #666;
 }
 
 /*///////////////// MODAL POPUP ELEMENTS ///////////////////////*/
@@ -391,15 +382,14 @@ th {
     padding: 0;
     border: 1px solid #888;
     width: calc(65% + 2vmin) !important;
-    max-width: 100% !important;
+    max-width: calc(65% + 2vmin);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    animation-name: animatetop;
-    animation-duration: 1s;
+    /*animation-name: animatetop;
+    animation-duration: 1s;*/
 }
 
 /* The Close Button */
 .modal-close-button {
-    color: #eeeeee !important;
     float: right;
     font-size: 32px;
     font-weight: bold;
@@ -413,7 +403,7 @@ th {
 }
 
 .modal-header {
-    padding: 2px 4px;
+    padding: 10%;
     color: white;
     text-align: left;
 }
@@ -467,4 +457,274 @@ th {
 }
 .td-appointment-taken:hover .tooltip-text {
     visibility: visible;
+}
+
+
+/*///////////////// CHAT ELEMENTS ///////////////////////*/
+.chat-primary-container {
+    margin-left: 10vmax;
+    margin-right: 10vmax;
+}
+.chat-table-container {
+    border: 1px solid #666666;
+    min-height: 60vh;
+    max-height: 60vh;
+}
+.chat-conversation-container {
+    width: 20vmax;
+    height: 100%;
+    max-height: 60vh;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    overflow-y:auto; /*Scrollable*/
+}
+.chat-online-container {
+    margin: 0;
+    min-height: 30vh;
+    max-height: 60vh;
+    background-color: #dadada;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+.chat-online-sub-container {
+    max-height: 40vh;
+    width: 100%;
+    overflow-y:auto; /*Scrollable*/
+}
+.chat-viewport-container {
+    max-height: 60vh;
+    margin: 0px;
+    background-color: #f2f2f2;
+}
+.message-container {
+    height: 90%;
+    background-color: #f2f2f2;
+    top: 0px;
+    padding-top: auto;
+    padding-bottom: auto;
+    overflow-y:auto; /*Scrollable*/
+}
+.chatbar-container {
+    height: 10%;
+    background-color: #dddddd;
+}
+#chatBar {
+    font-size: 75% !important;
+    border: none;
+    background-color: white;
+    border-radius: 10px;
+    width: 98%;
+    height: 85% !important;
+}
+#chatSendButtonContainer {
+    width: 18%;
+}
+#chatSendButton {
+    font-size: 80% !important;
+    font-weight: bold;
+    text-align: center;
+    height: 100% !important;
+    color: white;
+    background-color: #4093da;
+    border-radius: 10px;
+    padding: 6px 20% 6px 20%;
+    cursor: pointer;
+}
+
+/*///////////////// MESSAGE ELEMENTS ///////////////////////*/
+.message-header {
+    font-size: 10px;
+    width: auto;
+    margin-top: 2px;
+    margin-bottom: 0px;
+}
+.message {
+    font-size: 16px;
+    width: auto;
+    color: #111111;
+    border-radius: 10px;
+    padding: 2px 2px 2px 6px;
+    margin-bottom: 2px;
+}
+.received {
+    text-align: left;
+    margin-left: 6px;
+    margin-right: 53%;
+}
+.sent {
+    text-align: right;
+    margin-left: 53%;
+    margin-right: 6px;
+}
+.message-received {
+    background-color: #6fa9db;
+    padding-left: 8px;
+}
+.message-sent {
+    background-color: #b2e5df;
+    padding-right: 8px;
+}
+
+/*///////////////// CONVERSATION CARD ELEMENTS ///////////////////////*/
+.conv-card-container {
+    border: 1px solid #bbaaaaaa;
+    background-color: #dedede;
+    cursor: pointer;
+    max-width: 100%;
+    padding: 12px 24px 12px 24px !important;
+}
+.conv-unread-indicator {
+    height: 1em;
+    padding: 0.15em;
+}
+#unreadIndicator  { /*New version to replace old indicator*/
+    background-color: #2255ee;
+    border-radius: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    color: white;
+}
+.conv-number-unread {
+    font-size: 20px;
+    font-family: "Montserrat";
+    border-radius: 40%;
+    color: white;
+    padding: 0.8em;
+    padding-left: 0.45em;
+    margin-left: 0.25em;
+    height: 1.5em;
+    width: 1.5em;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+.conv-is-read {
+    background-color: #00000000;
+}
+.conv-has-unread {
+    background-color: #2255ee;
+}
+.conv-title:hover .conv-unread-indicator {
+    background-color: white;
+}
+.conv-title {
+    font-size: 18px;
+    font-family: "Montserrat";
+    font-weight: bold;
+    text-align: left;
+}
+#buttonNewConversation {
+    font-size: 14px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #bcbcbc;
+    cursor: pointer;
+}
+
+/*///////////////// CONVERSATION POPUP ELEMENTS ///////////////////////*/
+.button-popup-confirmation {
+    padding: 6px 18px 6px 18px;
+    margin-top: 12px;
+    margin-bottom: 18px;
+}
+.label-conv-popup {
+    font-size: 16px;
+    margin: 18px 10% 0px 10%;
+    text-align: center;
+}
+.input-conv-popup {
+    margin: 0px 30px 18px 30px;
+    text-align: center;
+    width: calc(100%-60px);
+    max-width: calc(100%-60px);
+}
+.modal-close-button-text {
+    text-align: right;
+    font-size: 16px;
+    font-weight: thin;
+    padding-right: 30px;
+    cursor: pointer;
+}
+
+/*///////////////// ONLINE/OFFLINE ELEMENTS ///////////////////////*/
+.online-card-container {
+    max-width: 100%;
+    background-color: #f2f2f2;
+}
+.online-status-icon-container {
+}
+.online-title {
+    text-align: left;
+    overflow-x: hidden;
+}
+.online-status-icon {
+    min-height: 16px;
+    min-width: 16px;
+    max-height: 4%;
+    max-width: 4%;
+}
+.online-list-close-button {
+    background-color: #f85b5b;
+    border-radius: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-top: 36px;
+    color: white;
+}
+.online-list-close-button:hover,
+.online-list-close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/*///////////////// DOCTOR/PACKAGE SEARCH ELEMENTS ///////////////////////*/
+.card-container {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    margin-top: 1vmax !important;
+    width: 100% !important;
+}
+#searchBar {
+    border: 1px solid #aaaaaa;
+    background-color: white;
+    height: 42px;
+    margin: 0px 2% 0px 0px !important;
+    padding-left: 12px;
+    padding-right: 6px;
+    width: 98% !important;
+    border-radius: 20px;
+}
+#searchButton {
+    font-size: 18px;
+    font-family: "Questrial";
+    color: #ffffff;
+    border: none;
+    padding: 8px 2px 8px 2px !important;
+    width: 100%;
+}
+.td-align-left {
+    margin-left: 0px !important;
+    padding-left: 0px !important;
+    left: 0px;
+}
+
+
+/*///////////////// INSURANCE PACKAGE ELEMENTS ///////////////////////*/
+.insurance-package-drawer {
+    z-index: 1;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 0;
+    margin-top: 3em;
+    padding-left: 4px;
+    max-height: 91vh;
+    min-width: 35vw;
+    max-width: 45vw;
+    background-color: #eeeeee;
 }

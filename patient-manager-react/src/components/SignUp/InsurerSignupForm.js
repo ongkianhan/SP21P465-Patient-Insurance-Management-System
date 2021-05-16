@@ -105,7 +105,7 @@ class InsurerSignupForm extends Component
                                     <table>
                                         {/*Row 1*/}
                                         <tr>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-left-side">
                                             <div className="form-group">
                                                 <input
                                                     type="text"
@@ -124,7 +124,7 @@ class InsurerSignupForm extends Component
                                                 )}
                                             </div>
                                             </td>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-right-side">
                                             <div className="form-group">
                                                 <input
                                                     type="text"
@@ -146,7 +146,7 @@ class InsurerSignupForm extends Component
                                         </tr>
                                         {/*Row 2*/}
                                         <tr>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-left-side">
                                             <div className="form-group">
                                                 <input
                                                     type="text"
@@ -165,7 +165,7 @@ class InsurerSignupForm extends Component
                                                 )}
                                             </div>
                                             </td>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-right-side">
                                             <div className="form-group">
                                                 <input
                                                     type="text"
@@ -185,9 +185,11 @@ class InsurerSignupForm extends Component
                                             </div>
                                             </td>
                                         </tr>
+                                        </table>
                                         {/*Row 3*/}
+                                        <table>
                                         <tr>
-                                            <td className="td-textbox-holder">
+                                            <td>
                                             <div className="form-group">
                                                 <input
                                                     type="text"
@@ -220,6 +222,12 @@ class InsurerSignupForm extends Component
                             </div>
                         </div>
                     </div>
+                    <br/>
+                    <br/>
+                    <p><b>Your Privacy</b></p>
+                    <p>Your email will be publicly available on your profile so that others can chat with you.</p>
+                    <br/>
+                    <br/>
                 </div>
             </div>
         );

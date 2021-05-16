@@ -25,7 +25,6 @@ public class AppointmentService
         try
         {
             //Pair the appointment with the patient...
-            //Calling get() retrieves the actual User from the repos
             Patient patient = (Patient) userRepository.findByEmail(username);
             appointment.setPatient(patient);
 
@@ -45,9 +44,7 @@ public class AppointmentService
 
     public Iterable<Appointment> getAppointmentsByPatientId(long patientId, String username)
     {
-        //FIXME might not work correctly if the user is in a different time zone than the server?
-        Date now = new Date(); //pass in the current time to only show upcoming Appointments
-        return appointmentRepository.getAppointmentsByPatientId(patientId, now);
+        return appointmentRepository.getAppointmentsByPatientId(patientId);
     }
 
     public Iterable<Appointment> getAppointmentsByDoctorId(long doctorId)

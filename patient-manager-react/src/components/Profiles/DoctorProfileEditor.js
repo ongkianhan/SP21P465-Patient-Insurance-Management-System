@@ -4,6 +4,14 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
 import { getCurrentUser } from "../../actions/userActions";
+import Geocode from "react-geocode";
+import { validateDoctor } from "../../validation/doctorValidator";
+
+Geocode.setLanguage("en");
+Geocode.setLocationType("ROOFTOP");
+Geocode.enableDebug();
+
+Geocode.setApiKey("AIzaSyDx1alSX-eHys1ZzIMmIyFO07hPmvA_5A8");
 
 class DoctorProfileEditor extends Component {
     constructor() {
@@ -17,19 +25,22 @@ class DoctorProfileEditor extends Component {
             lastName: "",
             specialization: "",
             hospitalName: "",
+            latitude: "",
+            longitude: "",
+            address: "",
+            supportsCovidCare: false,
             errors: {},
-            hasSuccess:false
+            hasSuccess: false,
         };
 
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    async componentDidMount()
-    {
+    async componentDidMount() {
         //Make a request to get all the user's info from the database
-        const {userId} = this.props.match.params;
-        this.setState({userId: userId});
+        const { userId } = this.props.match.params;
+        this.setState({ userId: userId });
         await this.props.getCurrentUser(userId, this.props.history);
 
         const {
@@ -38,17 +49,31 @@ class DoctorProfileEditor extends Component {
             lastName,
             specialization,
             hospitalName,
+            latitude,
+            longitude,
+            supportsCovidCare,
         } = this.props.currentUser.currentUser;
         //Display the user's information
+
+        await Geocode.fromLatLng(latitude, longitude).then(
+            (response) => {
+                const address = response.results[0].formatted_address;
+                this.state.address = address;
+            },
+            (error) => {
+                console.error(error);
+            }
+        );
+
         this.setState({
             email,
             firstName,
             lastName,
             specialization,
-            hospitalName
+            hospitalName,
+            supportsCovidCare,
         });
     }
-
 
     componentWillReceiveProps(nextProps) {
         //Show errors if they exist
@@ -56,8 +81,6 @@ class DoctorProfileEditor extends Component {
             this.setState({ errors: nextProps.errors });
         }
     }
-    
-    
 
     //When submitting, create the doctor
     async onSubmit(e) {
@@ -69,28 +92,47 @@ class DoctorProfileEditor extends Component {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             specialization: this.state.specialization,
+            latitude: this.state.latitude,
+            longitude: this.state.longitude,
             hospitalName: this.state.hospitalName,
+            supportsCovidCare: this.state.supportsCovidCare,
             errors: {},
         };
-    
+
+        await Geocode.fromAddress(this.state.address).then(
+            (response) => {
+                newDoctor.latitude = response.results[0].geometry.location.lat;
+                newDoctor.longitude = response.results[0].geometry.location.lng;
+            },
+            (error) => {
+                console.error(error);
+            }
+        );
+
         //Validate the user
-        const frontEndErrors = validateUser(newDoctor)
-        if (Object.keys(frontEndErrors).length != 0) //if errors exist
-        {
+        var frontEndErrors = validateUser(newDoctor);
+        validateDoctor(newDoctor, frontEndErrors);
+        if (Object.keys(frontEndErrors).length != 0) {
+            //if errors exist
             this.setState({ errors: frontEndErrors });
             return;
         }
 
         //Send the signup request
-        await this.props.createNewUser(newDoctor, "doctor", this.props.history, this.props.login);
+        await this.props.createNewUser(
+            newDoctor,
+            "doctor",
+            this.props.history,
+            this.props.login
+        );
 
-        if (Object.keys(this.state.errors).length == 0) //if no errors exist
-        {
-            const {userId} = this.props.match.params;
-            this.setState({userId: userId});
+        if (Object.keys(this.state.errors).length == 0) {
+            //if no errors exist
+            const { userId } = this.props.match.params;
+            this.setState({ userId: userId });
             await this.props.getCurrentUser(userId, this.props.history);
-            
-            this.setState({hasSuccess:true})
+
+            this.setState({ hasSuccess: true });
         }
     }
 
@@ -98,24 +140,24 @@ class DoctorProfileEditor extends Component {
         this.setState({ [e.target.name]: e.target.value });
     }
 
+    setSupportsCovidCare(e) {
+        this.setState({ [e.target.name]: e.target.checked });
+    }
+
     render() {
         const { errors } = this.state;
 
         let successMessage;
-        if(this.state.hasSuccess){
+        if (this.state.hasSuccess) {
             successMessage = (
                 <span>
-                    <h5>
-                    Success! Account has been successfully updated
+                    <h5 className="pt-3">
+                        Success! Account has been successfully updated
                     </h5>
                 </span>
             );
-        }
-        else{
-            successMessage = (
-                <span>
-                </span>
-            );
+        } else {
+            successMessage = <span></span>;
         }
 
         return (
@@ -127,8 +169,7 @@ class DoctorProfileEditor extends Component {
                             <div
                                 className="text-left"
                                 style={{ paddingTop: "2%" }}
-                            >
-                            </div>
+                            ></div>
                             <h1 className="display-4 text-left page-header">
                                 Your Profile
                             </h1>
@@ -143,16 +184,18 @@ class DoctorProfileEditor extends Component {
                                     <table>
                                         {/*Row 1*/}
                                         <tr>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-left-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
                                                         className={classnames(
                                                             "form-control textbox",
-                                                            {/*
+                                                            {
+                                                                /*
                                                                 "is-invalid":
                                                                     errors.email,
-                                                            */}
+                                                            */
+                                                            }
                                                         )}
                                                         placeholder="Email address"
                                                         name="email"
@@ -166,8 +209,7 @@ class DoctorProfileEditor extends Component {
                                                     )}
                                                 </div>
                                             </td>
-                                            {/*
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-right-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -175,27 +217,27 @@ class DoctorProfileEditor extends Component {
                                                             "form-control textbox",
                                                             {
                                                                 "is-invalid":
-                                                                    errors.password,
+                                                                    errors.address,
                                                             }
                                                         )}
-                                                        placeholder="Password"
-                                                        name="password"
+                                                        placeholder="Address"
+                                                        name="address"
                                                         value={
-                                                            this.state.password
+                                                            this.state.address
                                                         }
                                                         onChange={this.onChange}
                                                     />
-                                                    {errors.password && (
+                                                    {errors.address && (
                                                         <div className="invalid-feedback">
-                                                            {errors.password}
+                                                            {errors.address}
                                                         </div>
                                                     )}
                                                 </div>
-                                            </td> */}
+                                            </td>
                                         </tr>
                                         {/*Row 2*/}
                                         <tr>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-left-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -220,7 +262,7 @@ class DoctorProfileEditor extends Component {
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-right-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -248,7 +290,7 @@ class DoctorProfileEditor extends Component {
                                         </tr>
                                         {/*Row 3*/}
                                         <tr>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-left-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -262,18 +304,21 @@ class DoctorProfileEditor extends Component {
                                                         placeholder="Specialization"
                                                         name="specialization"
                                                         value={
-                                                            this.state.specialization
+                                                            this.state
+                                                                .specialization
                                                         }
                                                         onChange={this.onChange}
                                                     />
                                                     {errors.specialization && (
                                                         <div className="invalid-feedback">
-                                                            {errors.specialization}
+                                                            {
+                                                                errors.specialization
+                                                            }
                                                         </div>
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-right-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -287,7 +332,8 @@ class DoctorProfileEditor extends Component {
                                                         placeholder="Hospital name"
                                                         name="hospitalName"
                                                         value={
-                                                            this.state.hospitalName
+                                                            this.state
+                                                                .hospitalName
                                                         }
                                                         onChange={this.onChange}
                                                     />
@@ -302,9 +348,34 @@ class DoctorProfileEditor extends Component {
                                             </td>
                                         </tr>
                                     </table>
-                                    <div>
-                                    {successMessage}
-                                    </div>
+                                    <table>
+                                        <tr>
+                                            <td className="td-form-check">
+                                                <div className="form-group">
+                                                    <input
+                                                        className={classnames(
+                                                            "form-check-input"
+                                                        )}
+                                                        type="checkbox"
+                                                        checked={
+                                                            this.state
+                                                                .supportsCovidCare
+                                                        }
+                                                        onChange={this.setSupportsCovidCare.bind(
+                                                            this
+                                                        )}
+                                                        id="supportsCovidCareCheckbox"
+                                                        name="supportsCovidCare"
+                                                    ></input>
+                                                    <label className="form-check-label">
+                                                        Do you offer COVID-19
+                                                        care?
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div>{successMessage}</div>
                                     {/*Submit button*/}
                                     <div className="row justify-content-center">
                                         <input
@@ -328,6 +399,7 @@ DoctorProfileEditor.propTypes = {
     getCurrentUser: PropTypes.func.isRequired,
     security: PropTypes.object.isRequired,
     validateUser: PropTypes.func.isRequired,
+    validateDoctor: PropTypes.func.isRequired,
     currentUser: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired,
 };
@@ -335,7 +407,12 @@ DoctorProfileEditor.propTypes = {
 const mapStateToProps = (state) => ({
     currentUser: state.currentUser,
     security: state.security,
-    errors: state.errors
+    errors: state.errors,
 });
 
-export default connect(mapStateToProps, { createNewUser, getCurrentUser, validateUser })(DoctorProfileEditor);
+export default connect(mapStateToProps, {
+    createNewUser,
+    getCurrentUser,
+    validateUser,
+    validateDoctor,
+})(DoctorProfileEditor);

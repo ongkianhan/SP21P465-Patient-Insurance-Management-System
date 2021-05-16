@@ -5,8 +5,20 @@ import { connect } from "react-redux";
 import classnames from "classnames";
 import { login, validateUser } from "../../actions/securityActions";
 import { Link } from "react-router-dom";
+import Geocode from "react-geocode";
+import { validateDoctor } from "../../validation/doctorValidator";
+
+Geocode.setLanguage("en");
+Geocode.setLocationType("ROOFTOP");
+Geocode.enableDebug();
+
+Geocode.setApiKey("AIzaSyDx1alSX-eHys1ZzIMmIyFO07hPmvA_5A8");
+
+
 
 class DoctorSignupForm extends Component {
+
+
     constructor() {
         super();
 
@@ -17,11 +29,16 @@ class DoctorSignupForm extends Component {
             lastName: "",
             specialization: "",
             hospitalName: "",
+            address: "",
+            latitude:"",
+            longitude:"",
+            supportsCovidCare:false,
             errors: {},
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
+
 
     componentDidMount() {
         //Instantly bring the user to their dashboard
@@ -41,6 +58,7 @@ class DoctorSignupForm extends Component {
     async onSubmit(e) {
         e.preventDefault();
         //Create a new doctor account
+
         const newDoctor = {
             email: this.state.email,
             password: this.state.password,
@@ -48,11 +66,26 @@ class DoctorSignupForm extends Component {
             lastName: this.state.lastName,
             specialization: this.state.specialization,
             hospitalName: this.state.hospitalName,
+            latitude: this.state.latitude,
+            longitude: this.state.longitude,
+            supportsCovidCare: this.state.supportsCovidCare,
             errors: {},
         };
+
+        await Geocode.fromAddress(this.state.address).then(
+            (response) => {
+              newDoctor.latitude= response.results[0].geometry.location.lat;
+              newDoctor.longitude= response.results[0].geometry.location.lng;
+              
+            },
+            (error) => {
+              console.error(error);
+            }
+          );
     
         //Validate the user
-        const frontEndErrors = validateUser(newDoctor)
+        var frontEndErrors = validateUser(newDoctor);
+        validateDoctor(newDoctor, frontEndErrors);
         if (Object.keys(frontEndErrors).length != 0) //if errors exist
         {
             this.setState({ errors: frontEndErrors });
@@ -73,6 +106,10 @@ class DoctorSignupForm extends Component {
             //Navigate to the dashboard
             this.props.history.push("/dashboard");
         }
+    }
+
+    setSupportsCovidCare(e) {
+        this.state.supportsCovidCare = e.target.checked;
     }
 
     onChange(e) {
@@ -116,7 +153,7 @@ class DoctorSignupForm extends Component {
                                     <table>
                                         {/*Row 1*/}
                                         <tr>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-left-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -139,7 +176,7 @@ class DoctorSignupForm extends Component {
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-right-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -167,7 +204,7 @@ class DoctorSignupForm extends Component {
                                         </tr>
                                         {/*Row 2*/}
                                         <tr>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-left-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -192,7 +229,7 @@ class DoctorSignupForm extends Component {
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-right-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -220,7 +257,7 @@ class DoctorSignupForm extends Component {
                                         </tr>
                                         {/*Row 3*/}
                                         <tr>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-left-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -245,7 +282,7 @@ class DoctorSignupForm extends Component {
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="td-textbox-holder">
+                                            <td className="td-textbox-right-side">
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -273,6 +310,53 @@ class DoctorSignupForm extends Component {
                                                 </div>
                                             </td>
                                         </tr>
+                                        <tr>
+                                        <td className="td-textbox-left-side">
+                                                <div className="form-group">
+                                                    <input
+                                                        type="text"
+                                                        className={classnames(
+                                                            "form-control textbox",
+                                                            {
+                                                                "is-invalid":
+                                                                    errors.address,
+                                                            }
+                                                        )}
+                                                        placeholder="Address"
+                                                        name="address"
+                                                        value={
+                                                            this.state.address
+                                                        }
+                                                        onChange={this.onChange}
+                                                    />
+                                                    {errors.address && (
+                                                        <div className="invalid-feedback">
+                                                            {
+                                                                errors.address
+                                                            }
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </td>
+
+                                            <td className="td-form-check td-textbox-right-side">
+                                                <div className="form-group">
+                                                    <input
+                                                        className={classnames(
+                                                            "form-check-input"
+                                                        )}
+                                                        type="checkbox"
+                                                        onChange={this.setSupportsCovidCare.bind(this)}
+                                                        id="supportsCovidCareCheckbox"
+                                                    ></input>
+                                                    <label
+                                                        className="form-check-label"
+                                                    >
+                                                        Do you offer COVID-19 care?
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     </table>
                                     {/*Submit button*/}
                                     <div className="row justify-content-center">
@@ -286,6 +370,13 @@ class DoctorSignupForm extends Component {
                             </div>
                         </div>
                     </div>
+                    <br/>
+                    <br/>
+                    <p><b>Your Privacy</b></p>
+                    <p>Your email will be publicly available on your profile so that others can chat with you.</p>
+                    <p>Your hospital address will be publicly available to help patients find your hospital.</p>
+                    <br/>
+                    <br/>
                 </div>
             </div>
         );
@@ -296,6 +387,7 @@ DoctorSignupForm.propTypes = {
     createNewUser: PropTypes.func.isRequired,
     login: PropTypes.func.isRequired,
     validateUser: PropTypes.func.isRequired,
+    validateDoctor: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired,
 };
@@ -305,4 +397,4 @@ const mapStateToProps = (state) => ({
     security: state.security,
 });
 
-export default connect(mapStateToProps, { createNewUser, login, validateUser })(DoctorSignupForm);
+export default connect(mapStateToProps, { createNewUser, login, validateUser, validateDoctor })(DoctorSignupForm);

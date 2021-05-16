@@ -4,7 +4,6 @@ import {PropTypes} from "prop-types";
 import defaultProfileIcon from "../../static/defaultProfileIcon.png";
 import { connect } from "react-redux";
 
-var MakeAppointmentButton = null;
 
 class DoctorCard extends Component 
 {
@@ -12,7 +11,7 @@ class DoctorCard extends Component
     {
         const {doctor} = this.props;
         return (
-            <div className="container">
+            <div className="card-container">
             <div className="card card-body bg-light mb-3">
                 <div className="row align-items-center">
                     <div className="col-3">

@@ -36,11 +36,15 @@ public abstract class User implements UserDetails
     @NotBlank(message = "Last name cannot be blank")
     private String lastName;
 
-    @OneToMany(mappedBy = "usersInvolved", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, orphanRemoval = true)
+    @OneToMany(mappedBy = "usersInvolved", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, orphanRemoval = true)
     @JsonIgnore
     private List<Conversation> conversations = new ArrayList<>();
 
+    private int numberOfUnreadMessages = 0;
+
     private String userType; //DOC, INS, or PAT
+
+    private boolean isOnline;
 
 
     public Long getUserId() {
@@ -99,7 +103,21 @@ public abstract class User implements UserDetails
         this.userType = userType;
     }
 
+    public int getNumberOfUnreadMessages() {
+        return numberOfUnreadMessages;
+    }
 
+    public void setNumberOfUnreadMessages(int numberOfUnreadMessages) {
+        this.numberOfUnreadMessages = numberOfUnreadMessages;
+    }
+
+    public boolean isOnline() {
+        return isOnline;
+    }
+
+    public void setOnline(boolean online) {
+        isOnline = online;
+    }
 
     //
     //  REQUIRED METHODS FOR UserDetails

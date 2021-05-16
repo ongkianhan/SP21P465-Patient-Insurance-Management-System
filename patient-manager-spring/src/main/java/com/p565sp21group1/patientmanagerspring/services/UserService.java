@@ -3,7 +3,10 @@ package com.p565sp21group1.patientmanagerspring.services;
 import com.p565sp21group1.patientmanagerspring.exceptions.UserNotFoundException;
 import com.p565sp21group1.patientmanagerspring.exceptions.EmailTakenException;
 import com.p565sp21group1.patientmanagerspring.models.Doctor;
+import com.p565sp21group1.patientmanagerspring.models.InsurancePackage;
+import com.p565sp21group1.patientmanagerspring.models.Patient;
 import com.p565sp21group1.patientmanagerspring.models.User;
+import com.p565sp21group1.patientmanagerspring.payload.DoctorSearchRequest;
 import com.p565sp21group1.patientmanagerspring.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,21 +22,6 @@ public class UserService
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    /**
-     * Converts a URL parameter to a long
-     */
-    public long parseUserId(String id)
-    {
-        try
-        {
-            return Long.parseLong(id);
-        }
-        catch (NumberFormatException ex)
-        {
-            throw new UserNotFoundException("Invalid ID");
-        }
-    }
 
 
     public User saveOrUpdateUser(User user)
@@ -85,9 +73,26 @@ public class UserService
         }
     }
 
-    public Iterable<Doctor> filterDoctors()
+    public Iterable<Doctor> getDoctorsByFilter(DoctorSearchRequest filter)
     {
-        //TODO
-        return new ArrayList<Doctor>();
+        return userRepository.getDoctorsByFilter(filter);
+    }
+
+    public Iterable<String> getAllSpecializations()
+    {
+        return userRepository.getAllSpecializations();
+    }
+
+    public Iterable<Patient> getAllPatients()
+    {
+        return userRepository.getAllPatients();
+    }
+
+    public void updateUserOnlineStatus(long userId, boolean isOnline)
+    {
+        //Make the user online or offline, then save that to the database
+        User user = userRepository.findById(userId).get();
+        user.setOnline(isOnline);
+        userRepository.save(user);
     }
 }

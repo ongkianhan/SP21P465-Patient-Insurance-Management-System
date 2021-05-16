@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,11 +25,15 @@ public class Doctor extends User
     @NotBlank(message = "Hospital name cannot be blank")
     private String hospitalName;
 
-    @Column(name = "latitude", nullable = true, unique = false)
+    @Column(name = "latitude", unique = false)
+    @NotNull(message = "Address is required")
     private double latitude;
 
-    @Column(name = "longitude", nullable = true, unique = false)
+    @Column(name = "longitude", unique = false)
+    @NotNull(message = "Address is required")
     private double longitude;
+
+    private boolean supportsCovidCare = false;
 
     public Doctor() {
         this.setUserType("DOC");
@@ -72,5 +77,13 @@ public class Doctor extends User
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public boolean isSupportsCovidCare() {
+        return supportsCovidCare;
+    }
+
+    public void setSupportsCovidCare(boolean supportsCovidCare) {
+        this.supportsCovidCare = supportsCovidCare;
     }
 }

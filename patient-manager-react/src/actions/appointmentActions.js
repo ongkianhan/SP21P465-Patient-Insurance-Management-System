@@ -30,12 +30,20 @@ export const getAppointmentsByDoctorId = (doctorId) => async dispatch => {
     });
 }
 
+export const getAppointmentsByPatientId = (patientId) => async dispatch => {
+    const res = await axios.get(`/api/appointments/get-by-patient/${patientId}`);
+    dispatch ({
+        type: GET_MANY_APPOINTMENTS,
+        payload: res.data
+    });
+}
+
 export const validateAppointment = (appointment) => {
     const errorOutput = {};
     //Check if date is blank
     if (appointment["date"] === null || appointment["date"] === "")
     {
-        errorOutput["date"] = "Select a time from the table →";
+        errorOutput["blankDate"] = "Select a time from the table below";//→ 
     }
     //Check if date is in the past
     else if (appointment["date"].getTime() <= (new Date()).getTime())

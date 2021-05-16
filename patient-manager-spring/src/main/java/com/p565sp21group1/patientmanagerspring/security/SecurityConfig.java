@@ -79,6 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .antMatchers(H2_URL).permitAll()
                 .antMatchers("/api/account/**").permitAll() //permit sign-up & login without login
                 .antMatchers("/api/appointments/get-by-doctor/**").permitAll() //anyone can see a doctor's appts
+                .antMatchers("/api/insurance/all-insurance-packages/**").permitAll() //anyone can find insurance
                 .anyRequest().authenticated();
                 //.and()
                 //.oauth2Login();
